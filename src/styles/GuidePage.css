@@ -1,0 +1,229 @@
+/* ═══════════════════════════════════════
+   GuidePage.css — Barre de recherche Redux + Filter panel
+   ═══════════════════════════════════════ */
+
+/* ── Barre de recherche ────────────────── */
+.guide-searchbar {
+  padding: 14px 32px 0;
+}
+
+.guide-searchbar__inner {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 14px;
+  gap: 10px;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.guide-searchbar__inner:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(107, 156, 62, 0.12);
+}
+
+.guide-searchbar__icon { font-size: 16px; color: var(--color-text-muted); }
+
+.guide-searchbar__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 12px 0;
+  background: transparent;
+  color: var(--color-text);
+}
+.guide-searchbar__input::placeholder { color: var(--color-text-light); }
+
+.guide-searchbar__clear {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: var(--color-text-light);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition), color var(--transition);
+}
+.guide-searchbar__clear:hover {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.guide-searchbar__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding: 0 4px;
+}
+.guide-searchbar__count {
+  font-size: 12px;
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.guide-searchbar__reset {
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: var(--color-accent);
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity var(--transition);
+}
+.guide-searchbar__reset:hover { opacity: 0.7; }
+
+/* ── Carrousel ─────────────────────────── */
+.guide-page__carousel-wrap {
+  padding: 22px 32px;
+}
+.guide-page__carousel-title {
+  color: var(--color-dark);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* ── Sidebar améliorée ─────────────────── */
+.filter-sidebar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.filter-sidebar__badge {
+  background: var(--color-accent);
+  color: white;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.filter-sidebar__sort {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--color-border);
+}
+.filter-sidebar__sort-label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* ── Panel de filtre dynamique ─────────── */
+.filter-panel {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--color-border);
+  animation: slideDown 0.18s ease;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.filter-panel__section { margin-bottom: 12px; }
+
+.filter-panel__label {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.filter-panel__stars-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.filter-panel__star-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #ccc;
+  text-align: left;
+  transition: all var(--transition);
+}
+.filter-panel__star-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.filter-panel__star-btn--active {
+  background: var(--color-primary-bg);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.filter-panel__select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  outline: none;
+  background: white;
+  cursor: pointer;
+  transition: border-color var(--transition);
+}
+.filter-panel__select:focus { border-color: var(--color-primary); }
+
+.filter-panel__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.filter-panel__checkbox input { accent-color: var(--color-primary); width: 15px; height: 15px; }
+
+.filter-panel__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.filter-panel__tag {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 4px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: all var(--transition);
+}
+.filter-panel__tag:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+.filter-panel__tag--active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+/* ── État vide ─────────────────────────── */
+.guide-page__empty {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}

@@ -1,0 +1,1354 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "firstName": "Ismail",
+      "lastName": "Benjalloul",
+      "email": "admin@cityguide.ma",
+      "passwordHash": "$2b$10$dummyhashadmin",
+      "role": "admin",
+      "isGuide": false,
+      "linkedAccounts": ["google"],
+      "isVerified": true,
+      "avatar": "/assets/avatars/ismail.jpg",
+      "createdAt": "2025-01-01T09:00:00Z"
+    },
+    {
+      "id": "u2",
+      "firstName": "Hajar",
+      "lastName": "Bentaib",
+      "email": "hajar.guide@cityguide.ma",
+      "passwordHash": "$2b$10$dummyhashguide",
+      "role": "user",
+      "isGuide": true,
+      "linkedAccounts": [],
+      "isVerified": true,
+      "avatar": "/assets/avatars/hajar.jpg",
+      "createdAt": "2025-01-10T10:00:00Z"
+    },
+    {
+      "id": "u3",
+      "firstName": "Wafaa",
+      "lastName": "Aselgui",
+      "email": "wafaa@example.com",
+      "passwordHash": "$2b$10$dummyhashuser",
+      "role": "user",
+      "isGuide": false,
+      "linkedAccounts": [],
+      "isVerified": false,
+      "avatar": "/assets/avatars/wafaa.jpg",
+      "createdAt": "2025-02-05T08:30:00Z"
+    },
+    {
+      "id": "u4",
+      "firstName": "Yousef",
+      "lastName": "Chafik",
+      "email": "yousef.guide@cityguide.ma",
+      "passwordHash": "$2b$10$dummyhashyousef",
+      "role": "user",
+      "isGuide": true,
+      "linkedAccounts": ["google"],
+      "isVerified": true,
+      "avatar": "/assets/avatars/yousef.jpg",
+      "createdAt": "2025-01-20T11:00:00Z"
+    },
+    {
+      "id": "u5",
+      "firstName": "Sohaila",
+      "lastName": "Mansouri",
+      "email": "sohaila.guide@cityguide.ma",
+      "passwordHash": "$2b$10$dummyhashsohaila",
+      "role": "user",
+      "isGuide": true,
+      "linkedAccounts": [],
+      "isVerified": true,
+      "avatar": "/assets/avatars/sohaila.jpg",
+      "createdAt": "2025-02-01T09:45:00Z"
+    },
+    {
+      "id": "u6",
+      "firstName": "Karim",
+      "lastName": "El Fassi",
+      "email": "karim@example.com",
+      "passwordHash": "$2b$10$dummyhashkarim",
+      "role": "user",
+      "isGuide": false,
+      "linkedAccounts": [],
+      "isVerified": true,
+      "avatar": "/assets/avatars/karim.jpg",
+      "createdAt": "2025-03-12T14:00:00Z"
+    },
+    {
+      "id": "u7",
+      "firstName": "Nadia",
+      "lastName": "Tazi",
+      "email": "nadia@example.com",
+      "passwordHash": "$2b$10$dummyhashnadia",
+      "role": "user",
+      "isGuide": false,
+      "linkedAccounts": ["facebook"],
+      "isVerified": true,
+      "avatar": "/assets/avatars/nadia.jpg",
+      "createdAt": "2025-03-18T16:30:00Z"
+    },
+    {
+      "id": "u8",
+      "firstName": "Omar",
+      "lastName": "Benali",
+      "email": "omar.guide@cityguide.ma",
+      "passwordHash": "$2b$10$dummyhashomar",
+      "role": "user",
+      "isGuide": true,
+      "linkedAccounts": [],
+      "isVerified": true,
+      "avatar": "/assets/avatars/omar.jpg",
+      "createdAt": "2025-02-15T10:20:00Z"
+    }
+  ],
+
+  "cities": [
+    {
+      "id": "c1",
+      "name": "Casablanca",
+      "slug": "casablanca",
+      "region": "Casablanca-Settat",
+      "description": "La capitale économique du Maroc, ville cosmopolite et moderne sur l'Atlantique.",
+      "coverImage": "/assets/cities/casablanca.jpg",
+      "population": 3752000,
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.5898, 33.5731]
+      }
+    },
+    {
+      "id": "c2",
+      "name": "Marrakech",
+      "slug": "marrakech",
+      "region": "Marrakech-Safi",
+      "description": "La ville rouge, perle du sud, connue pour sa médina animée et ses jardins luxuriants.",
+      "coverImage": "/assets/cities/marrakech.jpg",
+      "population": 1070838,
+      "location": {
+        "type": "Point",
+        "coordinates": [-8.0083, 31.6295]
+      }
+    },
+    {
+      "id": "c3",
+      "name": "Fès",
+      "slug": "fes",
+      "region": "Fès-Meknès",
+      "description": "La capitale spirituelle et culturelle du Maroc, UNESCO World Heritage.",
+      "coverImage": "/assets/cities/fes.jpg",
+      "population": 1112072,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.0003, 34.0181]
+      }
+    },
+    {
+      "id": "c4",
+      "name": "Chefchaouen",
+      "slug": "chefchaouen",
+      "region": "Tanger-Tétouan-Al Hoceïma",
+      "description": "La ville bleue, joyau du Rif marocain, connue pour ses ruelles azurées.",
+      "coverImage": "/assets/cities/chefchaouen.jpg",
+      "population": 45990,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.2636, 35.1689]
+      }
+    },
+    {
+      "id": "c5",
+      "name": "Agadir",
+      "slug": "agadir",
+      "region": "Souss-Massa",
+      "description": "Station balnéaire réputée, plages dorées et soleil toute l'année.",
+      "coverImage": "/assets/cities/agadir.jpg",
+      "population": 421844,
+      "location": {
+        "type": "Point",
+        "coordinates": [-9.5981, 30.4278]
+      }
+    },
+    {
+      "id": "c6",
+      "name": "Rabat",
+      "slug": "rabat",
+      "region": "Rabat-Salé-Kénitra",
+      "description": "La capitale politique du Maroc, ville royale au riche patrimoine historique.",
+      "coverImage": "/assets/cities/rabat.jpg",
+      "population": 577827,
+      "location": {
+        "type": "Point",
+        "coordinates": [-6.8498, 33.9716]
+      }
+    }
+  ],
+
+  "categories": [
+    {
+      "id": "cat1",
+      "name": "Historical Sites",
+      "slug": "historical-sites",
+      "icon": "FaLandmark",
+      "parentId": null
+    },
+    {
+      "id": "cat2",
+      "name": "Museums",
+      "slug": "museums",
+      "icon": "FaBuilding",
+      "parentId": "cat1"
+    },
+    {
+      "id": "cat3",
+      "name": "Restaurants",
+      "slug": "restaurants",
+      "icon": "FaUtensils",
+      "parentId": null
+    },
+    {
+      "id": "cat4",
+      "name": "Hotels",
+      "slug": "hotels",
+      "icon": "FaHotel",
+      "parentId": null
+    },
+    {
+      "id": "cat5",
+      "name": "Gardens & Parks",
+      "slug": "gardens-parks",
+      "icon": "FaTree",
+      "parentId": null
+    },
+    {
+      "id": "cat6",
+      "name": "Shopping",
+      "slug": "shopping",
+      "icon": "FaShoppingBag",
+      "parentId": null
+    },
+    {
+      "id": "cat7",
+      "name": "Beaches",
+      "slug": "beaches",
+      "icon": "FaUmbrella",
+      "parentId": null
+    },
+    {
+      "id": "cat8",
+      "name": "Mosques",
+      "slug": "mosques",
+      "icon": "FaMosque",
+      "parentId": "cat1"
+    },
+    {
+      "id": "cat9",
+      "name": "Hammams & Spas",
+      "slug": "hammams-spas",
+      "icon": "FaSpa",
+      "parentId": null
+    },
+    {
+      "id": "cat10",
+      "name": "Street Food",
+      "slug": "street-food",
+      "icon": "FaBreadSlice",
+      "parentId": "cat3"
+    }
+  ],
+
+  "guideProfiles": [
+    {
+      "id": "gp1",
+      "userId": "u2",
+      "bio": "Guide certifiée avec 8 ans d'expérience. Passionnée par l'architecture islamique et la gastronomie marocaine.",
+      "specialties": ["Architecture", "Medina Tours", "Culinary"],
+      "spokenLanguages": ["Arabic", "French", "English"],
+      "cityIds": ["c1", "c2"],
+      "pricePerHour": 150,
+      "totalTours": 320,
+      "averageRating": 4.8,
+      "reviewCount": 95,
+      "availability": {
+        "monday": ["09:00-17:00"],
+        "tuesday": ["09:00-17:00"],
+        "wednesday": [],
+        "thursday": ["10:00-18:00"],
+        "friday": ["09:00-12:00"],
+        "saturday": ["08:00-20:00"],
+        "sunday": ["08:00-20:00"]
+      },
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "gp2",
+      "userId": "u4",
+      "bio": "Scrum Master et guide passionné. Expert en histoire des dynasties marocaines et circuits désert.",
+      "specialties": ["History", "Desert Tours", "Photography"],
+      "spokenLanguages": ["Arabic", "French", "Spanish"],
+      "cityIds": ["c2", "c3"],
+      "pricePerHour": 120,
+      "totalTours": 185,
+      "averageRating": 4.6,
+      "reviewCount": 62,
+      "availability": {
+        "monday": ["10:00-18:00"],
+        "tuesday": ["10:00-18:00"],
+        "wednesday": ["10:00-18:00"],
+        "thursday": [],
+        "friday": [],
+        "saturday": ["08:00-22:00"],
+        "sunday": ["08:00-22:00"]
+      },
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "gp3",
+      "userId": "u5",
+      "bio": "Amoureuse de la ville bleue, guide locale à Chefchaouen depuis 5 ans. Spécialisée en artisanat et randonnées.",
+      "specialties": ["Hiking", "Crafts", "Local Culture"],
+      "spokenLanguages": ["Arabic", "French", "English", "German"],
+      "cityIds": ["c4", "c3"],
+      "pricePerHour": 100,
+      "totalTours": 210,
+      "averageRating": 4.9,
+      "reviewCount": 78,
+      "availability": {
+        "monday": ["08:00-18:00"],
+        "tuesday": ["08:00-18:00"],
+        "wednesday": ["08:00-18:00"],
+        "thursday": ["08:00-18:00"],
+        "friday": ["08:00-13:00"],
+        "saturday": ["07:00-20:00"],
+        "sunday": ["07:00-20:00"]
+      },
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "gp4",
+      "userId": "u8",
+      "bio": "Guide surfeur à Agadir, expert en sports nautiques, plages secrètes et culture berbère du Souss.",
+      "specialties": ["Surfing", "Beaches", "Berber Culture"],
+      "spokenLanguages": ["Arabic", "French", "English"],
+      "cityIds": ["c5"],
+      "pricePerHour": 130,
+      "totalTours": 140,
+      "averageRating": 4.7,
+      "reviewCount": 53,
+      "availability": {
+        "monday": ["07:00-19:00"],
+        "tuesday": ["07:00-19:00"],
+        "wednesday": [],
+        "thursday": ["07:00-19:00"],
+        "friday": [],
+        "saturday": ["06:00-20:00"],
+        "sunday": ["06:00-20:00"]
+      },
+      "verificationStatus": "verified"
+    }
+  ],
+
+  "places": [
+    {
+      "id": "p1",
+      "name": "Hassan II Mosque",
+      "slug": "hassan-ii-mosque",
+      "description": "La plus grande mosquée d'Afrique et la 7ème au monde. Un chef-d'œuvre architectural sur l'Atlantique.",
+      "categoryId": "cat8",
+      "cityId": "c1",
+      "address": "Boulevard Sidi Mohammed Ben Abdallah, Casablanca",
+      "phone": "+212 522 48 28 86",
+      "website": "https://mosqueehassan2.com",
+      "openingHours": {
+        "saturday": "09:00-17:00",
+        "sunday": "09:00-17:00",
+        "monday": "09:00-17:00",
+        "tuesday": "09:00-17:00",
+        "thursday": "09:00-17:00"
+      },
+      "entryFee": 120,
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.6327, 33.6086]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": true,
+      "averageRating": 4.9,
+      "reviewCount": 1250,
+      "images": [
+        "/assets/places/hassan-mosque-1.jpg",
+        "/assets/places/hassan-mosque-2.jpg",
+        "/assets/places/hassan-mosque-3.jpg"
+      ]
+    },
+    {
+      "id": "p2",
+      "name": "Jardin Majorelle",
+      "slug": "jardin-majorelle",
+      "description": "Jardin botanique spectaculaire créé par le peintre Jacques Majorelle, racheté par Yves Saint Laurent.",
+      "categoryId": "cat5",
+      "cityId": "c2",
+      "address": "Rue Yves Saint Laurent, Marrakech",
+      "phone": "+212 524 31 30 47",
+      "website": "https://jardinmajorelle.com",
+      "openingHours": {
+        "monday": "08:00-17:30",
+        "tuesday": "08:00-17:30",
+        "wednesday": "08:00-17:30",
+        "thursday": "08:00-17:30",
+        "friday": "08:00-17:30",
+        "saturday": "08:00-17:30",
+        "sunday": "08:00-17:30"
+      },
+      "entryFee": 150,
+      "location": {
+        "type": "Point",
+        "coordinates": [-8.0024, 31.6417]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": true,
+      "averageRating": 4.7,
+      "reviewCount": 890,
+      "images": [
+        "/assets/places/majorelle-1.jpg",
+        "/assets/places/majorelle-2.jpg"
+      ]
+    },
+    {
+      "id": "p3",
+      "name": "Médina de Fès el-Bali",
+      "slug": "medina-fes-el-bali",
+      "description": "La médina la mieux conservée du monde arabe, classée au patrimoine mondial de l'UNESCO depuis 1981.",
+      "categoryId": "cat1",
+      "cityId": "c3",
+      "address": "Fès el-Bali, Fès",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "00:00-23:59",
+        "tuesday": "00:00-23:59",
+        "wednesday": "00:00-23:59",
+        "thursday": "00:00-23:59",
+        "friday": "00:00-23:59",
+        "saturday": "00:00-23:59",
+        "sunday": "00:00-23:59"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-4.9731, 34.0636]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": true,
+      "averageRating": 4.8,
+      "reviewCount": 2100,
+      "images": [
+        "/assets/places/fes-medina-1.jpg",
+        "/assets/places/fes-medina-2.jpg",
+        "/assets/places/fes-medina-3.jpg"
+      ]
+    },
+    {
+      "id": "p4",
+      "name": "Chefchaouen Old Town",
+      "slug": "chefchaouen-old-town",
+      "description": "Le quartier bleu iconique, ruelles peintes en bleu et blanc, souks artisanaux et ambiance unique.",
+      "categoryId": "cat1",
+      "cityId": "c4",
+      "address": "Médina, Chefchaouen",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "00:00-23:59",
+        "tuesday": "00:00-23:59",
+        "wednesday": "00:00-23:59",
+        "thursday": "00:00-23:59",
+        "friday": "00:00-23:59",
+        "saturday": "00:00-23:59",
+        "sunday": "00:00-23:59"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.2691, 35.171]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": true,
+      "averageRating": 4.9,
+      "reviewCount": 1560,
+      "images": [
+        "/assets/places/chefchaouen-1.jpg",
+        "/assets/places/chefchaouen-2.jpg"
+      ]
+    },
+    {
+      "id": "p5",
+      "name": "Plage d'Agadir",
+      "slug": "plage-agadir",
+      "description": "10 km de plage dorée, eaux calmes, idéale pour la baignade, le surf et les sports nautiques.",
+      "categoryId": "cat7",
+      "cityId": "c5",
+      "address": "Corniche d'Agadir, Agadir",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "00:00-23:59",
+        "tuesday": "00:00-23:59",
+        "wednesday": "00:00-23:59",
+        "thursday": "00:00-23:59",
+        "friday": "00:00-23:59",
+        "saturday": "00:00-23:59",
+        "sunday": "00:00-23:59"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-9.6201, 30.4124]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": false,
+      "averageRating": 4.6,
+      "reviewCount": 740,
+      "images": [
+        "/assets/places/agadir-beach-1.jpg",
+        "/assets/places/agadir-beach-2.jpg"
+      ]
+    },
+    {
+      "id": "p6",
+      "name": "Tour Hassan & Mausolée Mohammed V",
+      "slug": "tour-hassan-mausolee",
+      "description": "Minaret inachevé du XIIe siècle face au majestueux mausolée royal, symbole de Rabat.",
+      "categoryId": "cat1",
+      "cityId": "c6",
+      "address": "Avenue Tour Hassan, Rabat",
+      "phone": "+212 537 73 48 60",
+      "website": null,
+      "openingHours": {
+        "monday": "08:00-18:00",
+        "tuesday": "08:00-18:00",
+        "wednesday": "08:00-18:00",
+        "thursday": "08:00-18:00",
+        "friday": "08:00-18:00",
+        "saturday": "08:00-18:00",
+        "sunday": "08:00-18:00"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-6.8226, 34.0244]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": true,
+      "averageRating": 4.7,
+      "reviewCount": 980,
+      "images": [
+        "/assets/places/tour-hassan-1.jpg",
+        "/assets/places/tour-hassan-2.jpg"
+      ]
+    },
+    {
+      "id": "p7",
+      "name": "Jemaa el-Fna",
+      "slug": "jemaa-el-fna",
+      "description": "La place mythique de Marrakech, UNESCO Patrimoine immatériel : conteurs, acrobates, musiciens gnaoua.",
+      "categoryId": "cat1",
+      "cityId": "c2",
+      "address": "Place Jemaa el-Fna, Marrakech",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "00:00-23:59",
+        "tuesday": "00:00-23:59",
+        "wednesday": "00:00-23:59",
+        "thursday": "00:00-23:59",
+        "friday": "00:00-23:59",
+        "saturday": "00:00-23:59",
+        "sunday": "00:00-23:59"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-8.0089, 31.6259]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": true,
+      "averageRating": 4.8,
+      "reviewCount": 3200,
+      "images": [
+        "/assets/places/jemaa-el-fna-1.jpg",
+        "/assets/places/jemaa-el-fna-2.jpg"
+      ]
+    },
+    {
+      "id": "p8",
+      "name": "Restaurant Al Mounia",
+      "slug": "restaurant-al-mounia",
+      "description": "Restaurant gastronomique marocain authentique, cadre andalou, tagines et pastillas de renom.",
+      "categoryId": "cat3",
+      "cityId": "c1",
+      "address": "95 Rue Prince Moulay Abdallah, Casablanca",
+      "phone": "+212 522 22 26 69",
+      "website": null,
+      "openingHours": {
+        "monday": "12:00-15:00,19:00-23:00",
+        "tuesday": "12:00-15:00,19:00-23:00",
+        "wednesday": "12:00-15:00,19:00-23:00",
+        "thursday": "12:00-15:00,19:00-23:00",
+        "friday": "12:00-15:00,19:00-23:00",
+        "saturday": "12:00-15:00,19:00-23:00",
+        "sunday": "12:00-15:00"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.6189, 33.5922]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": false,
+      "averageRating": 4.5,
+      "reviewCount": 430,
+      "images": [
+        "/assets/places/al-mounia-1.jpg",
+        "/assets/places/al-mounia-2.jpg"
+      ]
+    },
+    {
+      "id": "p9",
+      "name": "Tanneries de Chouara",
+      "slug": "tanneries-chouara",
+      "description": "Les célèbres tanneries médiévales de Fès, un spectacle de couleurs unique au monde, inchangé depuis le XIe siècle.",
+      "categoryId": "cat1",
+      "cityId": "c3",
+      "address": "Rue Chouara, Fès el-Bali",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "08:00-18:00",
+        "tuesday": "08:00-18:00",
+        "wednesday": "08:00-18:00",
+        "thursday": "08:00-18:00",
+        "friday": "08:00-18:00",
+        "saturday": "08:00-18:00",
+        "sunday": "08:00-18:00"
+      },
+      "entryFee": 20,
+      "location": {
+        "type": "Point",
+        "coordinates": [-4.9706, 34.0647]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": true,
+      "averageRating": 4.6,
+      "reviewCount": 1100,
+      "images": [
+        "/assets/places/tanneries-1.jpg",
+        "/assets/places/tanneries-2.jpg"
+      ]
+    },
+    {
+      "id": "p10",
+      "name": "Palais Bahia",
+      "slug": "palais-bahia",
+      "description": "Palais du XIXe siècle, joyau de l'architecture marocaine avec ses jardins et salons décorés de zelliges.",
+      "categoryId": "cat1",
+      "cityId": "c2",
+      "address": "Rue Riad Zitoun el Jedid, Marrakech",
+      "phone": "+212 524 38 96 24",
+      "website": null,
+      "openingHours": {
+        "monday": "09:00-17:00",
+        "tuesday": "09:00-17:00",
+        "wednesday": "09:00-17:00",
+        "thursday": "09:00-17:00",
+        "friday": "09:00-17:00",
+        "saturday": "09:00-17:00",
+        "sunday": "09:00-17:00"
+      },
+      "entryFee": 70,
+      "location": {
+        "type": "Point",
+        "coordinates": [-8.0019, 31.6205]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": false,
+      "averageRating": 4.5,
+      "reviewCount": 670,
+      "images": ["/assets/places/bahia-1.jpg", "/assets/places/bahia-2.jpg"]
+    },
+    {
+      "id": "p11",
+      "name": "Morocco Mall",
+      "slug": "morocco-mall",
+      "description": "Le plus grand centre commercial d'Afrique, 350 boutiques, aquarium géant et entertainment.",
+      "categoryId": "cat6",
+      "cityId": "c1",
+      "address": "Bd de la Corniche, Casablanca",
+      "phone": "+212 522 97 97 97",
+      "website": "https://moroccomall.net",
+      "openingHours": {
+        "monday": "10:00-22:00",
+        "tuesday": "10:00-22:00",
+        "wednesday": "10:00-22:00",
+        "thursday": "10:00-22:00",
+        "friday": "10:00-23:00",
+        "saturday": "10:00-23:00",
+        "sunday": "10:00-22:00"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.6741, 33.5887]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": false,
+      "averageRating": 4.3,
+      "reviewCount": 520,
+      "images": [
+        "/assets/places/morocco-mall-1.jpg",
+        "/assets/places/morocco-mall-2.jpg"
+      ]
+    },
+    {
+      "id": "p12",
+      "name": "Hammam de la Rose",
+      "slug": "hammam-de-la-rose",
+      "description": "Hammam traditionnel 5 étoiles à Marrakech, soins à l'huile d'argan et au savon beldi.",
+      "categoryId": "cat9",
+      "cityId": "c2",
+      "address": "30 Derb Sraghna, Marrakech",
+      "phone": "+212 524 42 65 00",
+      "website": "https://hammamdelarose.com",
+      "openingHours": {
+        "monday": "09:00-20:00",
+        "tuesday": "09:00-20:00",
+        "wednesday": "09:00-20:00",
+        "thursday": "09:00-20:00",
+        "friday": "09:00-20:00",
+        "saturday": "09:00-22:00",
+        "sunday": "09:00-22:00"
+      },
+      "entryFee": 350,
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.9984, 31.6312]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": false,
+      "averageRating": 4.8,
+      "reviewCount": 290,
+      "images": [
+        "/assets/places/hammam-rose-1.jpg",
+        "/assets/places/hammam-rose-2.jpg"
+      ]
+    }
+  ],
+
+  "events": [
+    {
+      "id": "e1",
+      "title": "Jazzablanca Festival",
+      "description": "Le plus grand festival de jazz en Afrique, 4 jours de concerts avec des artistes internationaux.",
+      "cityId": "c1",
+      "organizer": "Jazzablanca Productions",
+      "dateRange": {
+        "from": "2026-06-15T18:00:00Z",
+        "to": "2026-06-18T23:59:59Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.6534, 33.5892]
+      },
+      "venue": "Anfa Park, Casablanca",
+      "ticketPrice": 250,
+      "ticketUrl": "https://jazzablanca.com/tickets",
+      "coverImage": "/assets/events/jazzablanca.jpg",
+      "status": "upcoming",
+      "isFeatured": true,
+      "tags": ["music", "jazz", "festival", "international"]
+    },
+    {
+      "id": "e2",
+      "title": "Marrakech International Film Festival",
+      "description": "Festival international du film de Marrakech, l'un des plus prestigieux d'Afrique et du monde arabe.",
+      "cityId": "c2",
+      "organizer": "FIFM",
+      "dateRange": {
+        "from": "2026-11-20T10:00:00Z",
+        "to": "2026-11-28T23:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-8.0125, 31.6258]
+      },
+      "venue": "Palais des Congrès, Marrakech",
+      "ticketPrice": 100,
+      "ticketUrl": "https://festivalmarrakech.info",
+      "coverImage": "/assets/events/fifm.jpg",
+      "status": "planned",
+      "isFeatured": true,
+      "tags": ["cinema", "film", "culture", "international"]
+    },
+    {
+      "id": "e3",
+      "title": "Festival des Cerises de Sefrou",
+      "description": "Festival traditionnel célébrant la récolte des cerises, élection de la Reine des cerises, musique et danse.",
+      "cityId": "c3",
+      "organizer": "Municipalité de Sefrou",
+      "dateRange": {
+        "from": "2026-06-05T10:00:00Z",
+        "to": "2026-06-07T22:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-4.831, 33.8302]
+      },
+      "venue": "Centre-ville de Sefrou",
+      "ticketPrice": 0,
+      "ticketUrl": null,
+      "coverImage": "/assets/events/cerises-sefrou.jpg",
+      "status": "upcoming",
+      "isFeatured": false,
+      "tags": ["traditional", "culture", "food", "local"]
+    },
+    {
+      "id": "e4",
+      "title": "Gnaoua World Music Festival",
+      "description": "Festival unique de musique gnaoua et world music à Essaouira, 3 jours de concerts gratuits en plein air.",
+      "cityId": "c2",
+      "organizer": "Association Gnaoua",
+      "dateRange": {
+        "from": "2026-06-25T16:00:00Z",
+        "to": "2026-06-28T02:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-9.7711, 31.5125]
+      },
+      "venue": "Place Moulay Hassan, Essaouira",
+      "ticketPrice": 0,
+      "ticketUrl": null,
+      "coverImage": "/assets/events/gnaoua.jpg",
+      "status": "upcoming",
+      "isFeatured": true,
+      "tags": ["music", "gnaoua", "world-music", "free"]
+    },
+    {
+      "id": "e5",
+      "title": "Marathon International de Marrakech",
+      "description": "Marathon international avec 15 000 coureurs de 80 pays, parcours historique dans la ville rouge.",
+      "cityId": "c2",
+      "organizer": "Marathon Marrakech",
+      "dateRange": {
+        "from": "2027-01-25T07:00:00Z",
+        "to": "2027-01-25T16:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-8.0089, 31.6259]
+      },
+      "venue": "Place Jemaa el-Fna, Marrakech",
+      "ticketPrice": 500,
+      "ticketUrl": "https://marathon-marrakech.com",
+      "coverImage": "/assets/events/marathon-marrakech.jpg",
+      "status": "planned",
+      "isFeatured": false,
+      "tags": ["sport", "running", "marathon", "international"]
+    },
+    {
+      "id": "e6",
+      "title": "Mawazine — Rythmes du Monde",
+      "description": "L'un des plus grands festivals de musique au monde, accueillant des millions de spectateurs à Rabat.",
+      "cityId": "c6",
+      "organizer": "Association Maroc Cultures",
+      "dateRange": {
+        "from": "2026-05-29T18:00:00Z",
+        "to": "2026-06-07T02:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-6.859, 34.012]
+      },
+      "venue": "OLM Souissi & Scènes multiples, Rabat",
+      "ticketPrice": 0,
+      "ticketUrl": "https://festival-mawazine.ma",
+      "coverImage": "/assets/events/mawazine.jpg",
+      "status": "upcoming",
+      "isFeatured": true,
+      "tags": ["music", "world", "festival", "free", "international"]
+    },
+    {
+      "id": "e7",
+      "title": "Salon du Cheval d'El Jadida",
+      "description": "Plus grand événement équestre du monde arabe, fantasia, expositions et compétitions.",
+      "cityId": "c1",
+      "organizer": "SIEMA",
+      "dateRange": {
+        "from": "2026-10-18T09:00:00Z",
+        "to": "2026-10-25T20:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-8.5078, 33.2561]
+      },
+      "venue": "Complexe Moulay Abdallah, El Jadida",
+      "ticketPrice": 80,
+      "ticketUrl": null,
+      "coverImage": "/assets/events/salon-cheval.jpg",
+      "status": "planned",
+      "isFeatured": false,
+      "tags": ["equestrian", "culture", "tradition", "sport"]
+    }
+  ],
+
+  "scores": [
+    {
+      "id": "s1",
+      "targetId": "p1",
+      "targetType": "Place",
+      "score": 5,
+      "authorId": "u3",
+      "createdAt": "2026-03-25T14:30:00Z"
+    },
+    {
+      "id": "s2",
+      "targetId": "gp1",
+      "targetType": "GuideProfile",
+      "score": 4,
+      "authorId": "u3",
+      "createdAt": "2026-03-28T09:15:00Z"
+    },
+    {
+      "id": "s3",
+      "targetId": "p2",
+      "targetType": "Place",
+      "score": 5,
+      "authorId": "u6",
+      "createdAt": "2026-02-14T11:20:00Z"
+    },
+    {
+      "id": "s4",
+      "targetId": "p3",
+      "targetType": "Place",
+      "score": 5,
+      "authorId": "u7",
+      "createdAt": "2026-01-30T08:45:00Z"
+    },
+    {
+      "id": "s5",
+      "targetId": "p4",
+      "targetType": "Place",
+      "score": 5,
+      "authorId": "u6",
+      "createdAt": "2026-02-20T16:00:00Z"
+    },
+    {
+      "id": "s6",
+      "targetId": "gp2",
+      "targetType": "GuideProfile",
+      "score": 5,
+      "authorId": "u6",
+      "createdAt": "2026-03-01T10:00:00Z"
+    },
+    {
+      "id": "s7",
+      "targetId": "gp3",
+      "targetType": "GuideProfile",
+      "score": 5,
+      "authorId": "u7",
+      "createdAt": "2026-03-10T14:30:00Z"
+    },
+    {
+      "id": "s8",
+      "targetId": "p7",
+      "targetType": "Place",
+      "score": 5,
+      "authorId": "u3",
+      "createdAt": "2026-03-15T19:00:00Z"
+    },
+    {
+      "id": "s9",
+      "targetId": "p9",
+      "targetType": "Place",
+      "score": 4,
+      "authorId": "u6",
+      "createdAt": "2026-02-28T10:00:00Z"
+    },
+    {
+      "id": "s10",
+      "targetId": "p12",
+      "targetType": "Place",
+      "score": 5,
+      "authorId": "u7",
+      "createdAt": "2026-03-20T15:00:00Z"
+    },
+    {
+      "id": "s11",
+      "targetId": "gp4",
+      "targetType": "GuideProfile",
+      "score": 4,
+      "authorId": "u3",
+      "createdAt": "2026-03-22T12:00:00Z"
+    },
+    {
+      "id": "s12",
+      "targetId": "p6",
+      "targetType": "Place",
+      "score": 5,
+      "authorId": "u7",
+      "createdAt": "2026-03-05T09:30:00Z"
+    }
+  ],
+
+  "comments": [
+    {
+      "id": "com1",
+      "targetId": "p1",
+      "targetType": "Place",
+      "authorId": "u3",
+      "content": "Absolutely breathtaking architecture. A must-visit in Casablanca!",
+      "parentCommentId": null,
+      "likes": 12,
+      "createdAt": "2026-03-25T14:35:00Z"
+    },
+    {
+      "id": "com2",
+      "targetId": "p1",
+      "targetType": "Place",
+      "authorId": "u2",
+      "content": "Glad you enjoyed it! I highly recommend taking the guided tour inside.",
+      "parentCommentId": "com1",
+      "likes": 3,
+      "createdAt": "2026-03-26T10:00:00Z"
+    },
+    {
+      "id": "com3",
+      "targetId": "p2",
+      "targetType": "Place",
+      "authorId": "u6",
+      "content": "Le Jardin Majorelle est un vrai paradis de couleurs. Les bougainvillées et le bleu cobalt, c'est magique.",
+      "parentCommentId": null,
+      "likes": 25,
+      "createdAt": "2026-02-14T12:00:00Z"
+    },
+    {
+      "id": "com4",
+      "targetId": "p2",
+      "targetType": "Place",
+      "authorId": "u7",
+      "content": "Venez tôt le matin pour éviter la foule. Le musée Berbère à l'intérieur vaut également le détour.",
+      "parentCommentId": null,
+      "likes": 18,
+      "createdAt": "2026-02-20T09:30:00Z"
+    },
+    {
+      "id": "com5",
+      "targetId": "p3",
+      "targetType": "Place",
+      "authorId": "u7",
+      "content": "La médina de Fès est un labyrinthe fascinant. Prenez un guide local, vous ne regretterez pas !",
+      "parentCommentId": null,
+      "likes": 34,
+      "createdAt": "2026-01-30T09:00:00Z"
+    },
+    {
+      "id": "com6",
+      "targetId": "p3",
+      "targetType": "Place",
+      "authorId": "u4",
+      "content": "En tant que guide, je confirme : la médina de Fès recèle des trésors cachés à chaque coin de rue.",
+      "parentCommentId": "com5",
+      "likes": 11,
+      "createdAt": "2026-01-31T10:00:00Z"
+    },
+    {
+      "id": "com7",
+      "targetId": "p4",
+      "targetType": "Place",
+      "authorId": "u6",
+      "content": "Chefchaouen est la ville la plus photogénique que j'ai visitée. Les ruelles bleues sont à couper le souffle.",
+      "parentCommentId": null,
+      "likes": 47,
+      "createdAt": "2026-02-20T17:00:00Z"
+    },
+    {
+      "id": "com8",
+      "targetId": "p7",
+      "targetType": "Place",
+      "authorId": "u3",
+      "content": "Jemaa el-Fna la nuit, avec les fumées des stands de nourriture et les musiciens, c'est une expérience inoubliable.",
+      "parentCommentId": null,
+      "likes": 29,
+      "createdAt": "2026-03-15T20:00:00Z"
+    },
+    {
+      "id": "com9",
+      "targetId": "p9",
+      "targetType": "Place",
+      "authorId": "u6",
+      "content": "Les tanneries de Chouara sont spectaculaires vues depuis les terrasses des boutiques de cuir. L'odeur est forte mais ça vaut le coup !",
+      "parentCommentId": null,
+      "likes": 22,
+      "createdAt": "2026-02-28T11:00:00Z"
+    },
+    {
+      "id": "com10",
+      "targetId": "p12",
+      "targetType": "Place",
+      "authorId": "u7",
+      "content": "Le meilleur hammam de Marrakech. Le soin à l'huile d'argan est divin. Je réserve à chaque visite.",
+      "parentCommentId": null,
+      "likes": 15,
+      "createdAt": "2026-03-20T16:00:00Z"
+    },
+    {
+      "id": "com11",
+      "targetId": "gp1",
+      "targetType": "GuideProfile",
+      "authorId": "u6",
+      "content": "Hajar est une guide exceptionnelle ! Sa connaissance de l'architecture islamique est impressionnante.",
+      "parentCommentId": null,
+      "likes": 8,
+      "createdAt": "2026-03-10T10:00:00Z"
+    },
+    {
+      "id": "com12",
+      "targetId": "gp3",
+      "targetType": "GuideProfile",
+      "authorId": "u7",
+      "content": "Sohaila nous a fait découvrir des coins de Chefchaouen que jamais on n'aurait trouvés seuls. Merci !",
+      "parentCommentId": null,
+      "likes": 19,
+      "createdAt": "2026-03-12T14:00:00Z"
+    }
+  ],
+
+  "media": [
+    {
+      "id": "med1",
+      "url": "/assets/places/hassan-mosque-1.jpg",
+      "type": "image",
+      "parentType": "Place",
+      "parentId": "p1",
+      "approvedAt": "2026-01-10T09:00:00Z"
+    },
+    {
+      "id": "med2",
+      "url": "/assets/places/hassan-mosque-2.jpg",
+      "type": "image",
+      "parentType": "Place",
+      "parentId": "p1",
+      "approvedAt": "2026-01-10T09:05:00Z"
+    },
+    {
+      "id": "med3",
+      "url": "/assets/places/majorelle-1.jpg",
+      "type": "image",
+      "parentType": "Place",
+      "parentId": "p2",
+      "approvedAt": "2026-01-12T10:00:00Z"
+    },
+    {
+      "id": "med4",
+      "url": "/assets/places/fes-medina-1.jpg",
+      "type": "image",
+      "parentType": "Place",
+      "parentId": "p3",
+      "approvedAt": "2026-01-15T11:00:00Z"
+    },
+    {
+      "id": "med5",
+      "url": "/assets/places/chefchaouen-1.jpg",
+      "type": "image",
+      "parentType": "Place",
+      "parentId": "p4",
+      "approvedAt": "2026-01-18T09:30:00Z"
+    },
+    {
+      "id": "med6",
+      "url": "/assets/events/jazzablanca.jpg",
+      "type": "image",
+      "parentType": "Event",
+      "parentId": "e1",
+      "approvedAt": "2026-02-01T08:00:00Z"
+    },
+    {
+      "id": "med7",
+      "url": "/assets/events/fifm.jpg",
+      "type": "image",
+      "parentType": "Event",
+      "parentId": "e2",
+      "approvedAt": "2026-02-01T08:10:00Z"
+    },
+    {
+      "id": "med8",
+      "url": "/assets/places/jemaa-el-fna-1.jpg",
+      "type": "image",
+      "parentType": "Place",
+      "parentId": "p7",
+      "approvedAt": "2026-02-05T10:00:00Z"
+    },
+    {
+      "id": "med9",
+      "url": "/assets/places/tanneries-1.jpg",
+      "type": "image",
+      "parentType": "Place",
+      "parentId": "p9",
+      "approvedAt": "2026-02-08T09:00:00Z"
+    },
+    {
+      "id": "med10",
+      "url": "/assets/events/mawazine.jpg",
+      "type": "image",
+      "parentType": "Event",
+      "parentId": "e6",
+      "approvedAt": "2026-02-10T11:00:00Z"
+    }
+  ],
+
+  "pendingRequests": [
+    {
+      "id": "req1",
+      "requestType": "guide_application",
+      "userId": "u3",
+      "payload": {
+        "specialties": ["Nightlife", "Shopping"],
+        "spokenLanguages": ["English", "Spanish"],
+        "cityIds": ["c2"]
+      },
+      "status": "pending",
+      "submittedAt": "2026-03-29T16:20:00Z"
+    },
+    {
+      "id": "req2",
+      "requestType": "business_verification",
+      "userId": "u6",
+      "payload": {
+        "placeId": "p9",
+        "documentUrl": "/assets/docs/chouara-license.pdf"
+      },
+      "status": "pending",
+      "submittedAt": "2026-03-28T11:00:00Z"
+    },
+    {
+      "id": "req3",
+      "requestType": "guide_application",
+      "userId": "u7",
+      "payload": {
+        "specialties": ["Luxury Travel", "Gastronomy", "Art"],
+        "spokenLanguages": ["French", "English", "Italian"],
+        "cityIds": ["c1", "c6"]
+      },
+      "status": "pending",
+      "submittedAt": "2026-03-30T09:00:00Z"
+    }
+  ],
+
+  "reports": [
+    {
+      "id": "rep1",
+      "targetId": "com1",
+      "targetType": "Comment",
+      "reporterId": "u1",
+      "reason": "inappropriate_content",
+      "status": "open",
+      "createdAt": "2026-03-30T08:00:00Z"
+    },
+    {
+      "id": "rep2",
+      "targetId": "p11",
+      "targetType": "Place",
+      "reporterId": "u7",
+      "reason": "incorrect_information",
+      "status": "open",
+      "createdAt": "2026-03-29T14:00:00Z"
+    },
+    {
+      "id": "rep3",
+      "targetId": "com9",
+      "targetType": "Comment",
+      "reporterId": "u4",
+      "reason": "spam",
+      "status": "resolved",
+      "createdAt": "2026-03-27T10:00:00Z"
+    }
+  ],
+
+  "adminLogs": [
+    {
+      "id": "log1",
+      "adminId": "u1",
+      "action": "approve_guide",
+      "targetType": "PendingRequest",
+      "targetId": "req0_archived",
+      "timestamp": "2026-01-15T09:00:00Z",
+      "details": "Approved Hajar Bentaib (u2) as a guide for Casablanca/Marrakech."
+    },
+    {
+      "id": "log2",
+      "adminId": "u1",
+      "action": "approve_guide",
+      "targetType": "PendingRequest",
+      "targetId": "req_archived_gp2",
+      "timestamp": "2026-01-22T10:30:00Z",
+      "details": "Approved Yousef Chafik (u4) as a guide for Marrakech/Fès."
+    },
+    {
+      "id": "log3",
+      "adminId": "u1",
+      "action": "approve_guide",
+      "targetType": "PendingRequest",
+      "targetId": "req_archived_gp3",
+      "timestamp": "2026-02-01T11:00:00Z",
+      "details": "Approved Sohaila Mansouri (u5) as a guide for Chefchaouen/Fès."
+    },
+    {
+      "id": "log4",
+      "adminId": "u1",
+      "action": "approve_guide",
+      "targetType": "PendingRequest",
+      "targetId": "req_archived_gp4",
+      "timestamp": "2026-02-10T09:15:00Z",
+      "details": "Approved Omar Benali (u8) as a guide for Agadir."
+    },
+    {
+      "id": "log5",
+      "adminId": "u1",
+      "action": "verify_business",
+      "targetType": "Place",
+      "targetId": "p1",
+      "timestamp": "2026-01-10T08:00:00Z",
+      "details": "Verified Hassan II Mosque as official business listing."
+    },
+    {
+      "id": "log6",
+      "adminId": "u1",
+      "action": "resolve_report",
+      "targetType": "Report",
+      "targetId": "rep3",
+      "timestamp": "2026-03-28T09:00:00Z",
+      "details": "Resolved spam report on comment com9. No action taken."
+    },
+    {
+      "id": "log7",
+      "adminId": "u1",
+      "action": "feature_place",
+      "targetType": "Place",
+      "targetId": "p7",
+      "timestamp": "2026-03-01T10:00:00Z",
+      "details": "Marked Jemaa el-Fna as featured place."
+    },
+    {
+      "id": "log8",
+      "adminId": "u1",
+      "action": "feature_event",
+      "targetType": "Event",
+      "targetId": "e6",
+      "timestamp": "2026-03-15T14:00:00Z",
+      "details": "Marked Mawazine festival as featured event."
+    }
+  ]
+}
