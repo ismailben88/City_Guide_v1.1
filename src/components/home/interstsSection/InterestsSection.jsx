@@ -4,17 +4,14 @@ import { HiChevronLeft, HiChevronRight, HiArrowRight } from "react-icons/hi2";
 import { RiCompassLine } from "react-icons/ri";
 import { TbGridDots } from "react-icons/tb";
 
-import {
-  Section, Header, HeaderLeft, Eyebrow, Title,
-  HeaderRight, ViewAll, Arrows, ArrowBtn,
-  Track, DotsRow, DotBtn,
-  Card, ImgWrap, CardImg, ImgOverlay,
-  CountBadge, CardBody, CardTitle, ExploreBtn,
-} from "./InterestsSection.styles";
-
 const CARD_WIDTH = 160 + 16;
 
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * InterestsSection - displays interest categories
+ * Props:
+ *   categories      {Array}  from api.getInterestCategories()
+ *   onCategoryClick {fn}     (category) => void
+ */
 export default function InterestsSection({ categories = [], onCategoryClick }) {
   const trackRef                      = useRef(null);
   const drag                          = useRef({ active: false, startX: 0, scrollLeft: 0 });
@@ -45,45 +42,73 @@ export default function InterestsSection({ categories = [], onCategoryClick }) {
   if (!categories.length) return null;
 
   return (
-    <Section>
+    <section className="py-[44px] pb-[52px] overflow-hidden">
 
       {/* ── Header ── */}
-      <Header>
-        <HeaderLeft>
-          <Eyebrow>Explore</Eyebrow>
-          <Title>Find things to do by interest</Title>
-        </HeaderLeft>
-        <HeaderRight>
-          <ViewAll href="/places">
+      <div className="flex items-end justify-between px-7 pb-[22px] gap-3">
+        <div className="flex flex-col gap-1">
+          <span className="font-[Nunito,sans-serif] text-[11px] font-bold tracking-[0.13em] uppercase text-[#6b9c3e]">
+            Explore
+          </span>
+          <h2 className="font-[Playfair_Display,Georgia,serif] text-[clamp(1.3rem,2.5vw,1.8rem)] font-bold text-[#3d2b1a] m-0 leading-[1.2]">
+            Find things to do by interest
+          </h2>
+        </div>
+        <div className="flex items-center gap-[14px] flex-shrink-0">
+          <a
+            href="/places"
+            className="font-[Nunito,sans-serif] text-[13px] font-bold text-[#6b9c3e] no-underline
+                       flex items-center gap-[5px] whitespace-nowrap cursor-pointer
+                       transition-colors duration-[200ms] ease-in-out hover:text-[#c8761a]"
+          >
             View all <HiArrowRight size={13} />
-          </ViewAll>
-          <Arrows>
-            <ArrowBtn
+          </a>
+          <div className="flex gap-2">
+            <button
               onClick={() => scrollBy(-1)}
               disabled={!canLeft}
               aria-label="Previous"
+              className="w-9 h-9 rounded-full border-[1.5px] border-[#dde8cc] bg-white
+                         text-[#3d2b1a] cursor-pointer flex items-center justify-center
+                         shadow-[0_1px_4px_rgba(0,0,0,0.06)]
+                         transition-all duration-[180ms] ease-in-out
+                         hover:not-disabled:bg-[#3d2b1a] hover:not-disabled:border-[#3d2b1a]
+                         hover:not-disabled:text-white hover:not-disabled:scale-108
+                         disabled:opacity-[0.28] disabled:cursor-not-allowed"
             >
               <HiChevronLeft size={16} />
-            </ArrowBtn>
-            <ArrowBtn
+            </button>
+            <button
               onClick={() => scrollBy(1)}
               disabled={!canRight}
               aria-label="Next"
+              className="w-9 h-9 rounded-full border-[1.5px] border-[#dde8cc] bg-white
+                         text-[#3d2b1a] cursor-pointer flex items-center justify-center
+                         shadow-[0_1px_4px_rgba(0,0,0,0.06)]
+                         transition-all duration-[180ms] ease-in-out
+                         hover:not-disabled:bg-[#3d2b1a] hover:not-disabled:border-[#3d2b1a]
+                         hover:not-disabled:text-white hover:not-disabled:scale-108
+                         disabled:opacity-[0.28] disabled:cursor-not-allowed"
             >
               <HiChevronRight size={16} />
-            </ArrowBtn>
-          </Arrows>
-        </HeaderRight>
-      </Header>
+            </button>
+          </div>
+        </div>
+      </div>
 
       {/* ── Track ── */}
-      <Track
+      <div
         ref={trackRef}
         onScroll={updateState}
         onMouseDown={onMouseDown}
         onMouseMove={onMouseMove}
         onMouseUp={onMouseUp}
         onMouseLeave={onMouseUp}
+        className="flex gap-4 overflow-x-auto scroll-snap-x-mandatory
+                   px-7 py-2 pb-5 cursor-grab [-webkit-overflow-scrolling:touch]
+                   scrollbar-w-0 [-ms-overflow-style:none]
+                   [&::-webkit-scrollbar]:hidden
+                   active:cursor-grabbing"
       >
         {categories.map((c, i) => (
           <InterestCard
@@ -93,21 +118,26 @@ export default function InterestsSection({ categories = [], onCategoryClick }) {
             onClick={() => onCategoryClick?.(c)}
           />
         ))}
-      </Track>
+      </div>
 
       {/* ── Dots ── */}
-      <DotsRow>
+      <div className="flex justify-center gap-[7px] pt-[6px]">
         {categories.map((_, i) => (
-          <DotBtn
+          <button
             key={i}
-            $active={i === activeIndex}
             onClick={() => scrollToIdx(i)}
             aria-label={`Category ${i + 1}`}
+            className="h-[7px] rounded-full border-none p-0 cursor-pointer
+                       transition-all duration-[300ms] ease-in-out"
+            style={{
+              width: i === activeIndex ? "24px" : "7px",
+              background: i === activeIndex ? "#6b9c3e" : "#d5e0bc",
+            }}
           />
         ))}
-      </DotsRow>
+      </div>
 
-    </Section>
+    </section>
   );
 }
 
@@ -115,39 +145,73 @@ export default function InterestsSection({ categories = [], onCategoryClick }) {
 //  InterestCard
 // ─────────────────────────────────────────────────────────────────────────────
 function InterestCard({ category, index, onClick }) {
+  // Category data structure from API:
+  // - id, name, slug, icon, parentId (from categories)
+  // - May also have: img, title (from old data)
+
+  const title = category.title || category.name;
+  const img = category.img || `https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400`;
+
   return (
-    <Card
-      $index={index}
+    <div
+      className="relative w-[160px] rounded-[18px] overflow-hidden cursor-pointer
+                 bg-[#1e1a14] shadow-[0_4px_14px_rgba(0,0,0,0.1)] flex-shrink-0
+                 scroll-snap-align-start flex flex-col
+                 transition-all duration-[280ms] ease-[cubic-bezier(.25,.8,.25,1)]
+                 hover:-translate-y-[5px] hover:shadow-[0_14px_32px_rgba(61,43,26,0.18)]
+                 animate-fade-up"
+      style={{ animationDelay: `${index * 55}ms` }}
       onClick={onClick}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && onClick?.()}
     >
       {/* ── Image ── */}
-      <ImgWrap>
-        <CardImg src={category.img} alt={category.title} loading="lazy" />
-        <ImgOverlay />
-      </ImgWrap>
+      <div className="relative w-full h-[160px] overflow-hidden flex-shrink-0">
+        <img
+          src={img}
+          alt={title}
+          loading="lazy"
+          className="w-full h-full object-cover block transition-transform duration-[450ms] ease-in-out
+                     hover:scale-108"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(30,26,20,0.82)]" />
+      </div>
 
       {/* ── Count badge ── */}
       {category.count && (
-        <CountBadge>
+        <span className="absolute top-[10px] right-[10px] z-2
+                         bg-[rgba(107,156,62,0.85)] backdrop-blur-[6px] text-[#e8f5c8]
+                         font-[Nunito,sans-serif] text-[10px] font-bold tracking-[0.06em]
+                         px-2 py-[3px] rounded-full border border-[rgba(200,217,138,0.3)]
+                         flex items-center gap-[3px]">
           <TbGridDots size={9} />
           {category.count} places
-        </CountBadge>
+        </span>
       )}
 
       {/* ── Body ── */}
-      <CardBody>
-        <CardTitle>{category.title}</CardTitle>
-        <ExploreBtn
+      <div className="px-3 py-2.5 pb-3.5 flex flex-col items-center gap-1.5
+                      bg-[#1e1a14] text-center">
+        <p className="font-[Playfair_Display,Georgia,serif] text-[13px] font-bold
+                      text-[#f5ede0] m-0 leading-[1.3]">
+          {title}
+        </p>
+        <button
           type="button"
           onClick={(e) => { e.stopPropagation(); onClick?.(); }}
+          className="flex items-center gap-1 bg-transparent text-[#c8d98a]
+                     border border-[rgba(200,217,138,0.3)] rounded-full
+                     px-3 py-1 font-[Nunito,sans-serif] text-[10px] font-bold
+                     tracking-[0.05em] cursor-pointer
+                     transition-all duration-[180ms] ease-in-out
+                     hover:bg-[rgba(107,156,62,0.22)] hover:border-[rgba(107,156,62,0.6)]
+                     hover:text-white"
         >
           <RiCompassLine size={10} />
           Explore
-        </ExploreBtn>
-      </CardBody>
-    </Card>
+        </button>
+      </div>
+    </div>
   );
 }

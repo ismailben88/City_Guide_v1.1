@@ -10,7 +10,7 @@
       "isGuide": false,
       "linkedAccounts": ["google"],
       "isVerified": true,
-      "avatar": "/assets/avatars/ismail.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=11",
       "createdAt": "2025-01-01T09:00:00Z"
     },
     {
@@ -23,7 +23,7 @@
       "isGuide": true,
       "linkedAccounts": [],
       "isVerified": true,
-      "avatar": "/assets/avatars/hajar.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=47",
       "createdAt": "2025-01-10T10:00:00Z"
     },
     {
@@ -36,7 +36,7 @@
       "isGuide": false,
       "linkedAccounts": [],
       "isVerified": false,
-      "avatar": "/assets/avatars/wafaa.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=32",
       "createdAt": "2025-02-05T08:30:00Z"
     },
     {
@@ -49,7 +49,7 @@
       "isGuide": true,
       "linkedAccounts": ["google"],
       "isVerified": true,
-      "avatar": "/assets/avatars/yousef.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=68",
       "createdAt": "2025-01-20T11:00:00Z"
     },
     {
@@ -62,7 +62,7 @@
       "isGuide": true,
       "linkedAccounts": [],
       "isVerified": true,
-      "avatar": "/assets/avatars/sohaila.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=25",
       "createdAt": "2025-02-01T09:45:00Z"
     },
     {
@@ -75,7 +75,7 @@
       "isGuide": false,
       "linkedAccounts": [],
       "isVerified": true,
-      "avatar": "/assets/avatars/karim.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=53",
       "createdAt": "2025-03-12T14:00:00Z"
     },
     {
@@ -88,7 +88,7 @@
       "isGuide": false,
       "linkedAccounts": ["facebook"],
       "isVerified": true,
-      "avatar": "/assets/avatars/nadia.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=44",
       "createdAt": "2025-03-18T16:30:00Z"
     },
     {
@@ -101,8 +101,60 @@
       "isGuide": true,
       "linkedAccounts": [],
       "isVerified": true,
-      "avatar": "/assets/avatars/omar.jpg",
+      "avatar": "https://i.pravatar.cc/150?img=60",
       "createdAt": "2025-02-15T10:20:00Z"
+    },
+    {
+      "id": "u9",
+      "firstName": "Fatima",
+      "lastName": "Zahra",
+      "email": "fatima@example.com",
+      "passwordHash": "$2b$10$dummyhashfatima",
+      "role": "user",
+      "isGuide": false,
+      "linkedAccounts": [],
+      "isVerified": true,
+      "avatar": "https://i.pravatar.cc/150?img=9",
+      "createdAt": "2025-03-01T11:00:00Z"
+    },
+    {
+      "id": "u10",
+      "firstName": "Ahmed",
+      "lastName": "El Amrani",
+      "email": "ahmed.guide@cityguide.ma",
+      "passwordHash": "$2b$10$dummyhashahmed",
+      "role": "user",
+      "isGuide": true,
+      "linkedAccounts": ["google"],
+      "isVerified": true,
+      "avatar": "https://i.pravatar.cc/150?img=12",
+      "createdAt": "2025-03-05T09:30:00Z"
+    },
+    {
+      "id": "u11",
+      "firstName": "Samira",
+      "lastName": "Idrissi",
+      "email": "samira@example.com",
+      "passwordHash": "$2b$10$dummyhashsamira",
+      "role": "user",
+      "isGuide": false,
+      "linkedAccounts": [],
+      "isVerified": false,
+      "avatar": "https://i.pravatar.cc/150?img=16",
+      "createdAt": "2025-03-10T14:20:00Z"
+    },
+    {
+      "id": "u12",
+      "firstName": "Mohammed",
+      "lastName": "Bennani",
+      "email": "mohammed.guide@cityguide.ma",
+      "passwordHash": "$2b$10$dummyhashmohammed",
+      "role": "user",
+      "isGuide": true,
+      "linkedAccounts": [],
+      "isVerified": true,
+      "avatar": "https://i.pravatar.cc/150?img=70",
+      "createdAt": "2025-03-15T10:00:00Z"
     }
   ],
 
@@ -113,7 +165,7 @@
       "slug": "casablanca",
       "region": "Casablanca-Settat",
       "description": "La capitale économique du Maroc, ville cosmopolite et moderne sur l'Atlantique.",
-      "coverImage": "/assets/cities/casablanca.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=1200&q=80",
       "population": 3752000,
       "location": {
         "type": "Point",
@@ -126,7 +178,7 @@
       "slug": "marrakech",
       "region": "Marrakech-Safi",
       "description": "La ville rouge, perle du sud, connue pour sa médina animée et ses jardins luxuriants.",
-      "coverImage": "/assets/cities/marrakech.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1553602538-b09eb6a4ded8?w=1200&q=80",
       "population": 1070838,
       "location": {
         "type": "Point",
@@ -139,7 +191,7 @@
       "slug": "fes",
       "region": "Fès-Meknès",
       "description": "La capitale spirituelle et culturelle du Maroc, UNESCO World Heritage.",
-      "coverImage": "/assets/cities/fes.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=1200&q=80",
       "population": 1112072,
       "location": {
         "type": "Point",
@@ -152,7 +204,7 @@
       "slug": "chefchaouen",
       "region": "Tanger-Tétouan-Al Hoceïma",
       "description": "La ville bleue, joyau du Rif marocain, connue pour ses ruelles azurées.",
-      "coverImage": "/assets/cities/chefchaouen.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1548013146-72479768bada?w=1200&q=80",
       "population": 45990,
       "location": {
         "type": "Point",
@@ -165,7 +217,7 @@
       "slug": "agadir",
       "region": "Souss-Massa",
       "description": "Station balnéaire réputée, plages dorées et soleil toute l'année.",
-      "coverImage": "/assets/cities/agadir.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=1200&q=80",
       "population": 421844,
       "location": {
         "type": "Point",
@@ -178,11 +230,37 @@
       "slug": "rabat",
       "region": "Rabat-Salé-Kénitra",
       "description": "La capitale politique du Maroc, ville royale au riche patrimoine historique.",
-      "coverImage": "/assets/cities/rabat.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?w=1200&q=80",
       "population": 577827,
       "location": {
         "type": "Point",
         "coordinates": [-6.8498, 33.9716]
+      }
+    },
+    {
+      "id": "c7",
+      "name": "Essaouira",
+      "slug": "essaouira",
+      "region": "Marrakech-Safi",
+      "description": "Ville portuaire fortifiée classée UNESCO, réputée pour ses plages, ses vents et son ambiance artistique.",
+      "coverImage": "https://images.unsplash.com/photo-1553513651-525a8c4d3e91?w=1200&q=80",
+      "population": 77888,
+      "location": {
+        "type": "Point",
+        "coordinates": [-9.7711, 31.5125]
+      }
+    },
+    {
+      "id": "c8",
+      "name": "Tanger",
+      "slug": "tanger",
+      "region": "Tanger-Tétouan-Al Hoceïma",
+      "description": "Port cosmopolite entre l'Atlantique et la Méditerranée, carrefour culturel historique entre l'Europe et l'Afrique.",
+      "coverImage": "https://images.unsplash.com/photo-1570974790270-6c5b932585f2?w=1200&q=80",
+      "population": 1275000,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.8129, 35.7595]
       }
     }
   ],
@@ -348,6 +426,50 @@
         "sunday": ["06:00-20:00"]
       },
       "verificationStatus": "verified"
+    },
+    {
+      "id": "gp5",
+      "userId": "u10",
+      "bio": "Photographe professionnel et guide spécialisé en randonnées dans l'Atlas et photographie de paysages.",
+      "specialties": ["Photography", "Hiking", "Atlas Mountains"],
+      "spokenLanguages": ["Arabic", "French", "English", "Spanish"],
+      "cityIds": ["c2", "c7"],
+      "pricePerHour": 180,
+      "totalTours": 95,
+      "averageRating": 4.9,
+      "reviewCount": 42,
+      "availability": {
+        "monday": ["08:00-18:00"],
+        "tuesday": ["08:00-18:00"],
+        "wednesday": ["08:00-18:00"],
+        "thursday": ["08:00-18:00"],
+        "friday": ["08:00-12:00"],
+        "saturday": ["06:00-20:00"],
+        "sunday": ["06:00-20:00"]
+      },
+      "verificationStatus": "verified"
+    },
+    {
+      "id": "gp6",
+      "userId": "u12",
+      "bio": "Guide officiel à Tanger depuis 12 ans. Spécialiste de l'histoire internationale du détroit de Gibraltar.",
+      "specialties": ["History", "Cultural Tours", "International Relations"],
+      "spokenLanguages": ["Arabic", "French", "English", "Spanish", "Italian"],
+      "cityIds": ["c8"],
+      "pricePerHour": 140,
+      "totalTours": 420,
+      "averageRating": 4.8,
+      "reviewCount": 156,
+      "availability": {
+        "monday": ["09:00-17:00"],
+        "tuesday": ["09:00-17:00"],
+        "wednesday": ["09:00-17:00"],
+        "thursday": ["09:00-17:00"],
+        "friday": ["09:00-13:00"],
+        "saturday": ["08:00-20:00"],
+        "sunday": ["08:00-20:00"]
+      },
+      "verificationStatus": "verified"
     }
   ],
 
@@ -379,9 +501,9 @@
       "averageRating": 4.9,
       "reviewCount": 1250,
       "images": [
-        "/assets/places/hassan-mosque-1.jpg",
-        "/assets/places/hassan-mosque-2.jpg",
-        "/assets/places/hassan-mosque-3.jpg"
+        "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=1200&q=80",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80",
+        "https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?w=1200&q=80"
       ]
     },
     {
@@ -413,8 +535,8 @@
       "averageRating": 4.7,
       "reviewCount": 890,
       "images": [
-        "/assets/places/majorelle-1.jpg",
-        "/assets/places/majorelle-2.jpg"
+        "https://images.unsplash.com/photo-1560697529-7236591c3f3d?w=1200&q=80",
+        "https://images.unsplash.com/photo-1551008922-1f5aa3a6040e?w=1200&q=80"
       ]
     },
     {
@@ -446,9 +568,9 @@
       "averageRating": 4.8,
       "reviewCount": 2100,
       "images": [
-        "/assets/places/fes-medina-1.jpg",
-        "/assets/places/fes-medina-2.jpg",
-        "/assets/places/fes-medina-3.jpg"
+        "https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=1200&q=80",
+        "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1200&q=80",
+        "https://images.unsplash.com/photo-1560697529-7236591c3f3d?w=1200&q=80"
       ]
     },
     {
@@ -480,8 +602,8 @@
       "averageRating": 4.9,
       "reviewCount": 1560,
       "images": [
-        "/assets/places/chefchaouen-1.jpg",
-        "/assets/places/chefchaouen-2.jpg"
+        "https://images.unsplash.com/photo-1548013146-72479768bada?w=1200&q=80",
+        "https://images.unsplash.com/photo-1590418606746-018840f9ced6?w=1200&q=80"
       ]
     },
     {
@@ -513,8 +635,8 @@
       "averageRating": 4.6,
       "reviewCount": 740,
       "images": [
-        "/assets/places/agadir-beach-1.jpg",
-        "/assets/places/agadir-beach-2.jpg"
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80",
+        "https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=1200&q=80"
       ]
     },
     {
@@ -546,8 +668,8 @@
       "averageRating": 4.7,
       "reviewCount": 980,
       "images": [
-        "/assets/places/tour-hassan-1.jpg",
-        "/assets/places/tour-hassan-2.jpg"
+        "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?w=1200&q=80",
+        "https://images.unsplash.com/photo-1553603229-0e5087e5a491?w=1200&q=80"
       ]
     },
     {
@@ -579,8 +701,8 @@
       "averageRating": 4.8,
       "reviewCount": 3200,
       "images": [
-        "/assets/places/jemaa-el-fna-1.jpg",
-        "/assets/places/jemaa-el-fna-2.jpg"
+        "https://images.unsplash.com/photo-1553602538-b09eb6a4ded8?w=1200&q=80",
+        "https://images.unsplash.com/photo-1519058082700-08a0b56da9b4?w=1200&q=80"
       ]
     },
     {
@@ -612,8 +734,8 @@
       "averageRating": 4.5,
       "reviewCount": 430,
       "images": [
-        "/assets/places/al-mounia-1.jpg",
-        "/assets/places/al-mounia-2.jpg"
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80",
+        "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=80"
       ]
     },
     {
@@ -645,8 +767,8 @@
       "averageRating": 4.6,
       "reviewCount": 1100,
       "images": [
-        "/assets/places/tanneries-1.jpg",
-        "/assets/places/tanneries-2.jpg"
+        "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1200&q=80",
+        "https://images.unsplash.com/photo-1573047573471-adb75f0e4e20?w=1200&q=80"
       ]
     },
     {
@@ -677,7 +799,10 @@
       "isFeatured": false,
       "averageRating": 4.5,
       "reviewCount": 670,
-      "images": ["/assets/places/bahia-1.jpg", "/assets/places/bahia-2.jpg"]
+      "images": [
+        "https://images.unsplash.com/photo-1519058082700-08a0b56da9b4?w=1200&q=80",
+        "https://images.unsplash.com/photo-1509060988-2d5c84ee3c57?w=1200&q=80"
+      ]
     },
     {
       "id": "p11",
@@ -708,8 +833,8 @@
       "averageRating": 4.3,
       "reviewCount": 520,
       "images": [
-        "/assets/places/morocco-mall-1.jpg",
-        "/assets/places/morocco-mall-2.jpg"
+        "https://images.unsplash.com/photo-1567449303078-57ad995bd17a?w=1200&q=80",
+        "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200&q=80"
       ]
     },
     {
@@ -741,8 +866,273 @@
       "averageRating": 4.8,
       "reviewCount": 290,
       "images": [
-        "/assets/places/hammam-rose-1.jpg",
-        "/assets/places/hammam-rose-2.jpg"
+        "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80",
+        "https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p13",
+      "name": "Place Uta el-Hammam",
+      "slug": "place-uta-el-hammam",
+      "description": "La place principale de Chefchaouen, entourée de restaurants et cafés avec vue sur le kasbah.",
+      "categoryId": "cat1",
+      "cityId": "c4",
+      "address": "Place Uta el-Hammam, Chefchaouen",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "00:00-23:59",
+        "tuesday": "00:00-23:59",
+        "wednesday": "00:00-23:59",
+        "thursday": "00:00-23:59",
+        "friday": "00:00-23:59",
+        "saturday": "00:00-23:59",
+        "sunday": "00:00-23:59"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.2636, 35.1717]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": false,
+      "averageRating": 4.7,
+      "reviewCount": 320,
+      "images": [
+        "https://images.unsplash.com/photo-1564507592333-c60657eea9d0?w=1200&q=80",
+        "https://images.unsplash.com/photo-1549637642-90187f64f8e2?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p14",
+      "name": "Skala de la Ville",
+      "slug": "skala-de-la-ville",
+      "description": "Fortifications du XVIIIe siècle avec canons portugais et vue panoramique sur l'océan et les îles Purpuraires.",
+      "categoryId": "cat1",
+      "cityId": "c7",
+      "address": "Skala, Essaouira",
+      "phone": "+212 524 47 59 60",
+      "website": null,
+      "openingHours": {
+        "monday": "09:00-18:00",
+        "tuesday": "09:00-18:00",
+        "wednesday": "09:00-18:00",
+        "thursday": "09:00-18:00",
+        "friday": "09:00-18:00",
+        "saturday": "09:00-18:00",
+        "sunday": "09:00-18:00"
+      },
+      "entryFee": 60,
+      "location": {
+        "type": "Point",
+        "coordinates": [-9.7711, 31.5125]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": true,
+      "averageRating": 4.6,
+      "reviewCount": 480,
+      "images": [
+        "https://images.unsplash.com/photo-1553513651-525a8c4d3e91?w=1200&q=80",
+        "https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p15",
+      "name": "Dar el-Makhzen",
+      "slug": "dar-el-makhzen",
+      "description": "Ancien palais royal transformé en musée des arts marocains et antiquités.",
+      "categoryId": "cat2",
+      "cityId": "c8",
+      "address": "Place du Méchouar, Tanger",
+      "phone": "+212 539 93 21 77",
+      "website": null,
+      "openingHours": {
+        "monday": "10:00-17:30",
+        "tuesday": "10:00-17:30",
+        "wednesday": "10:00-17:30",
+        "thursday": "10:00-17:30",
+        "friday": "10:00-17:30",
+        "saturday": "10:00-17:30",
+        "sunday": "10:00-17:30"
+      },
+      "entryFee": 20,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.8129, 35.7595]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": false,
+      "averageRating": 4.4,
+      "reviewCount": 210,
+      "images": [
+        "https://images.unsplash.com/photo-1570974790270-6c5b932585f2?w=1200&q=80",
+        "https://images.unsplash.com/photo-1548013146-72479768bada?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p16",
+      "name": "Phare du Cap Spartel",
+      "slug": "phare-cap-spartel",
+      "description": "Phare historique du XIXe siècle marquant la rencontre entre l'Atlantique et la Méditerranée.",
+      "categoryId": "cat1",
+      "cityId": "c8",
+      "address": "Cap Spartel, Tanger",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "09:00-18:00",
+        "tuesday": "09:00-18:00",
+        "wednesday": "09:00-18:00",
+        "thursday": "09:00-18:00",
+        "friday": "09:00-18:00",
+        "saturday": "09:00-18:00",
+        "sunday": "09:00-18:00"
+      },
+      "entryFee": 10,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.925, 35.7922]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": true,
+      "averageRating": 4.7,
+      "reviewCount": 350,
+      "images": [
+        "https://images.unsplash.com/photo-1506905927184-25a6fe05a8ee?w=1200&q=80",
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p17",
+      "name": "Vallée de l'Ourika",
+      "slug": "vallee-de-lourika",
+      "description": "Vallée verdoyante à 30 km de Marrakech, parfaite pour les randonnées et la découverte des villages berbères.",
+      "categoryId": "cat5",
+      "cityId": "c2",
+      "address": "Vallée de l'Ourika, région de Marrakech",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "00:00-23:59",
+        "tuesday": "00:00-23:59",
+        "wednesday": "00:00-23:59",
+        "thursday": "00:00-23:59",
+        "friday": "00:00-23:59",
+        "saturday": "00:00-23:59",
+        "sunday": "00:00-23:59"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.6, 31.5]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": true,
+      "averageRating": 4.8,
+      "reviewCount": 620,
+      "images": [
+        "https://images.unsplash.com/photo-1506905927184-25a6fe05a8ee?w=1200&q=80",
+        "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80",
+        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p18",
+      "name": "Musée de l'ALCS",
+      "slug": "musee-alcs",
+      "description": "Musée de la fondation L'Appel qui célèbre la culture et l'histoire juive marocaine.",
+      "categoryId": "cat2",
+      "cityId": "c1",
+      "address": "81, rue Chasseur Jules Gros, Casablanca",
+      "phone": "+212 522 36 15 67",
+      "website": "https://alcs.ma",
+      "openingHours": {
+        "monday": "10:00-17:00",
+        "tuesday": "10:00-17:00",
+        "wednesday": "10:00-17:00",
+        "thursday": "10:00-17:00",
+        "friday": "10:00-17:00",
+        "saturday": "10:00-13:00",
+        "sunday": "closed"
+      },
+      "entryFee": 50,
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.6156, 33.5942]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": false,
+      "averageRating": 4.5,
+      "reviewCount": 180,
+      "images": [
+        "https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=1200&q=80",
+        "https://images.unsplash.com/photo-1566054757965-8c40853414c4?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p19",
+      "name": "Cascades d'Ouzoud",
+      "slug": "cascades-ouzoud",
+      "description": "Les plus hautes cascades du Maroc (110m), situées dans le Moyen Atlas, paradis des macaques de Barbarie.",
+      "categoryId": "cat5",
+      "cityId": "c2",
+      "address": "Cascades d'Ouzoud, région de Béni Mellal",
+      "phone": null,
+      "website": null,
+      "openingHours": {
+        "monday": "06:00-19:00",
+        "tuesday": "06:00-19:00",
+        "wednesday": "06:00-19:00",
+        "thursday": "06:00-19:00",
+        "friday": "06:00-19:00",
+        "saturday": "06:00-19:00",
+        "sunday": "06:00-19:00"
+      },
+      "entryFee": 20,
+      "location": {
+        "type": "Point",
+        "coordinates": [-6.7228, 32.0153]
+      },
+      "isVerifiedBusiness": false,
+      "isFeatured": true,
+      "averageRating": 4.9,
+      "reviewCount": 890,
+      "images": [
+        "https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?w=1200&q=80",
+        "https://images.unsplash.com/photo-1506905927184-25a6fe05a8ee?w=1200&q=80"
+      ]
+    },
+    {
+      "id": "p20",
+      "name": "Restaurant Le Dhow",
+      "slug": "restaurant-le-dhow",
+      "description": "Restaurant embarqué sur un bateau traditionnel avec vue panoramique sur le port de Tanger et l'Espagne.",
+      "categoryId": "cat3",
+      "cityId": "c8",
+      "address": "Port de Tanger, Tanger",
+      "phone": "+212 539 94 05 27",
+      "website": "https://ledhow.com",
+      "openingHours": {
+        "monday": "12:00-23:00",
+        "tuesday": "12:00-23:00",
+        "wednesday": "12:00-23:00",
+        "thursday": "12:00-23:00",
+        "friday": "12:00-23:00",
+        "saturday": "12:00-23:00",
+        "sunday": "12:00-23:00"
+      },
+      "entryFee": 0,
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.812, 35.785]
+      },
+      "isVerifiedBusiness": true,
+      "isFeatured": true,
+      "averageRating": 4.6,
+      "reviewCount": 410,
+      "images": [
+        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80",
+        "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=1200&q=80"
       ]
     }
   ],
@@ -765,7 +1155,7 @@
       "venue": "Anfa Park, Casablanca",
       "ticketPrice": 250,
       "ticketUrl": "https://jazzablanca.com/tickets",
-      "coverImage": "/assets/events/jazzablanca.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1540039155733-5bb30b4a5a55?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
       "tags": ["music", "jazz", "festival", "international"]
@@ -787,7 +1177,7 @@
       "venue": "Palais des Congrès, Marrakech",
       "ticketPrice": 100,
       "ticketUrl": "https://festivalmarrakech.info",
-      "coverImage": "/assets/events/fifm.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200&q=80",
       "status": "planned",
       "isFeatured": true,
       "tags": ["cinema", "film", "culture", "international"]
@@ -809,7 +1199,7 @@
       "venue": "Centre-ville de Sefrou",
       "ticketPrice": 0,
       "ticketUrl": null,
-      "coverImage": "/assets/events/cerises-sefrou.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": false,
       "tags": ["traditional", "culture", "food", "local"]
@@ -831,7 +1221,7 @@
       "venue": "Place Moulay Hassan, Essaouira",
       "ticketPrice": 0,
       "ticketUrl": null,
-      "coverImage": "/assets/events/gnaoua.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
       "tags": ["music", "gnaoua", "world-music", "free"]
@@ -853,7 +1243,7 @@
       "venue": "Place Jemaa el-Fna, Marrakech",
       "ticketPrice": 500,
       "ticketUrl": "https://marathon-marrakech.com",
-      "coverImage": "/assets/events/marathon-marrakech.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=1200&q=80",
       "status": "planned",
       "isFeatured": false,
       "tags": ["sport", "running", "marathon", "international"]
@@ -875,7 +1265,7 @@
       "venue": "OLM Souissi & Scènes multiples, Rabat",
       "ticketPrice": 0,
       "ticketUrl": "https://festival-mawazine.ma",
-      "coverImage": "/assets/events/mawazine.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
       "tags": ["music", "world", "festival", "free", "international"]
@@ -897,10 +1287,120 @@
       "venue": "Complexe Moulay Abdallah, El Jadida",
       "ticketPrice": 80,
       "ticketUrl": null,
-      "coverImage": "/assets/events/salon-cheval.jpg",
+      "coverImage": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=1200&q=80",
       "status": "planned",
       "isFeatured": false,
       "tags": ["equestrian", "culture", "tradition", "sport"]
+    },
+    {
+      "id": "e8",
+      "title": "Tan Tan Moussem Festival",
+      "description": "Festival traditionnel des nomades du Sahara, rassemblement des tribus sahéliennes, chameaux et musique.",
+      "cityId": "c5",
+      "organizer": "Municipalité de Tan Tan",
+      "dateRange": {
+        "from": "2026-09-12T09:00:00Z",
+        "to": "2026-09-17T23:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-11.103, 28.436]
+      },
+      "venue": "Plage de Tan Tan",
+      "ticketPrice": 0,
+      "ticketUrl": null,
+      "coverImage": "https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1200&q=80",
+      "status": "upcoming",
+      "isFeatured": true,
+      "tags": ["culture", "nomadic", "traditional", "festival", "unesco"]
+    },
+    {
+      "id": "e9",
+      "title": "Saidia Beach Festival",
+      "description": "Festival de musique électronique et pop sur la plage de Saidia, station balnéaire de la Méditerranée.",
+      "cityId": "c2",
+      "organizer": "Maroc Cultures",
+      "dateRange": {
+        "from": "2026-08-10T16:00:00Z",
+        "to": "2026-08-15T02:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-2.407, 35.082]
+      },
+      "venue": "Plage de Saidia",
+      "ticketPrice": 300,
+      "ticketUrl": "https://saidiabeachfestival.com",
+      "coverImage": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80",
+      "status": "upcoming",
+      "isFeatured": true,
+      "tags": ["music", "electronic", "beach", "festival", "summer"]
+    },
+    {
+      "id": "e10",
+      "title": "Festival des Roses de Kelaa M'Gouna",
+      "description": "Festival célébrant la récolte des roses dans la vallée des Roses, musique berbère et artisanat.",
+      "cityId": "c3",
+      "organizer": "Association des Roses",
+      "dateRange": {
+        "from": "2026-05-10T10:00:00Z",
+        "to": "2026-05-13T22:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-6.124, 31.245]
+      },
+      "venue": "Kelaa M'Gouna, Vallée des Roses",
+      "ticketPrice": 0,
+      "ticketUrl": null,
+      "coverImage": "https://images.unsplash.com/photo-1518882605630-8eb83b535a0e?w=1200&q=80",
+      "status": "upcoming",
+      "isFeatured": false,
+      "tags": ["culture", "flowers", "berber", "traditional", "festival"]
+    },
+    {
+      "id": "e11",
+      "title": "Rallye Automobile du Maroc",
+      "description": "Course automobile internationale à travers les paysages du Maroc, désert et montagnes.",
+      "cityId": "c1",
+      "organizer": "Royal Moroccan Motor Club",
+      "dateRange": {
+        "from": "2026-10-05T07:00:00Z",
+        "to": "2026-10-12T18:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-7.5898, 33.5731]
+      },
+      "venue": "Parcours multi-villes",
+      "ticketPrice": 150,
+      "ticketUrl": "https://rallyedumaroc.ma",
+      "coverImage": "https://images.unsplash.com/photo-1541447270888-83e8494f9c08?w=1200&q=80",
+      "status": "planned",
+      "isFeatured": false,
+      "tags": ["sport", "automobile", "rally", "adventure", "competition"]
+    },
+    {
+      "id": "e12",
+      "title": "Sufi Cultural Festival de Fès",
+      "description": "Festival dédié à la musique et danse soufies, maîtres et troupes venues du monde entier.",
+      "cityId": "c3",
+      "organizer": "Association de la Médina de Fès",
+      "dateRange": {
+        "from": "2026-04-20T18:00:00Z",
+        "to": "2026-04-25T23:00:00Z"
+      },
+      "location": {
+        "type": "Point",
+        "coordinates": [-5.0003, 34.0181]
+      },
+      "venue": "Batha Museum, Fès",
+      "ticketPrice": 100,
+      "ticketUrl": "https://festivalsoufidefes.ma",
+      "coverImage": "https://images.unsplash.com/photo-1516450360274-b7e15d5115aa?w=1200&q=80",
+      "status": "upcoming",
+      "isFeatured": true,
+      "tags": ["music", "sufi", "spiritual", "culture", "festival"]
     }
   ],
 
@@ -1129,7 +1629,7 @@
   "media": [
     {
       "id": "med1",
-      "url": "/assets/places/hassan-mosque-1.jpg",
+      "url": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&q=80",
       "type": "image",
       "parentType": "Place",
       "parentId": "p1",
@@ -1137,7 +1637,7 @@
     },
     {
       "id": "med2",
-      "url": "/assets/places/hassan-mosque-2.jpg",
+      "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
       "type": "image",
       "parentType": "Place",
       "parentId": "p1",
@@ -1145,7 +1645,7 @@
     },
     {
       "id": "med3",
-      "url": "/assets/places/majorelle-1.jpg",
+      "url": "https://images.unsplash.com/photo-1560697529-7236591c3f3d?w=800&q=80",
       "type": "image",
       "parentType": "Place",
       "parentId": "p2",
@@ -1153,7 +1653,7 @@
     },
     {
       "id": "med4",
-      "url": "/assets/places/fes-medina-1.jpg",
+      "url": "https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=800&q=80",
       "type": "image",
       "parentType": "Place",
       "parentId": "p3",
@@ -1161,7 +1661,7 @@
     },
     {
       "id": "med5",
-      "url": "/assets/places/chefchaouen-1.jpg",
+      "url": "https://images.unsplash.com/photo-1548013146-72479768bada?w=800&q=80",
       "type": "image",
       "parentType": "Place",
       "parentId": "p4",
@@ -1169,7 +1669,7 @@
     },
     {
       "id": "med6",
-      "url": "/assets/events/jazzablanca.jpg",
+      "url": "https://images.unsplash.com/photo-1540039155733-5bb30b4a5a55?w=800&q=80",
       "type": "image",
       "parentType": "Event",
       "parentId": "e1",
@@ -1177,7 +1677,7 @@
     },
     {
       "id": "med7",
-      "url": "/assets/events/fifm.jpg",
+      "url": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=800&q=80",
       "type": "image",
       "parentType": "Event",
       "parentId": "e2",
@@ -1185,7 +1685,7 @@
     },
     {
       "id": "med8",
-      "url": "/assets/places/jemaa-el-fna-1.jpg",
+      "url": "https://images.unsplash.com/photo-1553602538-b09eb6a4ded8?w=800&q=80",
       "type": "image",
       "parentType": "Place",
       "parentId": "p7",
@@ -1193,7 +1693,7 @@
     },
     {
       "id": "med9",
-      "url": "/assets/places/tanneries-1.jpg",
+      "url": "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=800&q=80",
       "type": "image",
       "parentType": "Place",
       "parentId": "p9",
@@ -1201,7 +1701,7 @@
     },
     {
       "id": "med10",
-      "url": "/assets/events/mawazine.jpg",
+      "url": "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&q=80",
       "type": "image",
       "parentType": "Event",
       "parentId": "e6",
@@ -1228,7 +1728,7 @@
       "userId": "u6",
       "payload": {
         "placeId": "p9",
-        "documentUrl": "/assets/docs/chouara-license.pdf"
+        "documentUrl": "https://example.com/docs/chouara-license.pdf"
       },
       "status": "pending",
       "submittedAt": "2026-03-28T11:00:00Z"

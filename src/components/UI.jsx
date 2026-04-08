@@ -1,5 +1,6 @@
 // components/UI.jsx  — Stars, ImgCard, GuideCard, PlaceCard, CommentSection, SearchBar
 import "../styles/Components.css";
+import PlaceCard from "./placeCard/PlaceCard";
 
 /* ── Stars ─────────────────────────────── */
 export function Stars({ rating, size = "md" }) {
@@ -52,7 +53,7 @@ export function GuideListItem({ guide, onClick }) {
 }
 
 /* ── PlaceCard ──────────────────────────── */
-export function PlaceCard({ place, onClick }) {
+export function PlaceCardd({ place, onClick }) {
   return (
     <div className="place-card" onClick={onClick}>
       <img className="place-card__img" src={place.img} alt={place.title} />
