@@ -8,7 +8,9 @@
       "passwordHash": "$2b$10$dummyhashadmin",
       "role": "admin",
       "isGuide": false,
-      "linkedAccounts": ["google"],
+      "linkedAccounts": [
+        "google"
+      ],
       "isVerified": true,
       "avatar": "https://i.pravatar.cc/150?img=11",
       "createdAt": "2025-01-01T09:00:00Z"
@@ -47,7 +49,9 @@
       "passwordHash": "$2b$10$dummyhashyousef",
       "role": "user",
       "isGuide": true,
-      "linkedAccounts": ["google"],
+      "linkedAccounts": [
+        "google"
+      ],
       "isVerified": true,
       "avatar": "https://i.pravatar.cc/150?img=68",
       "createdAt": "2025-01-20T11:00:00Z"
@@ -86,7 +90,9 @@
       "passwordHash": "$2b$10$dummyhashnadia",
       "role": "user",
       "isGuide": false,
-      "linkedAccounts": ["facebook"],
+      "linkedAccounts": [
+        "facebook"
+      ],
       "isVerified": true,
       "avatar": "https://i.pravatar.cc/150?img=44",
       "createdAt": "2025-03-18T16:30:00Z"
@@ -125,7 +131,9 @@
       "passwordHash": "$2b$10$dummyhashahmed",
       "role": "user",
       "isGuide": true,
-      "linkedAccounts": ["google"],
+      "linkedAccounts": [
+        "google"
+      ],
       "isVerified": true,
       "avatar": "https://i.pravatar.cc/150?img=12",
       "createdAt": "2025-03-05T09:30:00Z"
@@ -155,9 +163,18 @@
       "isVerified": true,
       "avatar": "https://i.pravatar.cc/150?img=70",
       "createdAt": "2025-03-15T10:00:00Z"
+    },
+    {
+      "id": "63dd",
+      "name": "wafaa",
+      "email": "aselgui@gmail.com",
+      "password": "12345678",
+      "avatar": "https://ui-avatars.com/api/?name=wafaa&background=6b9c3e&color=fff",
+      "city": "",
+      "joinedAt": "2026-04-09",
+      "role": "user"
     }
   ],
-
   "cities": [
     {
       "id": "c1",
@@ -169,7 +186,10 @@
       "population": 3752000,
       "location": {
         "type": "Point",
-        "coordinates": [-7.5898, 33.5731]
+        "coordinates": [
+          -7.5898,
+          33.5731
+        ]
       }
     },
     {
@@ -182,7 +202,10 @@
       "population": 1070838,
       "location": {
         "type": "Point",
-        "coordinates": [-8.0083, 31.6295]
+        "coordinates": [
+          -8.0083,
+          31.6295
+        ]
       }
     },
     {
@@ -195,7 +218,10 @@
       "population": 1112072,
       "location": {
         "type": "Point",
-        "coordinates": [-5.0003, 34.0181]
+        "coordinates": [
+          -5.0003,
+          34.0181
+        ]
       }
     },
     {
@@ -208,7 +234,10 @@
       "population": 45990,
       "location": {
         "type": "Point",
-        "coordinates": [-5.2636, 35.1689]
+        "coordinates": [
+          -5.2636,
+          35.1689
+        ]
       }
     },
     {
@@ -221,7 +250,10 @@
       "population": 421844,
       "location": {
         "type": "Point",
-        "coordinates": [-9.5981, 30.4278]
+        "coordinates": [
+          -9.5981,
+          30.4278
+        ]
       }
     },
     {
@@ -234,7 +266,10 @@
       "population": 577827,
       "location": {
         "type": "Point",
-        "coordinates": [-6.8498, 33.9716]
+        "coordinates": [
+          -6.8498,
+          33.9716
+        ]
       }
     },
     {
@@ -247,7 +282,10 @@
       "population": 77888,
       "location": {
         "type": "Point",
-        "coordinates": [-9.7711, 31.5125]
+        "coordinates": [
+          -9.7711,
+          31.5125
+        ]
       }
     },
     {
@@ -260,11 +298,13 @@
       "population": 1275000,
       "location": {
         "type": "Point",
-        "coordinates": [-5.8129, 35.7595]
+        "coordinates": [
+          -5.8129,
+          35.7595
+        ]
       }
     }
   ],
-
   "categories": [
     {
       "id": "cat1",
@@ -337,27 +377,49 @@
       "parentId": "cat3"
     }
   ],
-
   "guideProfiles": [
     {
       "id": "gp1",
       "userId": "u2",
       "bio": "Guide certifiée avec 8 ans d'expérience. Passionnée par l'architecture islamique et la gastronomie marocaine.",
-      "specialties": ["Architecture", "Medina Tours", "Culinary"],
-      "spokenLanguages": ["Arabic", "French", "English"],
-      "cityIds": ["c1", "c2"],
+      "specialties": [
+        "Architecture",
+        "Medina Tours",
+        "Culinary"
+      ],
+      "spokenLanguages": [
+        "Arabic",
+        "French",
+        "English"
+      ],
+      "cityIds": [
+        "c1",
+        "c2"
+      ],
       "pricePerHour": 150,
       "totalTours": 320,
       "averageRating": 4.8,
       "reviewCount": 95,
       "availability": {
-        "monday": ["09:00-17:00"],
-        "tuesday": ["09:00-17:00"],
+        "monday": [
+          "09:00-17:00"
+        ],
+        "tuesday": [
+          "09:00-17:00"
+        ],
         "wednesday": [],
-        "thursday": ["10:00-18:00"],
-        "friday": ["09:00-12:00"],
-        "saturday": ["08:00-20:00"],
-        "sunday": ["08:00-20:00"]
+        "thursday": [
+          "10:00-18:00"
+        ],
+        "friday": [
+          "09:00-12:00"
+        ],
+        "saturday": [
+          "08:00-20:00"
+        ],
+        "sunday": [
+          "08:00-20:00"
+        ]
       },
       "verificationStatus": "verified"
     },
@@ -365,21 +427,42 @@
       "id": "gp2",
       "userId": "u4",
       "bio": "Scrum Master et guide passionné. Expert en histoire des dynasties marocaines et circuits désert.",
-      "specialties": ["History", "Desert Tours", "Photography"],
-      "spokenLanguages": ["Arabic", "French", "Spanish"],
-      "cityIds": ["c2", "c3"],
+      "specialties": [
+        "History",
+        "Desert Tours",
+        "Photography"
+      ],
+      "spokenLanguages": [
+        "Arabic",
+        "French",
+        "Spanish"
+      ],
+      "cityIds": [
+        "c2",
+        "c3"
+      ],
       "pricePerHour": 120,
       "totalTours": 185,
       "averageRating": 4.6,
       "reviewCount": 62,
       "availability": {
-        "monday": ["10:00-18:00"],
-        "tuesday": ["10:00-18:00"],
-        "wednesday": ["10:00-18:00"],
+        "monday": [
+          "10:00-18:00"
+        ],
+        "tuesday": [
+          "10:00-18:00"
+        ],
+        "wednesday": [
+          "10:00-18:00"
+        ],
         "thursday": [],
         "friday": [],
-        "saturday": ["08:00-22:00"],
-        "sunday": ["08:00-22:00"]
+        "saturday": [
+          "08:00-22:00"
+        ],
+        "sunday": [
+          "08:00-22:00"
+        ]
       },
       "verificationStatus": "verified"
     },
@@ -387,21 +470,47 @@
       "id": "gp3",
       "userId": "u5",
       "bio": "Amoureuse de la ville bleue, guide locale à Chefchaouen depuis 5 ans. Spécialisée en artisanat et randonnées.",
-      "specialties": ["Hiking", "Crafts", "Local Culture"],
-      "spokenLanguages": ["Arabic", "French", "English", "German"],
-      "cityIds": ["c4", "c3"],
+      "specialties": [
+        "Hiking",
+        "Crafts",
+        "Local Culture"
+      ],
+      "spokenLanguages": [
+        "Arabic",
+        "French",
+        "English",
+        "German"
+      ],
+      "cityIds": [
+        "c4",
+        "c3"
+      ],
       "pricePerHour": 100,
       "totalTours": 210,
       "averageRating": 4.9,
       "reviewCount": 78,
       "availability": {
-        "monday": ["08:00-18:00"],
-        "tuesday": ["08:00-18:00"],
-        "wednesday": ["08:00-18:00"],
-        "thursday": ["08:00-18:00"],
-        "friday": ["08:00-13:00"],
-        "saturday": ["07:00-20:00"],
-        "sunday": ["07:00-20:00"]
+        "monday": [
+          "08:00-18:00"
+        ],
+        "tuesday": [
+          "08:00-18:00"
+        ],
+        "wednesday": [
+          "08:00-18:00"
+        ],
+        "thursday": [
+          "08:00-18:00"
+        ],
+        "friday": [
+          "08:00-13:00"
+        ],
+        "saturday": [
+          "07:00-20:00"
+        ],
+        "sunday": [
+          "07:00-20:00"
+        ]
       },
       "verificationStatus": "verified"
     },
@@ -409,21 +518,41 @@
       "id": "gp4",
       "userId": "u8",
       "bio": "Guide surfeur à Agadir, expert en sports nautiques, plages secrètes et culture berbère du Souss.",
-      "specialties": ["Surfing", "Beaches", "Berber Culture"],
-      "spokenLanguages": ["Arabic", "French", "English"],
-      "cityIds": ["c5"],
+      "specialties": [
+        "Surfing",
+        "Beaches",
+        "Berber Culture"
+      ],
+      "spokenLanguages": [
+        "Arabic",
+        "French",
+        "English"
+      ],
+      "cityIds": [
+        "c5"
+      ],
       "pricePerHour": 130,
       "totalTours": 140,
       "averageRating": 4.7,
       "reviewCount": 53,
       "availability": {
-        "monday": ["07:00-19:00"],
-        "tuesday": ["07:00-19:00"],
+        "monday": [
+          "07:00-19:00"
+        ],
+        "tuesday": [
+          "07:00-19:00"
+        ],
         "wednesday": [],
-        "thursday": ["07:00-19:00"],
+        "thursday": [
+          "07:00-19:00"
+        ],
         "friday": [],
-        "saturday": ["06:00-20:00"],
-        "sunday": ["06:00-20:00"]
+        "saturday": [
+          "06:00-20:00"
+        ],
+        "sunday": [
+          "06:00-20:00"
+        ]
       },
       "verificationStatus": "verified"
     },
@@ -431,21 +560,47 @@
       "id": "gp5",
       "userId": "u10",
       "bio": "Photographe professionnel et guide spécialisé en randonnées dans l'Atlas et photographie de paysages.",
-      "specialties": ["Photography", "Hiking", "Atlas Mountains"],
-      "spokenLanguages": ["Arabic", "French", "English", "Spanish"],
-      "cityIds": ["c2", "c7"],
+      "specialties": [
+        "Photography",
+        "Hiking",
+        "Atlas Mountains"
+      ],
+      "spokenLanguages": [
+        "Arabic",
+        "French",
+        "English",
+        "Spanish"
+      ],
+      "cityIds": [
+        "c2",
+        "c7"
+      ],
       "pricePerHour": 180,
       "totalTours": 95,
       "averageRating": 4.9,
       "reviewCount": 42,
       "availability": {
-        "monday": ["08:00-18:00"],
-        "tuesday": ["08:00-18:00"],
-        "wednesday": ["08:00-18:00"],
-        "thursday": ["08:00-18:00"],
-        "friday": ["08:00-12:00"],
-        "saturday": ["06:00-20:00"],
-        "sunday": ["06:00-20:00"]
+        "monday": [
+          "08:00-18:00"
+        ],
+        "tuesday": [
+          "08:00-18:00"
+        ],
+        "wednesday": [
+          "08:00-18:00"
+        ],
+        "thursday": [
+          "08:00-18:00"
+        ],
+        "friday": [
+          "08:00-12:00"
+        ],
+        "saturday": [
+          "06:00-20:00"
+        ],
+        "sunday": [
+          "06:00-20:00"
+        ]
       },
       "verificationStatus": "verified"
     },
@@ -453,26 +608,51 @@
       "id": "gp6",
       "userId": "u12",
       "bio": "Guide officiel à Tanger depuis 12 ans. Spécialiste de l'histoire internationale du détroit de Gibraltar.",
-      "specialties": ["History", "Cultural Tours", "International Relations"],
-      "spokenLanguages": ["Arabic", "French", "English", "Spanish", "Italian"],
-      "cityIds": ["c8"],
+      "specialties": [
+        "History",
+        "Cultural Tours",
+        "International Relations"
+      ],
+      "spokenLanguages": [
+        "Arabic",
+        "French",
+        "English",
+        "Spanish",
+        "Italian"
+      ],
+      "cityIds": [
+        "c8"
+      ],
       "pricePerHour": 140,
       "totalTours": 420,
       "averageRating": 4.8,
       "reviewCount": 156,
       "availability": {
-        "monday": ["09:00-17:00"],
-        "tuesday": ["09:00-17:00"],
-        "wednesday": ["09:00-17:00"],
-        "thursday": ["09:00-17:00"],
-        "friday": ["09:00-13:00"],
-        "saturday": ["08:00-20:00"],
-        "sunday": ["08:00-20:00"]
+        "monday": [
+          "09:00-17:00"
+        ],
+        "tuesday": [
+          "09:00-17:00"
+        ],
+        "wednesday": [
+          "09:00-17:00"
+        ],
+        "thursday": [
+          "09:00-17:00"
+        ],
+        "friday": [
+          "09:00-13:00"
+        ],
+        "saturday": [
+          "08:00-20:00"
+        ],
+        "sunday": [
+          "08:00-20:00"
+        ]
       },
       "verificationStatus": "verified"
     }
   ],
-
   "places": [
     {
       "id": "p1",
@@ -494,7 +674,10 @@
       "entryFee": 120,
       "location": {
         "type": "Point",
-        "coordinates": [-7.6327, 33.6086]
+        "coordinates": [
+          -7.6327,
+          33.6086
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": true,
@@ -528,7 +711,10 @@
       "entryFee": 150,
       "location": {
         "type": "Point",
-        "coordinates": [-8.0024, 31.6417]
+        "coordinates": [
+          -8.0024,
+          31.6417
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": true,
@@ -561,7 +747,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-4.9731, 34.0636]
+        "coordinates": [
+          -4.9731,
+          34.0636
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": true,
@@ -595,7 +784,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-5.2691, 35.171]
+        "coordinates": [
+          -5.2691,
+          35.171
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": true,
@@ -628,7 +820,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-9.6201, 30.4124]
+        "coordinates": [
+          -9.6201,
+          30.4124
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": false,
@@ -661,7 +856,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-6.8226, 34.0244]
+        "coordinates": [
+          -6.8226,
+          34.0244
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": true,
@@ -694,7 +892,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-8.0089, 31.6259]
+        "coordinates": [
+          -8.0089,
+          31.6259
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": true,
@@ -727,7 +928,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-7.6189, 33.5922]
+        "coordinates": [
+          -7.6189,
+          33.5922
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": false,
@@ -760,7 +964,10 @@
       "entryFee": 20,
       "location": {
         "type": "Point",
-        "coordinates": [-4.9706, 34.0647]
+        "coordinates": [
+          -4.9706,
+          34.0647
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": true,
@@ -793,7 +1000,10 @@
       "entryFee": 70,
       "location": {
         "type": "Point",
-        "coordinates": [-8.0019, 31.6205]
+        "coordinates": [
+          -8.0019,
+          31.6205
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": false,
@@ -826,7 +1036,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-7.6741, 33.5887]
+        "coordinates": [
+          -7.6741,
+          33.5887
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": false,
@@ -859,7 +1072,10 @@
       "entryFee": 350,
       "location": {
         "type": "Point",
-        "coordinates": [-7.9984, 31.6312]
+        "coordinates": [
+          -7.9984,
+          31.6312
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": false,
@@ -892,7 +1108,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-5.2636, 35.1717]
+        "coordinates": [
+          -5.2636,
+          35.1717
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": false,
@@ -925,7 +1144,10 @@
       "entryFee": 60,
       "location": {
         "type": "Point",
-        "coordinates": [-9.7711, 31.5125]
+        "coordinates": [
+          -9.7711,
+          31.5125
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": true,
@@ -958,7 +1180,10 @@
       "entryFee": 20,
       "location": {
         "type": "Point",
-        "coordinates": [-5.8129, 35.7595]
+        "coordinates": [
+          -5.8129,
+          35.7595
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": false,
@@ -991,7 +1216,10 @@
       "entryFee": 10,
       "location": {
         "type": "Point",
-        "coordinates": [-5.925, 35.7922]
+        "coordinates": [
+          -5.925,
+          35.7922
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": true,
@@ -1024,7 +1252,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-7.6, 31.5]
+        "coordinates": [
+          -7.6,
+          31.5
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": true,
@@ -1058,7 +1289,10 @@
       "entryFee": 50,
       "location": {
         "type": "Point",
-        "coordinates": [-7.6156, 33.5942]
+        "coordinates": [
+          -7.6156,
+          33.5942
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": false,
@@ -1091,7 +1325,10 @@
       "entryFee": 20,
       "location": {
         "type": "Point",
-        "coordinates": [-6.7228, 32.0153]
+        "coordinates": [
+          -6.7228,
+          32.0153
+        ]
       },
       "isVerifiedBusiness": false,
       "isFeatured": true,
@@ -1124,7 +1361,10 @@
       "entryFee": 0,
       "location": {
         "type": "Point",
-        "coordinates": [-5.812, 35.785]
+        "coordinates": [
+          -5.812,
+          35.785
+        ]
       },
       "isVerifiedBusiness": true,
       "isFeatured": true,
@@ -1136,7 +1376,6 @@
       ]
     }
   ],
-
   "events": [
     {
       "id": "e1",
@@ -1150,7 +1389,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-7.6534, 33.5892]
+        "coordinates": [
+          -7.6534,
+          33.5892
+        ]
       },
       "venue": "Anfa Park, Casablanca",
       "ticketPrice": 250,
@@ -1158,7 +1400,12 @@
       "coverImage": "https://images.unsplash.com/photo-1540039155733-5bb30b4a5a55?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
-      "tags": ["music", "jazz", "festival", "international"]
+      "tags": [
+        "music",
+        "jazz",
+        "festival",
+        "international"
+      ]
     },
     {
       "id": "e2",
@@ -1172,7 +1419,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-8.0125, 31.6258]
+        "coordinates": [
+          -8.0125,
+          31.6258
+        ]
       },
       "venue": "Palais des Congrès, Marrakech",
       "ticketPrice": 100,
@@ -1180,7 +1430,12 @@
       "coverImage": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=1200&q=80",
       "status": "planned",
       "isFeatured": true,
-      "tags": ["cinema", "film", "culture", "international"]
+      "tags": [
+        "cinema",
+        "film",
+        "culture",
+        "international"
+      ]
     },
     {
       "id": "e3",
@@ -1194,7 +1449,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-4.831, 33.8302]
+        "coordinates": [
+          -4.831,
+          33.8302
+        ]
       },
       "venue": "Centre-ville de Sefrou",
       "ticketPrice": 0,
@@ -1202,7 +1460,12 @@
       "coverImage": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": false,
-      "tags": ["traditional", "culture", "food", "local"]
+      "tags": [
+        "traditional",
+        "culture",
+        "food",
+        "local"
+      ]
     },
     {
       "id": "e4",
@@ -1216,7 +1479,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-9.7711, 31.5125]
+        "coordinates": [
+          -9.7711,
+          31.5125
+        ]
       },
       "venue": "Place Moulay Hassan, Essaouira",
       "ticketPrice": 0,
@@ -1224,7 +1490,12 @@
       "coverImage": "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
-      "tags": ["music", "gnaoua", "world-music", "free"]
+      "tags": [
+        "music",
+        "gnaoua",
+        "world-music",
+        "free"
+      ]
     },
     {
       "id": "e5",
@@ -1238,7 +1509,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-8.0089, 31.6259]
+        "coordinates": [
+          -8.0089,
+          31.6259
+        ]
       },
       "venue": "Place Jemaa el-Fna, Marrakech",
       "ticketPrice": 500,
@@ -1246,7 +1520,12 @@
       "coverImage": "https://images.unsplash.com/photo-1530549387789-4c1017266635?w=1200&q=80",
       "status": "planned",
       "isFeatured": false,
-      "tags": ["sport", "running", "marathon", "international"]
+      "tags": [
+        "sport",
+        "running",
+        "marathon",
+        "international"
+      ]
     },
     {
       "id": "e6",
@@ -1260,7 +1539,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-6.859, 34.012]
+        "coordinates": [
+          -6.859,
+          34.012
+        ]
       },
       "venue": "OLM Souissi & Scènes multiples, Rabat",
       "ticketPrice": 0,
@@ -1268,7 +1550,13 @@
       "coverImage": "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
-      "tags": ["music", "world", "festival", "free", "international"]
+      "tags": [
+        "music",
+        "world",
+        "festival",
+        "free",
+        "international"
+      ]
     },
     {
       "id": "e7",
@@ -1282,7 +1570,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-8.5078, 33.2561]
+        "coordinates": [
+          -8.5078,
+          33.2561
+        ]
       },
       "venue": "Complexe Moulay Abdallah, El Jadida",
       "ticketPrice": 80,
@@ -1290,7 +1581,12 @@
       "coverImage": "https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?w=1200&q=80",
       "status": "planned",
       "isFeatured": false,
-      "tags": ["equestrian", "culture", "tradition", "sport"]
+      "tags": [
+        "equestrian",
+        "culture",
+        "tradition",
+        "sport"
+      ]
     },
     {
       "id": "e8",
@@ -1304,7 +1600,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-11.103, 28.436]
+        "coordinates": [
+          -11.103,
+          28.436
+        ]
       },
       "venue": "Plage de Tan Tan",
       "ticketPrice": 0,
@@ -1312,7 +1611,13 @@
       "coverImage": "https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
-      "tags": ["culture", "nomadic", "traditional", "festival", "unesco"]
+      "tags": [
+        "culture",
+        "nomadic",
+        "traditional",
+        "festival",
+        "unesco"
+      ]
     },
     {
       "id": "e9",
@@ -1326,7 +1631,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-2.407, 35.082]
+        "coordinates": [
+          -2.407,
+          35.082
+        ]
       },
       "venue": "Plage de Saidia",
       "ticketPrice": 300,
@@ -1334,7 +1642,13 @@
       "coverImage": "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
-      "tags": ["music", "electronic", "beach", "festival", "summer"]
+      "tags": [
+        "music",
+        "electronic",
+        "beach",
+        "festival",
+        "summer"
+      ]
     },
     {
       "id": "e10",
@@ -1348,7 +1662,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-6.124, 31.245]
+        "coordinates": [
+          -6.124,
+          31.245
+        ]
       },
       "venue": "Kelaa M'Gouna, Vallée des Roses",
       "ticketPrice": 0,
@@ -1356,7 +1673,13 @@
       "coverImage": "https://images.unsplash.com/photo-1518882605630-8eb83b535a0e?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": false,
-      "tags": ["culture", "flowers", "berber", "traditional", "festival"]
+      "tags": [
+        "culture",
+        "flowers",
+        "berber",
+        "traditional",
+        "festival"
+      ]
     },
     {
       "id": "e11",
@@ -1370,7 +1693,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-7.5898, 33.5731]
+        "coordinates": [
+          -7.5898,
+          33.5731
+        ]
       },
       "venue": "Parcours multi-villes",
       "ticketPrice": 150,
@@ -1378,7 +1704,13 @@
       "coverImage": "https://images.unsplash.com/photo-1541447270888-83e8494f9c08?w=1200&q=80",
       "status": "planned",
       "isFeatured": false,
-      "tags": ["sport", "automobile", "rally", "adventure", "competition"]
+      "tags": [
+        "sport",
+        "automobile",
+        "rally",
+        "adventure",
+        "competition"
+      ]
     },
     {
       "id": "e12",
@@ -1392,7 +1724,10 @@
       },
       "location": {
         "type": "Point",
-        "coordinates": [-5.0003, 34.0181]
+        "coordinates": [
+          -5.0003,
+          34.0181
+        ]
       },
       "venue": "Batha Museum, Fès",
       "ticketPrice": 100,
@@ -1400,10 +1735,15 @@
       "coverImage": "https://images.unsplash.com/photo-1516450360274-b7e15d5115aa?w=1200&q=80",
       "status": "upcoming",
       "isFeatured": true,
-      "tags": ["music", "sufi", "spiritual", "culture", "festival"]
+      "tags": [
+        "music",
+        "sufi",
+        "spiritual",
+        "culture",
+        "festival"
+      ]
     }
   ],
-
   "scores": [
     {
       "id": "s1",
@@ -1502,7 +1842,6 @@
       "createdAt": "2026-03-05T09:30:00Z"
     }
   ],
-
   "comments": [
     {
       "id": "com1",
@@ -1625,7 +1964,6 @@
       "createdAt": "2026-03-12T14:00:00Z"
     }
   ],
-
   "media": [
     {
       "id": "med1",
@@ -1708,16 +2046,23 @@
       "approvedAt": "2026-02-10T11:00:00Z"
     }
   ],
-
   "pendingRequests": [
     {
       "id": "req1",
       "requestType": "guide_application",
       "userId": "u3",
       "payload": {
-        "specialties": ["Nightlife", "Shopping"],
-        "spokenLanguages": ["English", "Spanish"],
-        "cityIds": ["c2"]
+        "specialties": [
+          "Nightlife",
+          "Shopping"
+        ],
+        "spokenLanguages": [
+          "English",
+          "Spanish"
+        ],
+        "cityIds": [
+          "c2"
+        ]
       },
       "status": "pending",
       "submittedAt": "2026-03-29T16:20:00Z"
@@ -1738,15 +2083,25 @@
       "requestType": "guide_application",
       "userId": "u7",
       "payload": {
-        "specialties": ["Luxury Travel", "Gastronomy", "Art"],
-        "spokenLanguages": ["French", "English", "Italian"],
-        "cityIds": ["c1", "c6"]
+        "specialties": [
+          "Luxury Travel",
+          "Gastronomy",
+          "Art"
+        ],
+        "spokenLanguages": [
+          "French",
+          "English",
+          "Italian"
+        ],
+        "cityIds": [
+          "c1",
+          "c6"
+        ]
       },
       "status": "pending",
       "submittedAt": "2026-03-30T09:00:00Z"
     }
   ],
-
   "reports": [
     {
       "id": "rep1",
@@ -1776,7 +2131,6 @@
       "createdAt": "2026-03-27T10:00:00Z"
     }
   ],
-
   "adminLogs": [
     {
       "id": "log1",
