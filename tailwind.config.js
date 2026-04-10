@@ -10,12 +10,26 @@ export default {
         primary: "#5b8523", // green — buttons, accents
         accent: "#d57a2a", // orange — CTAs, featured badges
         dark: "#1a1a1a", // dark background
+        // ── Guide page neutrals (warm sand palette) ───────────────────────
+        sand: "#faf7f2",
+        sand2: "#f3ede2",
+        sand3: "#e8dfd0",
+        ink: "#1c1409",
+        ink2: "#3d2b1a",
+        ink3: "#7a6a58",
+        // ── Green tints for tags & avatar borders ─────────────────────────
+        "green-light": "#eef5e8",
+        "green-mid": "#b8d48a",
       },
       fontFamily: {
         display: ["Playfair Display", "Georgia", "serif"],
         body: ["Nunito", "sans-serif"],
       },
-
+      // ─── Shadows ─────────────────────────────────────────────────────────
+      boxShadow: {
+        card: "0 6px 24px rgba(91,133,35,0.10)",
+        search: "0 8px 32px rgba(91,133,35,0.18)",
+      },
       // ─── Hero keyframes ──────────────────────────────────────────────────
       keyframes: {
         "zoom-in": {
@@ -55,21 +69,16 @@ export default {
           "50%": { opacity: "0.6" },
         },
       },
-
       // ─── Hero animations ─────────────────────────────────────────────────
       animation: {
         "zoom-in": "zoom-in 0.95s cubic-bezier(0.4,0,0.2,1) forwards",
         "fade-out": "fade-out 0.95s ease forwards",
         prog: "prog 6s linear forwards",
-
-        // Text staggered slide-up (5 levels)
         "slide-up-1": "slide-up 0.5s ease 0.05s both",
         "slide-up-2": "slide-up 0.5s ease 0.13s both",
         "slide-up-3": "slide-up 0.55s ease 0.2s both",
         "slide-up-4": "slide-up 0.55s ease 0.28s both",
         "slide-up-5": "slide-up 0.6s ease 0.35s both",
-
-        // General purpose
         "fade-up": "fade-up 0.5s ease both",
         "fade-in": "fade-in 0.4s ease both",
         "slide-right": "slide-right 0.45s ease both",
