@@ -53,22 +53,22 @@ export function GuideListItem({ guide, onClick }) {
 }
 
 /* ── PlaceCard ──────────────────────────── */
-export function PlaceCardd({ place, onClick }) {
-  return (
-    <div className="place-card" onClick={onClick}>
-      <img className="place-card__img" src={place.img} alt={place.title} />
-      <div className="place-card__body">
-        <div className="place-card__title">{place.title}</div>
-        <Stars rating={place.rating} size="sm" />
-        <div className="place-card__actions">
-          <span className="place-card__action place-card__action--buy">Buy / rent</span>
-          <span className="place-card__action place-card__action--learn">learn more</span>
-          <span className="place-card__action place-card__action--share">share</span>
-        </div>
-      </div>
-    </div>
-  );
-}
+// export function PlaceCardd({ place, onClick }) {
+//   return (
+//     <div className="place-card" onClick={onClick}>
+//       <img className="place-card__img" src={place.img} alt={place.title} />
+//       <div className="place-card__body">
+//         <div className="place-card__title">{place.title}</div>
+//         <Stars rating={place.rating} size="sm" />
+//         <div className="place-card__actions">
+//           <span className="place-card__action place-card__action--buy">Buy / rent</span>
+//           <span className="place-card__action place-card__action--learn">learn more</span>
+//           <span className="place-card__action place-card__action--share">share</span>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
 
 /* ── CommentSection ─────────────────────── */
 export function CommentSection({ comments }) {
