@@ -1,43 +1,49 @@
-// pages/EventsPage.jsx
 import { useState, useEffect, useMemo } from "react";
 import "../styles/EventsPage.css";
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
 const formatDate = (dateStr) => {
+  if (!dateStr) return "Date à venir";
   const d = new Date(dateStr);
-  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" });
 };
 
 const CATEGORY_ICONS = {
-  music:   "🎵",
-  art:     "🎨",
-  sport:   "🏃",
+  music: "🎵",
+  art: "🎨",
+  sport: "🏃",
   culture: "🏺",
 };
 
 // ─── EventCard ────────────────────────────────────────────────────────────────
 function EventCard({ event, featured = false }) {
+  // Correction : On vérifie le prix pour déterminer si c'est gratuit
+  const isFree = event.ticketPrice === 0;
+
   return (
     <article className={`ev-card ${featured ? "ev-card--featured" : ""}`}>
       <div className="ev-card__img-wrap">
-        <img src={event.img} alt={event.title} className="ev-card__img" />
-        <span className="ev-card__badge ev-card__badge--free">
-          {event.isFree ? "Free" : "Paid"}
+        {/* Correction : On utilise coverImage au lieu de img */}
+        <img src={event.coverImage} alt={event.title} className="ev-card__img" />
+        <span className={`ev-card__badge ${isFree ? "ev-card__badge--free" : "ev-card__badge--paid"}`}>
+          {isFree ? "Gratuit" : `${event.ticketPrice} DH`}
         </span>
         <span className="ev-card__badge ev-card__badge--cat">
-          {CATEGORY_ICONS[event.category] ?? "📅"} {event.category}
+           📅 {event.category?.name || "Événement"}
         </span>
       </div>
       <div className="ev-card__body">
-        <p className="ev-card__city">📍 {event.city}</p>
+        {/* Correction ERREUR OBJET : On affiche event.city.name au lieu de l'objet entier */}
+        <p className="ev-card__city">📍 {event.city?.name || "Maroc"}</p>
         <h3 className="ev-card__title">{event.title}</h3>
         {featured && (
           <p className="ev-card__desc">{event.description}</p>
         )}
         <div className="ev-card__footer">
-          <span className="ev-card__date">🗓 {formatDate(event.date)}</span>
+          {/* Correction : createdAt ou une date spécifique de l'event */}
+          <span className="ev-card__date">🗓 {formatDate(event.createdAt)}</span>
           <button className="ev-card__cta">
-            {event.isFree ? "Register Free" : "Get Tickets"}
+            {isFree ? "S'inscrire" : "Billetterie"}
           </button>
         </div>
       </div>
@@ -47,22 +53,20 @@ function EventCard({ event, featured = false }) {
 
 // ─── EventsPage ───────────────────────────────────────────────────────────────
 export default function EventsPage() {
-  const [events, setEvents]         = useState([]);
-  const [loading, setLoading]       = useState(true);
-  const [error, setError]           = useState(null);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // filters
   const [categoryFilter, setCategoryFilter] = useState("all");
-  const [freeFilter, setFreeFilter]         = useState("all");   // all | free | paid
-  const [sortOrder, setSortOrder]           = useState("asc");   // asc | desc
+  const [freeFilter, setFreeFilter] = useState("all"); 
+  const [sortOrder, setSortOrder] = useState("asc");
 
-  // ── fetch ────────────────────────────────────────────────────────────────
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
     fetch("http://localhost:3001/events", { signal: controller.signal })
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch events");
+        if (!res.ok) throw new Error("Échec de la récupération des événements");
         return res.json();
       })
       .then((data) => { setEvents(data); setLoading(false); })
@@ -75,9 +79,9 @@ export default function EventsPage() {
     return () => controller.abort();
   }, []);
 
-  // ── derived values ────────────────────────────────────────────────────────
+  // Correction : On récupère les catégories depuis l'objet category
   const categories = useMemo(
-    () => ["all", ...new Set(events.map((e) => e.category))],
+    () => ["all", ...new Set(events.map((e) => e.category?.name).filter(Boolean))],
     [events]
   );
 
@@ -85,26 +89,27 @@ export default function EventsPage() {
     let list = [...events];
 
     if (categoryFilter !== "all")
-      list = list.filter((e) => e.category === categoryFilter);
+      list = list.filter((e) => e.category?.name === categoryFilter);
 
-    if (freeFilter === "free")  list = list.filter((e) => e.isFree);
-    if (freeFilter === "paid")  list = list.filter((e) => !e.isFree);
+    if (freeFilter === "free") list = list.filter((e) => e.ticketPrice === 0);
+    if (freeFilter === "paid") list = list.filter((e) => e.ticketPrice > 0);
 
     list.sort((a, b) => {
-      const diff = new Date(a.date) - new Date(b.date);
+      const diff = new Date(a.createdAt) - new Date(b.createdAt);
       return sortOrder === "asc" ? diff : -diff;
     });
 
     return list;
   }, [events, categoryFilter, freeFilter, sortOrder]);
 
-  const [featured, ...rest] = filtered;
+  // On sépare le premier événement pour la section "Featured"
+  const featured = filtered[0];
+  const rest = filtered.slice(1);
 
-  // ── render ────────────────────────────────────────────────────────────────
   if (loading) return (
     <div className="ev-page__loading">
       <div className="ev-page__spinner" />
-      <p>Loading events…</p>
+      <p>Chargement des événements...</p>
     </div>
   );
 
@@ -117,34 +122,28 @@ export default function EventsPage() {
 
   return (
     <div className="ev-page">
-
-      {/* ── Page Header ── */}
       <header className="ev-page__header">
         <div className="ev-page__header-overlay">
-          <h1 className="ev-page__header-title">Upcoming Events</h1>
+          <h1 className="ev-page__header-title">Événements à venir</h1>
           <p className="ev-page__header-sub">
-            Festivals, concerts & experiences across Morocco
+            Festivals, concerts et expériences partout au Maroc
           </p>
         </div>
       </header>
 
-      {/* ── Filters Bar ── */}
       <div className="ev-page__filters">
-
-        {/* Category tabs */}
         <div className="ev-filters__group">
           {categories.map((cat) => (
             <button
-              key={cat}
+              key={cat} // La clé est maintenant une string unique
               className={`ev-filters__tab ${categoryFilter === cat ? "ev-filters__tab--active" : ""}`}
               onClick={() => setCategoryFilter(cat)}
             >
-              {cat === "all" ? "All" : `${CATEGORY_ICONS[cat] ?? "📅"} ${cat}`}
+              {cat === "all" ? "Tous" : cat}
             </button>
           ))}
         </div>
 
-        {/* Free / Paid */}
         <div className="ev-filters__group">
           {["all", "free", "paid"].map((val) => (
             <button
@@ -152,56 +151,45 @@ export default function EventsPage() {
               className={`ev-filters__pill ${freeFilter === val ? "ev-filters__pill--active" : ""}`}
               onClick={() => setFreeFilter(val)}
             >
-              {val === "all" ? "All prices" : val === "free" ? "🎟 Free" : "💳 Paid"}
+              {val === "all" ? "Tous les prix" : val === "free" ? "🎟 Gratuit" : "💳 Payant"}
             </button>
           ))}
         </div>
 
-        {/* Sort */}
         <div className="ev-filters__sort">
-          <label className="ev-filters__sort-label">Sort by date</label>
           <button
             className="ev-filters__sort-btn"
             onClick={() => setSortOrder((s) => (s === "asc" ? "desc" : "asc"))}
           >
-            {sortOrder === "asc" ? "Earliest first ↑" : "Latest first ↓"}
+            {sortOrder === "asc" ? "Plus récents ↑" : "Plus anciens ↓"}
           </button>
         </div>
-
       </div>
 
-      {/* ── Results count ── */}
       <div className="ev-page__count">
-        {filtered.length} event{filtered.length !== 1 ? "s" : ""} found
+        {filtered.length} événement{filtered.length > 1 ? "s" : ""} trouvé{filtered.length > 1 ? "s" : ""}
       </div>
 
-      {/* ── Content ── */}
       {filtered.length === 0 ? (
         <div className="ev-page__empty">
           <span>🗓</span>
-          <p>No events match your filters.</p>
-          <button
-            className="ev-page__reset"
-            onClick={() => { setCategoryFilter("all"); setFreeFilter("all"); }}
-          >
-            Clear filters
+          <p>Aucun événement ne correspond à vos filtres.</p>
+          <button className="ev-page__reset" onClick={() => { setCategoryFilter("all"); setFreeFilter("all"); }}>
+            Réinitialiser
           </button>
         </div>
       ) : (
         <div className="ev-page__content">
-
-          {/* ── Featured event ── */}
           {featured && (
             <section className="ev-page__featured">
-              <h2 className="ev-page__section-title">✨ Featured Event</h2>
+              <h2 className="ev-page__section-title">✨ À la une</h2>
               <EventCard event={featured} featured />
             </section>
           )}
 
-          {/* ── Grid ── */}
           {rest.length > 0 && (
             <section className="ev-page__grid-section">
-              <h2 className="ev-page__section-title">All Events</h2>
+              <h2 className="ev-page__section-title">Tous les événements</h2>
               <div className="ev-page__grid">
                 {rest.map((event) => (
                   <EventCard key={event.id} event={event} />
@@ -209,7 +197,6 @@ export default function EventsPage() {
               </div>
             </section>
           )}
-
         </div>
       )}
     </div>

@@ -1,4 +1,3 @@
-// pages/HomePage.jsx
 import { useState, useMemo } from "react";
 import Hero from "../components/home/Hero/Hero";
 import InterestsSection from "../components/home/interstsSection/InterestsSection";
@@ -13,19 +12,21 @@ import TopSearch from "../components/home/topSearch/TopSearch";
 import { useNavigation } from "../hooks/useNavigation";
 import "../styles/Pages.css";
 
-// Maps each chip label (lowercase) to which section it targets
+// On élargit le filtre pour inclure les nouvelles catégories dynamiques
 const FILTER_MAP = {
-  "guides":       "guides",
-  "restaurants":  "places",
-  "riads":        "places",
+  "guides": "guides",
+  "restaurants": "places",
+  "riads": "places",
   "desert tours": "destinations",
-  "hammam":       "places",
+  "hammam": "places",
+  "monuments": "places",
 };
 
 export default function HomePage() {
   const {
     topSearchPlaces,
     interestCategories,
+    trendingSearches, // <-- Ajouté depuis le nouveau hook
     events,
     topDestinations,
     guides,
@@ -38,6 +39,7 @@ export default function HomePage() {
 
   // ── handlers ──────────────────────────────────────────────────────────────
   const handleSearch = (term) => {
+    // Si on clique sur un tag ou recherche un terme, on cherche la correspondance
     const key = FILTER_MAP[term.toLowerCase()] ?? null;
     setActiveFilter(key);
 
@@ -52,8 +54,6 @@ export default function HomePage() {
   const handleGuideClick = (guide) => goToGuide(guide);
 
   // ── filtered data ─────────────────────────────────────────────────────────
-  // When no filter is active, show everything.
-  // When a filter IS active, hide sections that don't match.
   const filteredGuides = useMemo(() => {
     if (!activeFilter) return guides;
     return activeFilter === "guides" ? guides : [];
@@ -73,40 +73,59 @@ export default function HomePage() {
   if (loading) return <LoadingSpinner />;
   if (error) return <ErrorMessage message={error} />;
 
-  // ── render ────────────────────────────────────────────────────────────────
   return (
     <div className="page-content">
-
-      {/* ── Hero — now wired with onSearch ── */}
+      
+      {/* Hero : on passe handleSearch pour la barre de recherche principale */}
       <Hero onSearch={handleSearch} />
 
-      {/* ── Top Search ── */}
-      <TopSearch places={topSearchPlaces} onPlaceClick={handlePlaceClick} />
+      {/* TopSearch : On lui passe maintenant les trendingSearches pour afficher les tags cliquables */}
+      <TopSearch 
+        places={topSearchPlaces} 
+        trending={trendingSearches} // <-- Nouveau : affiche les catégories populaires
+        onPlaceClick={handlePlaceClick}
+        onTagClick={handleSearch}   // <-- Nouveau : permet de filtrer en cliquant sur un tag
+      />
 
-      {/* ── Interests (not filtered) ── */}
+      {/* Catégories d'intérêts */}
       <InterestsSection categories={interestCategories} />
 
-      {/* ── Events (not filtered) ── */}
+      {/* Événements de la saison */}
       <EventsSection events={events} />
 
-      {/* ── Top Destinations ── */}
+      {/* Top Destinations filtrables */}
       <div id="section-destinations">
-        <TopDestinationsSection destinations={filteredDestinations} />
+        {filteredDestinations.length > 0 && (
+          <TopDestinationsSection destinations={filteredDestinations} />
+        )}
       </div>
 
-      {/* ── Top Guides ── */}
+      {/* Top Guides filtrables */}
       <div id="section-guides">
-        <TopGuidesSection guides={filteredGuides} onGuideClick={handleGuideClick} />
+        {filteredGuides.length > 0 && (
+          <TopGuidesSection guides={filteredGuides} onGuideClick={handleGuideClick} />
+        )}
       </div>
 
-      {/* ── Famous Attractions / Places ── */}
+      {/* Attractions célèbres filtrables */}
       <div id="section-places">
-        <FamousAttractionsSection
-          places={filteredPlaces}
-          onPlaceClick={handlePlaceClick}
-        />
+        {filteredPlaces.length > 0 && (
+          <FamousAttractionsSection
+            places={filteredPlaces}
+            onPlaceClick={handlePlaceClick}
+          />
+        )}
       </div>
 
+      {/* Petit bouton pour réinitialiser les filtres si un filtre est actif */}
+      {activeFilter && (
+        <button 
+          className="reset-filter-btn" 
+          onClick={() => setActiveFilter(null)}
+        >
+          Voir tout
+        </button>
+      )}
     </div>
   );
 }

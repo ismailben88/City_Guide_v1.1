@@ -145,12 +145,13 @@ export default function InterestsSection({ categories = [], onCategoryClick }) {
 //  InterestCard
 // ─────────────────────────────────────────────────────────────────────────────
 function InterestCard({ category, index, onClick }) {
-  // Category data structure from API:
-  // - id, name, slug, icon, parentId (from categories)
-  // - May also have: img, title (from old data)
-
-  const title = category.title || category.name;
-  const img = category.img || `https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400`;
+  // 1. Correction du titre : Utiliser 'name' (structure de ton nouveau db.json)
+  const title = category.name || "Catégorie";
+  
+  // 2. Correction de l'image :
+  // Ton script de génération ne crée pas d'images pour les catégories.
+  // On utilise l'icône ou une image par défaut basée sur l'ID pour varier.
+  const img = category.img || `https://picsum.photos/seed/${category.id}/400/400`;
 
   return (
     <div
@@ -175,20 +176,12 @@ function InterestCard({ category, index, onClick }) {
           className="w-full h-full object-cover block transition-transform duration-[450ms] ease-in-out
                      hover:scale-108"
         />
+        {/* Ajout de l'icône au centre de l'image pour un look plus "App" */}
+        <div className="absolute inset-0 flex items-center justify-center text-[40px] z-10">
+           {category.icon}
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(30,26,20,0.82)]" />
       </div>
-
-      {/* ── Count badge ── */}
-      {category.count && (
-        <span className="absolute top-[10px] right-[10px] z-2
-                         bg-[rgba(107,156,62,0.85)] backdrop-blur-[6px] text-[#e8f5c8]
-                         font-[Nunito,sans-serif] text-[10px] font-bold tracking-[0.06em]
-                         px-2 py-[3px] rounded-full border border-[rgba(200,217,138,0.3)]
-                         flex items-center gap-[3px]">
-          <TbGridDots size={9} />
-          {category.count} places
-        </span>
-      )}
 
       {/* ── Body ── */}
       <div className="px-3 py-2.5 pb-3.5 flex flex-col items-center gap-1.5
@@ -209,7 +202,7 @@ function InterestCard({ category, index, onClick }) {
                      hover:text-white"
         >
           <RiCompassLine size={10} />
-          Explore
+          Explorer
         </button>
       </div>
     </div>

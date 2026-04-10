@@ -197,15 +197,16 @@ function PlaceCard({ place, index, isActive, onClick }) {
       </div>
 
       {/* ── Category badge ── */}
-      {place.category && (
-        <span className="absolute top-3 left-3 z-2 bg-[rgba(255,255,255,0.14)] backdrop-blur-[8px]
-                         text-white font-[Nunito,sans-serif] text-[10px] font-bold tracking-[0.1em]
-                         uppercase px-[10px] py-1 rounded-full border border-[rgba(255,255,255,0.22)]
-                         flex items-center gap-1">
-          <RiLeafLine size={10} />
-          {place.category}
-        </span>
-      )}
+{place.category && (
+  <span className="absolute top-3 left-3 z-2 bg-[rgba(255,255,255,0.14)] backdrop-blur-[8px]
+                   text-white font-[Nunito,sans-serif] text-[10px] font-bold tracking-[0.1em]
+                   uppercase px-[10px] py-1 rounded-full border border-[rgba(255,255,255,0.22)]
+                   flex items-center gap-1">
+    <RiLeafLine size={10} />
+    {/* FIX : On affiche .name au lieu de l'objet entier */}
+    {place.category.name || place.category}
+  </span>
+)}
 
       {/* ── Price badge ── */}
       {price && (
