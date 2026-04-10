@@ -1,4 +1,3 @@
-// store/slices/guideSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialFilters = {
@@ -9,8 +8,8 @@ const initialFilters = {
   verifiedOnly: false,
   speciality: "",
   sortBy: "score",
-  availDay: "", // e.g. "Monday" — filters by schedule[].day where isOpen:true
-  availNow: false, // filters by isCurrentlyAvailable
+  availDay: "", 
+  availNow: false, 
 };
 
 const initialState = {
@@ -22,8 +21,6 @@ const initialState = {
 };
 
 // ─── Filter helpers ───────────────────────────────────────────────────────────
-
-// Check guide is open on a given day
 function isOpenOnDay(guide, day) {
   if (!day) return true;
   return (
@@ -36,35 +33,37 @@ function isOpenOnDay(guide, day) {
 function applyFilters(allGuides, searchQuery, filters) {
   let result = [...allGuides];
 
+  // 1. Recherche Textuelle
   if (searchQuery.trim()) {
     const q = searchQuery.toLowerCase();
     result = result.filter((g) => {
-      const name =
-        `${g.user?.firstName ?? ""} ${g.user?.lastName ?? ""}`.toLowerCase();
+      // MODIFICATION : On utilise g.name directement car api.js le génère déjà
+      const fullName = (g.name || "").toLowerCase();
       return (
-        name.includes(q) ||
-        g.cities?.some((c) => c.name.toLowerCase().includes(q)) ||
+        fullName.includes(q) ||
+        g.cityNames?.some((cityName) => cityName.toLowerCase().includes(q)) || // Utilisation de cityNames (api.js)
         g.spokenLanguages?.some((l) => l.toLowerCase().includes(q)) ||
         g.specialties?.some((s) => s.toLowerCase().includes(q))
       );
     });
   }
 
+  // 2. Filtres par critères
   if (filters.minRating > 0)
     result = result.filter((g) => (g.averageRating ?? 0) >= filters.minRating);
 
   if (filters.city)
     result = result.filter((g) =>
-      g.cities?.some(
-        (c) => c.name.toLowerCase() === filters.city.toLowerCase(),
-      ),
+      g.cityNames?.some( // MODIFICATION : api.js renvoie cityNames (tableau de strings)
+        (name) => name.toLowerCase() === filters.city.toLowerCase()
+      )
     );
 
   if (filters.language)
     result = result.filter((g) =>
       g.spokenLanguages?.some(
-        (l) => l.toLowerCase() === filters.language.toLowerCase(),
-      ),
+        (l) => l.toLowerCase() === filters.language.toLowerCase()
+      )
     );
 
   if (filters.verifiedOnly)
@@ -73,8 +72,8 @@ function applyFilters(allGuides, searchQuery, filters) {
   if (filters.speciality)
     result = result.filter((g) =>
       g.specialties?.some((s) =>
-        s.toLowerCase().includes(filters.speciality.toLowerCase()),
-      ),
+        s.toLowerCase().includes(filters.speciality.toLowerCase())
+      )
     );
 
   if (filters.availDay)
@@ -82,20 +81,17 @@ function applyFilters(allGuides, searchQuery, filters) {
 
   if (filters.availNow)
     result = result.filter(
-      (g) => g.availability?.isCurrentlyAvailable === true,
+      (g) => g.availability?.isCurrentlyAvailable === true
     );
 
+  // 3. Tri (Sorting)
   switch (filters.sortBy) {
     case "score":
     case "rating":
       result.sort((a, b) => (b.averageRating ?? 0) - (a.averageRating ?? 0));
       break;
     case "name":
-      result.sort((a, b) => {
-        const na = `${a.user?.firstName} ${a.user?.lastName}`;
-        const nb = `${b.user?.firstName} ${b.user?.lastName}`;
-        return na.localeCompare(nb);
-      });
+      result.sort((a, b) => (a.name || "").localeCompare(b.name || "")); // Simplifié
       break;
     case "price_asc":
       result.sort((a, b) => (a.pricePerHour ?? 0) - (b.pricePerHour ?? 0));
@@ -128,66 +124,30 @@ const guideSlice = createSlice({
         state.filters = { ...initialFilters, sortBy: state.filters.sortBy };
       }
     },
-    setFilterMinRating(state, action) {
-      state.filters.minRating = action.payload;
-      state.visibleCount = 8;
-    },
-    setFilterCity(state, action) {
-      state.filters.city = action.payload;
-      state.visibleCount = 8;
-    },
-    setFilterLanguage(state, action) {
-      state.filters.language = action.payload;
-      state.visibleCount = 8;
-    },
-    setFilterVerified(state, action) {
-      state.filters.verifiedOnly = action.payload;
-      state.visibleCount = 8;
-    },
-    setFilterSpeciality(state, action) {
-      state.filters.speciality = action.payload;
-      state.visibleCount = 8;
-    },
-    setFilterSortBy(state, action) {
-      state.filters.sortBy = action.payload;
-    },
-    setFilterAvailDay(state, action) {
-      state.filters.availDay = action.payload;
-      state.visibleCount = 8;
-    },
-    setFilterAvailNow(state, action) {
-      state.filters.availNow = action.payload;
-      state.visibleCount = 8;
-    },
+    // ... tes autres reducers sont parfaits et restent identiques
+    setFilterMinRating(state, action) { state.filters.minRating = action.payload; state.visibleCount = 8; },
+    setFilterCity(state, action) { state.filters.city = action.payload; state.visibleCount = 8; },
+    setFilterLanguage(state, action) { state.filters.language = action.payload; state.visibleCount = 8; },
+    setFilterVerified(state, action) { state.filters.verifiedOnly = action.payload; state.visibleCount = 8; },
+    setFilterSpeciality(state, action) { state.filters.speciality = action.payload; state.visibleCount = 8; },
+    setFilterSortBy(state, action) { state.filters.sortBy = action.payload; },
+    setFilterAvailDay(state, action) { state.filters.availDay = action.payload; state.visibleCount = 8; },
+    setFilterAvailNow(state, action) { state.filters.availNow = action.payload; state.visibleCount = 8; },
     resetFilters(state) {
       state.filters = { ...initialFilters };
       state.searchQuery = "";
       state.visibleCount = 8;
     },
-    setSelectedGuide(state, action) {
-      state.selectedGuide = action.payload;
-    },
-    loadMore(state) {
-      state.visibleCount += 8;
-    },
+    setSelectedGuide(state, action) { state.selectedGuide = action.payload; },
+    loadMore(state) { state.visibleCount += 8; },
   },
 });
 
 export const {
-  setGuides,
-  setSearchQuery,
-  setFilterCategory,
-  setFilterMinRating,
-  setFilterCity,
-  setFilterLanguage,
-  setFilterVerified,
-  setFilterSpeciality,
-  setFilterSortBy,
-  setFilterAvailDay,
-  setFilterAvailNow,
-  resetFilters,
-  setSelectedGuide,
-  loadMore,
+  setGuides, setSearchQuery, setFilterCategory, setFilterMinRating,
+  setFilterCity, setFilterLanguage, setFilterVerified, setFilterSpeciality,
+  setFilterSortBy, setFilterAvailDay, setFilterAvailNow, resetFilters,
+  setSelectedGuide, loadMore,
 } = guideSlice.actions;
 
 export default guideSlice.reducer;
@@ -204,10 +164,11 @@ export const selectFilteredGuides = (state) => {
   return applyFilters(allGuides, searchQuery, filters);
 };
 
+// MODIFICATION : Utilisation de cityNames (venant de api.js) pour les filtres dynamiques
 export const selectCities = (state) =>
   [
     ...new Set(
-      state.guides.allGuides.flatMap((g) => g.cities?.map((c) => c.name) ?? []),
+      state.guides.allGuides.flatMap((g) => g.cityNames ?? [])
     ),
   ].sort();
 

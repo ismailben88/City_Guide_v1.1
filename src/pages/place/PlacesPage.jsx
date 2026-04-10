@@ -2,9 +2,8 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useNavigation } from "../../hooks/useNavigation";
 
-import { api }           from "../../services/api";
+import { api } from "../../services/api";
 import PlaceCard from "../../components/placeCard/PlaceCard"; 
-
 
 // ─── Inline SVG icons (zero extra deps) ──────────────────────────────────────
 const IconSearch  = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>;
@@ -39,19 +38,18 @@ function SkeletonCard({ delay = 0 }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
 export default function PlacesPage() {
   const { goToPlace } = useNavigation();
 
   const [places,         setPlaces]         = useState([]);
   const [categories,     setCategories]     = useState([]);
-  const [loading,        setLoading]        = useState(true);
-  const [query,          setQuery]          = useState("");
+  const [loading,         setLoading]        = useState(true);
+  const [query,           setQuery]          = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
   const [sortBy,         setSortBy]         = useState("default");
-  const [filtersOpen,    setFiltersOpen]    = useState(false);
+  const [filtersOpen,     setFiltersOpen]    = useState(false);
   const [sortOpen,       setSortOpen]       = useState(false);
-  const [searchFocused,  setSearchFocused]  = useState(false);
+  const [searchFocused,   setSearchFocused]  = useState(false);
 
   const inputRef = useRef(null);
   const sortRef  = useRef(null);
@@ -74,6 +72,13 @@ export default function PlacesPage() {
       })
       .catch((err) => { console.error(err); setLoading(false); });
   }, []);
+
+  // ── Helper to render Icon safely ──────────────────────────────────────────
+  const renderIcon = (iconData) => {
+    if (!iconData) return "📍";
+    if (typeof iconData === 'string') return iconData;
+    return iconData.name || iconData.icon || "📍";
+  };
 
   // ── Filter + Sort ──────────────────────────────────────────────────────────
   const filtered = useMemo(() => {
@@ -105,10 +110,11 @@ export default function PlacesPage() {
 
   const hasFilters   = !!(query.trim() || activeCategory !== "all");
   const resetAll     = () => { setQuery(""); setActiveCategory("all"); setSortBy("default"); };
-  const activeLabel  = activeCategory === "all" ? "Tous les lieux" : (categories.find((c) => c.id === activeCategory)?.name ?? "Lieux");
+  
+  const selectedCat  = categories.find((c) => c.id === activeCategory);
+  const activeLabel  = activeCategory === "all" ? "Tous les lieux" : (selectedCat?.name ?? "Lieux");
   const sortLabel    = SORT_OPTIONS.find((o) => o.value === sortBy)?.label ?? "Trier";
 
-  // ──────────────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-[#f7f3ee]">
       {/* ── Hero ────────────────────────────────────────────────────────────────── */}
@@ -122,36 +128,27 @@ export default function PlacesPage() {
         <div
           className="absolute inset-0 flex flex-col items-center justify-center gap-2.5"
           style={{
-            background:
-              "linear-gradient(160deg, rgba(20,12,3,.15) 0%, rgba(20,12,3,.68) 100%)",
+            background: "linear-gradient(160deg, rgba(20,12,3,.15) 0%, rgba(20,12,3,.68) 100%)",
           }}
         >
           <p className="font-body text-[11px] font-semibold tracking-[.26em] uppercase text-white/55 m-0 animate-slide-up-1">
             City Guide · Maroc
           </p>
 
-          <h1
-            className="font-display text-[clamp(2.2rem,5vw,3.2rem)] font-bold italic text-white m-0
-                         leading-tight tracking-tight text-center animate-slide-up-2"
-          >
+          <h1 className="font-display text-[clamp(2.2rem,5vw,3.2rem)] font-bold italic text-white m-0 leading-tight tracking-tight text-center animate-slide-up-2">
             Explorer les Lieux
           </h1>
 
           <p className="font-body text-[13px] text-white/60 m-0 text-center max-w-sm animate-slide-up-3">
-            Mosquées, médinas, plages et jardins — tout le Maroc à portée de
-            main
+            Mosquées, médinas, plages et jardins — tout le Maroc à portée de main
           </p>
 
-          {/* Live stats */}
           {!loading && (
             <div className="flex items-center gap-5 mt-1.5 animate-slide-up-4">
               {[
                 { value: places.length, label: "Lieux" },
                 { value: categories.length, label: "Catégories" },
-                {
-                  value: places.filter((p) => p.isFeatured).length,
-                  label: "En vedette",
-                },
+                { value: places.filter((p) => p.isFeatured).length, label: "En vedette" },
               ].map((stat, i) => (
                 <div key={i} className="flex items-center gap-5">
                   {i > 0 && <div className="w-px h-6 bg-white/20" />}
@@ -171,26 +168,15 @@ export default function PlacesPage() {
       </div>
 
       {/* ── Search strip ──────────────────────────────────────────────────────── */}
-      <div
-        className="max-w-3xl mx-auto px-5 -mt-7 relative z-10 animate-fade-up"
-        style={{ animationDelay: ".25s" }}
-      >
-        {/* Row: input + filter btn */}
+      <div className="max-w-3xl mx-auto px-5 -mt-7 relative z-10 animate-fade-up" style={{ animationDelay: ".25s" }}>
         <div className="flex gap-2.5 items-center">
-          {/* Search input */}
           <div
             onClick={() => inputRef.current?.focus()}
             className={`flex-1 flex items-center gap-2.5 bg-white rounded-2xl px-4 h-[50px] cursor-text
                         border-2 transition-all duration-200
-                        ${
-                          searchFocused
-                            ? "border-primary shadow-[0_8px_36px_rgba(91,133,35,.2)]"
-                            : "border-transparent shadow-[0_8px_36px_rgba(0,0,0,.12)]"
-                        }`}
+                        ${searchFocused ? "border-primary shadow-[0_8px_36px_rgba(91,133,35,.2)]" : "border-transparent shadow-[0_8px_36px_rgba(0,0,0,.12)]"}`}
           >
-            <span
-              className={`flex-shrink-0 transition-colors duration-200 ${searchFocused ? "text-primary" : "text-stone-400"}`}
-            >
+            <span className={`flex-shrink-0 transition-colors duration-200 ${searchFocused ? "text-primary" : "text-stone-400"}`}>
               <IconSearch />
             </span>
             <input
@@ -200,57 +186,38 @@ export default function PlacesPage() {
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setSearchFocused(true)}
               onBlur={() => setSearchFocused(false)}
-              className="flex-1 border-none outline-none bg-transparent font-body text-sm font-medium
-                         text-dark placeholder-stone-300"
+              className="flex-1 border-none outline-none bg-transparent font-body text-sm font-medium text-dark placeholder-stone-300"
             />
             {query && (
               <button
                 onClick={() => setQuery("")}
-                className="w-6 h-6 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center
-                           flex-shrink-0 border-none cursor-pointer hover:bg-stone-200 transition-colors duration-150"
+                className="w-6 h-6 rounded-full bg-stone-100 text-stone-400 flex items-center justify-center cursor-pointer hover:bg-stone-200"
               >
                 <IconX />
               </button>
             )}
           </div>
 
-          {/* Filter button */}
           <button
             onClick={() => setFiltersOpen((v) => !v)}
             className={`flex items-center gap-2 h-[50px] px-5 rounded-2xl border-2 font-body text-[13px] font-semibold
-                        cursor-pointer whitespace-nowrap transition-all duration-200
-                        shadow-[0_4px_20px_rgba(0,0,0,.08)]
-                        ${
-                          filtersOpen || activeCategory !== "all"
-                            ? "border-primary bg-primary/10 text-primary"
-                            : "border-stone-200 bg-white text-stone-500"
-                        }`}
+                        cursor-pointer transition-all duration-200 shadow-[0_4px_20px_rgba(0,0,0,.08)]
+                        ${filtersOpen || activeCategory !== "all" ? "border-primary bg-primary/10 text-primary" : "border-stone-200 bg-white text-stone-500"}`}
           >
             <IconSliders />
             Filtres
             {activeCategory !== "all" && (
-              <span
-                className="w-[18px] h-[18px] rounded-full bg-primary text-white text-[10px] font-bold
-                               flex items-center justify-center"
-              >
-                1
-              </span>
+              <span className="w-[18px] h-[18px] rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center">1</span>
             )}
           </button>
         </div>
 
-        {/* Category pills — 100% dynamic from API */}
         {filtersOpen && (
           <div className="flex flex-wrap gap-2 pt-3 animate-fade-in">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border-[1.5px]
-                          font-body text-[12px] font-semibold cursor-pointer transition-all duration-150
-                          ${
-                            activeCategory === "all"
-                              ? "border-primary bg-primary text-white"
-                              : "border-stone-200 bg-white text-stone-500 hover:border-primary hover:text-primary"
-                          }`}
+              className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border-[1.5px] font-body text-[12px] font-semibold cursor-pointer transition-all
+                          ${activeCategory === "all" ? "border-primary bg-primary text-white" : "border-stone-200 bg-white text-stone-500 hover:border-primary"}`}
             >
               🗺️ Tous
             </button>
@@ -260,15 +227,10 @@ export default function PlacesPage() {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(on ? "all" : cat.id)}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border-[1.5px]
-                              font-body text-[12px] font-semibold cursor-pointer transition-all duration-150
-                              ${
-                                on
-                                  ? "border-primary bg-primary text-white"
-                                  : "border-stone-200 bg-white text-stone-500 hover:border-primary hover:text-primary"
-                              }`}
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border-[1.5px] font-body text-[12px] font-semibold cursor-pointer transition-all
+                              ${on ? "border-primary bg-primary text-white" : "border-stone-200 bg-white text-stone-500 hover:border-primary"}`}
                 >
-                  <span>{cat.icon}</span>
+                  <span>{renderIcon(cat.icon)}</span>
                   {cat.name}
                 </button>
               );
@@ -276,18 +238,12 @@ export default function PlacesPage() {
           </div>
         )}
 
-        {/* Meta bar */}
         {hasFilters && (
           <div className="flex items-center justify-between pt-2.5 px-1 animate-fade-in">
             <span className="font-body text-[12px] font-semibold text-stone-400">
-              {filtered.length} lieu{filtered.length !== 1 ? "x" : ""} trouvé
-              {filtered.length !== 1 ? "s" : ""}
+              {filtered.length} lieu{filtered.length !== 1 ? "x" : ""} trouvé{filtered.length !== 1 ? "s" : ""}
             </span>
-            <button
-              onClick={resetAll}
-              className="flex items-center gap-1 border-none bg-transparent font-body text-[12px]
-                         font-bold text-accent cursor-pointer p-0 hover:opacity-75 transition-opacity"
-            >
+            <button onClick={resetAll} className="flex items-center gap-1 border-none bg-transparent font-bold text-accent cursor-pointer text-[12px]">
               <IconX /> Réinitialiser
             </button>
           </div>
@@ -296,59 +252,36 @@ export default function PlacesPage() {
 
       {/* ── Main content ──────────────────────────────────────────────────────── */}
       <div className="max-w-[1240px] mx-auto px-5">
-        {/* Top bar */}
         <div className="flex items-center justify-between pt-9 pb-5 gap-3 flex-wrap">
           <div>
-            <h2 className="font-display text-[1.7rem] font-bold text-dark m-0 leading-tight">
+            <h2 className="font-display text-[1.7rem] font-bold text-dark m-0">
               {activeLabel}
-              <span className="font-body text-[13px] font-medium text-stone-400 ml-2">
-                ({filtered.length})
-              </span>
+              <span className="font-body text-[13px] font-medium text-stone-400 ml-2">({filtered.length})</span>
             </h2>
             {activeCategory !== "all" && (
               <p className="font-body text-[12px] text-stone-400 m-0 mt-1">
-                {categories.find((c) => c.id === activeCategory)?.icon}
-                &nbsp;Catégorie sélectionnée
+                {renderIcon(selectedCat?.icon)} &nbsp;Catégorie sélectionnée
               </p>
             )}
           </div>
 
-          {/* Sort dropdown */}
           <div className="relative" ref={sortRef}>
             <button
               onClick={() => setSortOpen((v) => !v)}
-              className="flex items-center gap-2 h-10 px-4 rounded-xl border-[1.5px] border-stone-200
-                         bg-white font-body text-[13px] font-semibold text-dark cursor-pointer
-                         hover:border-primary transition-colors duration-150 whitespace-nowrap"
+              className="flex items-center gap-2 h-10 px-4 rounded-xl border-[1.5px] border-stone-200 bg-white font-body text-[13px] font-semibold text-dark cursor-pointer transition-all"
             >
               {sortLabel}
-              <span
-                className={`transition-transform duration-200 ${sortOpen ? "rotate-180" : ""}`}
-              >
-                <IconChevron />
-              </span>
+              <span className={`transition-transform ${sortOpen ? "rotate-180" : ""}`}><IconChevron /></span>
             </button>
 
             {sortOpen && (
-              <div
-                className="absolute top-[calc(100%+6px)] right-0 min-w-[170px] bg-white rounded-xl
-                              border-[1.5px] border-stone-100 shadow-[0_12px_40px_rgba(0,0,0,.12)]
-                              z-50 overflow-hidden animate-scale-in"
-              >
+              <div className="absolute top-[calc(100%+6px)] right-0 min-w-[170px] bg-white rounded-xl border border-stone-100 shadow-xl z-50 overflow-hidden animate-scale-in">
                 {SORT_OPTIONS.map((o) => (
                   <button
                     key={o.value}
-                    onClick={() => {
-                      setSortBy(o.value);
-                      setSortOpen(false);
-                    }}
-                    className={`w-full block px-4 py-2.5 text-left font-body text-[13px] border-none
-                                cursor-pointer transition-colors duration-100
-                                ${
-                                  sortBy === o.value
-                                    ? "text-primary font-bold bg-primary/5"
-                                    : "text-stone-600 font-medium hover:bg-stone-50"
-                                }`}
+                    onClick={() => { setSortBy(o.value); setSortOpen(false); }}
+                    className={`w-full block px-4 py-2.5 text-left font-body text-[13px] border-none cursor-pointer
+                                ${sortBy === o.value ? "text-primary font-bold bg-primary/5" : "text-stone-600 hover:bg-stone-50"}`}
                   >
                     {o.label}
                   </button>
@@ -358,36 +291,17 @@ export default function PlacesPage() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="h-px bg-stone-200 mb-5" />
 
-        {/* Grid */}
-        <div
-          className="grid gap-[22px] pb-20"
-          style={{
-            gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))",
-          }}
-        >
+        <div className="grid gap-[22px] pb-20" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))" }}>
           {loading ? (
-            [...Array(6)].map((_, i) => (
-              <SkeletonCard key={i} delay={i * 0.08} />
-            ))
+            [...Array(6)].map((_, i) => <SkeletonCard key={i} delay={i * 0.08} />)
           ) : filtered.length === 0 ? (
             <div className="col-[1/-1] flex flex-col items-center justify-center py-20 gap-4 text-center">
-              <span className="text-stone-300">
-                <IconMap />
-              </span>
-              <p className="font-body text-[14px] text-stone-400 m-0">
-                Aucun lieu ne correspond à votre recherche.
-              </p>
-              <button
-                onClick={resetAll}
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-full border-[1.5px]
-                           border-primary text-primary font-body text-[13px] font-bold
-                           bg-transparent cursor-pointer hover:bg-primary hover:text-white
-                           transition-all duration-150"
-              >
-                <IconX /> Réinitialiser les filtres
+              <span className="text-stone-300"><IconMap /></span>
+              <p className="font-body text-[14px] text-stone-400 m-0">Aucun lieu ne correspond à votre recherche.</p>
+              <button onClick={resetAll} className="px-5 py-2.5 rounded-full border border-primary text-primary font-bold cursor-pointer hover:bg-primary hover:text-white transition-all">
+                Réinitialiser les filtres
               </button>
             </div>
           ) : (

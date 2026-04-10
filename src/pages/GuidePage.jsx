@@ -1,5 +1,4 @@
-// pages/GuidePage.jsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   X,
@@ -17,7 +16,11 @@ import {
   Zap,
 } from "lucide-react";
 
+// Import de ton service API
+import { api } from "../services/api"; 
+
 import {
+  setGuides,
   setSearchQuery,
   setFilterCategory,
   setFilterMinRating,
@@ -41,10 +44,8 @@ import {
 
 import { useNavigation } from "../hooks/useNavigation";
 import GuideListItem from "../components/ui/GuideListItem";
-// import GuideListItem from "../components/UI/GuideListItem";
 
-// ─────────────────────────────────────────────────────────────────────────────
-
+// ── Constantes ─────────────────────────────────────────────────────────────
 const SIDEBAR_CATEGORIES = [
   { key: "All", label: "All guides", Icon: SlidersHorizontal },
   { key: "Rating", label: "Rating", Icon: Star },
@@ -63,17 +64,9 @@ const SORT_OPTIONS = [
   { value: "name", label: "Name A → Z" },
 ];
 
-const DAYS = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-// ── Shared primitives ─────────────────────────────────────────────────────────
+// ── Primitives UI ──────────────────────────────────────────────────────────
 const FilterLabel = ({ children }) => (
   <p className="text-[11px] font-extrabold tracking-widest uppercase text-ink3 font-body mb-2">
     {children}
@@ -90,7 +83,7 @@ const FilterSelect = ({ value, onChange, children }) => (
   </select>
 );
 
-// ── Sub filter panel ──────────────────────────────────────────────────────────
+// ── Composant SubFilterPanel ───────────────────────────────────────────────
 function SubFilterPanel() {
   const dispatch = useDispatch();
   const filters = useSelector(selectFilters);
@@ -101,7 +94,7 @@ function SubFilterPanel() {
   if (filters.category === "All") return null;
 
   return (
-    <div className="bg-sand rounded-2xl p-4 mt-1 flex flex-col gap-3 animate-fade-in">
+    <div className="bg-sand rounded-2xl p-4 mt-1 flex flex-col gap-3 animate-fade-in border border-sand3/30">
       {/* Rating */}
       {filters.category === "Rating" && (
         <div>
@@ -110,15 +103,9 @@ function SubFilterPanel() {
             {[1, 2, 3, 4, 5].map((n) => (
               <button
                 key={n}
-                onClick={() =>
-                  dispatch(setFilterMinRating(filters.minRating === n ? 0 : n))
-                }
-                className={`flex items-center gap-0.5 px-3 py-1.5 rounded-full border text-xs font-semibold font-body transition-all duration-150
-                  ${
-                    filters.minRating === n
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-sand3 bg-white text-ink3 hover:border-primary hover:text-primary"
-                  }`}
+                onClick={() => dispatch(setFilterMinRating(filters.minRating === n ? 0 : n))}
+                className={`flex items-center gap-0.5 px-3 py-1.5 rounded-full border text-xs font-semibold font-body transition-all
+                  ${filters.minRating === n ? "border-primary bg-primary/10 text-primary" : "border-sand3 bg-white text-ink3 hover:border-primary"}`}
               >
                 {Array.from({ length: n }).map((_, i) => (
                   <Star key={i} size={10} className="fill-current" />
@@ -133,16 +120,9 @@ function SubFilterPanel() {
       {filters.category === "City" && (
         <div>
           <FilterLabel>City</FilterLabel>
-          <FilterSelect
-            value={filters.city}
-            onChange={(e) => dispatch(setFilterCity(e.target.value))}
-          >
+          <FilterSelect value={filters.city} onChange={(e) => dispatch(setFilterCity(e.target.value))}>
             <option value="">All cities</option>
-            {cities.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
+            {cities.map((c) => <option key={c} value={c}>{c}</option>)}
           </FilterSelect>
         </div>
       )}
@@ -151,16 +131,9 @@ function SubFilterPanel() {
       {filters.category === "Language spoken" && (
         <div>
           <FilterLabel>Language</FilterLabel>
-          <FilterSelect
-            value={filters.language}
-            onChange={(e) => dispatch(setFilterLanguage(e.target.value))}
-          >
+          <FilterSelect value={filters.language} onChange={(e) => dispatch(setFilterLanguage(e.target.value))}>
             <option value="">All languages</option>
-            {languages.map((l) => (
-              <option key={l} value={l}>
-                {l}
-              </option>
-            ))}
+            {languages.map((l) => <option key={l} value={l}>{l}</option>)}
           </FilterSelect>
         </div>
       )}
@@ -187,12 +160,8 @@ function SubFilterPanel() {
               <button
                 key={s || "__all__"}
                 onClick={() => dispatch(setFilterSpeciality(s))}
-                className={`px-3 py-1 rounded-full border font-body text-[11px] font-bold transition-all duration-150
-                  ${
-                    filters.speciality === s
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-sand3 bg-white text-ink3 hover:border-primary hover:text-primary"
-                  }`}
+                className={`px-3 py-1 rounded-full border font-body text-[11px] font-bold transition-all
+                  ${filters.speciality === s ? "border-primary bg-primary/10 text-primary" : "border-sand3 bg-white text-ink3 hover:border-primary"}`}
               >
                 {s || "All"}
               </button>
@@ -201,10 +170,9 @@ function SubFilterPanel() {
         </div>
       )}
 
-      {/* Availability — uses schedule[].day + isCurrentlyAvailable */}
+      {/* Availability */}
       {filters.category === "Availability" && (
         <>
-          {/* Available now toggle */}
           <label className="flex items-center gap-2.5 cursor-pointer font-body text-sm font-semibold text-ink2">
             <input
               type="checkbox"
@@ -213,25 +181,18 @@ function SubFilterPanel() {
               className="w-4 h-4 accent-primary cursor-pointer"
             />
             <span className="flex items-center gap-1.5">
-              <Zap size={12} className="text-emerald-500" />
-              Available right now
+              <Zap size={12} className="text-emerald-500" /> Available now
             </span>
           </label>
-
-          {/* Day pills */}
           <div>
-            <FilterLabel>Open on day</FilterLabel>
+            <FilterLabel>Day</FilterLabel>
             <div className="flex flex-wrap gap-1.5">
               {["", ...DAYS].map((d) => (
                 <button
                   key={d || "__any__"}
                   onClick={() => dispatch(setFilterAvailDay(d))}
-                  className={`px-3 py-1 rounded-full border font-body text-[11px] font-bold transition-all duration-150
-                    ${
-                      filters.availDay === d
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-sand3 bg-white text-ink3 hover:border-primary hover:text-primary"
-                    }`}
+                  className={`px-3 py-1 rounded-full border font-body text-[11px] font-bold transition-all
+                    ${filters.availDay === d ? "border-primary bg-primary/10 text-primary" : "border-sand3 bg-white text-ink3 hover:border-primary"}`}
                 >
                   {d ? d.slice(0, 3) : "Any"}
                 </button>
@@ -244,7 +205,7 @@ function SubFilterPanel() {
   );
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// ── Page Principale ────────────────────────────────────────────────────────
 export default function GuidePage() {
   const dispatch = useDispatch();
   const { goToGuide } = useNavigation();
@@ -255,30 +216,48 @@ export default function GuidePage() {
   const visibleCount = useSelector(selectVisibleCount);
 
   const [searchFocused, setSearchFocused] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // 1. Fetch des données via ton api.js (Port 3001)
+  useEffect(() => {
+    const fetchGuidesData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        // On récupère une large liste pour que Redux puisse filtrer localement
+        const data = await api.getGuides(50); 
+        dispatch(setGuides(data));
+      } catch (err) {
+        console.error("Fetch Error:", err);
+        setError("Unable to connect to server on port 3001.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGuidesData();
+  }, [dispatch]);
 
   const guidesToShow = filteredGuides.slice(0, visibleCount);
   const hasMore = filteredGuides.length > visibleCount;
+
   const activeFiltersCount = [
-    filters.minRating > 0,
-    filters.city !== "",
-    filters.language !== "",
-    filters.verifiedOnly,
-    filters.speciality !== "",
-    filters.availDay !== "",
-    filters.availNow,
+    filters.minRating > 0, filters.city !== "", filters.language !== "",
+    filters.verifiedOnly, filters.speciality !== "", filters.availDay !== "", filters.availNow
   ].filter(Boolean).length;
 
   return (
     <div className="min-h-screen bg-sand">
-      {/* ── Hero ── */}
+      {/* Hero Section */}
       <div className="relative w-full h-72 overflow-hidden">
         <img
           src="https://images.unsplash.com/photo-1539020140153-e479b8e201e7?w=1400&q=85"
-          alt="Morocco guides"
+          alt="Morocco"
           className="w-full h-full object-cover object-[center_60%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/30 to-dark/70 flex flex-col items-center justify-center gap-2">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-white tracking-tight text-center animate-slide-up-1">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark/30 to-dark/70 flex flex-col items-center justify-center gap-2 text-center">
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-white animate-slide-up-1">
             Find your local Guide
           </h1>
           <p className="font-body text-sm text-white/70 animate-slide-up-2">
@@ -287,27 +266,22 @@ export default function GuidePage() {
         </div>
       </div>
 
-      {/* ── Search bar ── */}
-      <div className="max-w-2xl mx-auto px-5 -mt-7 relative z-10 animate-fade-up">
-        <div
-          className={`flex items-center bg-white rounded-2xl px-4 py-1.5 gap-3 shadow-xl transition-all duration-200 border-2
-          ${searchFocused ? "border-primary shadow-search" : "border-transparent"}`}
-        >
-          <Search size={18} className="text-primary flex-shrink-0" />
+      {/* Barre de Recherche */}
+      <div className="max-w-2xl mx-auto px-5 -mt-7 relative z-10">
+        <div className={`flex items-center bg-white rounded-2xl px-4 py-1.5 gap-3 shadow-xl border-2 transition-all 
+          ${searchFocused ? "border-primary" : "border-transparent"}`}>
+          <Search size={18} className="text-primary" />
           <input
             type="text"
-            placeholder="Search by name, city, language, speciality…"
+            placeholder="Search by name, city, language..."
             value={searchQuery}
             onChange={(e) => dispatch(setSearchQuery(e.target.value))}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
-            className="flex-1 border-none outline-none bg-transparent font-body text-sm font-medium text-ink2 placeholder:text-ink3/50 placeholder:font-normal min-w-0 py-2"
+            className="flex-1 border-none outline-none bg-transparent font-body text-sm py-2"
           />
           {searchQuery && (
-            <button
-              onClick={() => dispatch(setSearchQuery(""))}
-              className="w-7 h-7 rounded-full bg-sand2 text-ink3 flex items-center justify-center flex-shrink-0 hover:bg-sand3 hover:text-ink2 transition-colors"
-            >
+            <button onClick={() => dispatch(setSearchQuery(""))} className="w-7 h-7 rounded-full bg-sand2 text-ink3 flex items-center justify-center">
               <X size={13} />
             </button>
           )}
@@ -316,107 +290,84 @@ export default function GuidePage() {
         {(searchQuery || activeFiltersCount > 0) && (
           <div className="flex items-center justify-between px-1 pt-2.5">
             <span className="font-body text-xs font-semibold text-ink3">
-              {filteredGuides.length} guide
-              {filteredGuides.length !== 1 ? "s" : ""} found
+              {filteredGuides.length} guide{filteredGuides.length !== 1 ? "s" : ""} found
             </span>
-            <button
-              onClick={() => dispatch(resetFilters())}
-              className="flex items-center gap-1.5 font-body text-xs font-bold text-accent hover:text-ink2 transition-colors"
-            >
+            <button onClick={() => dispatch(resetFilters())} className="flex items-center gap-1.5 font-body text-xs font-bold text-accent hover:text-ink2">
               <RotateCcw size={11} /> Reset filters
             </button>
           </div>
         )}
       </div>
 
-      {/* ── Main layout ── */}
-      <div className="max-w-7xl mx-auto px-7 md:px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-7 py-9 pb-16">
-          {/* ── Sidebar ── */}
+      {/* Layout Principal */}
+      <div className="max-w-7xl mx-auto px-7 py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8">
+          
+          {/* Sidebar */}
           <aside className="flex flex-col gap-1.5 self-start lg:sticky lg:top-[90px]">
             <div className="hidden lg:flex items-center justify-between px-1 pb-3 border-b border-sand3 mb-1">
-              <span className="font-body text-[11px] font-extrabold tracking-widest uppercase text-ink2">
-                Filters
-              </span>
+              <span className="font-body text-[11px] font-extrabold tracking-widest uppercase text-ink2">Filters</span>
               {activeFiltersCount > 0 && (
-                <span className="bg-primary text-white font-body text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                  {activeFiltersCount}
-                </span>
+                <span className="bg-primary text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">{activeFiltersCount}</span>
               )}
             </div>
 
-            <div className="flex flex-col gap-1 max-lg:flex-row max-lg:flex-wrap max-lg:gap-2">
+            <div className="flex flex-col gap-1 max-lg:flex-row max-lg:flex-wrap">
               {SIDEBAR_CATEGORIES.map(({ key, label, Icon }) => (
                 <button
                   key={key}
                   onClick={() => dispatch(setFilterCategory(key))}
-                  className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border text-sm font-semibold text-left transition-all duration-150 font-body
-                    ${
-                      filters.category === key
-                        ? "border-primary bg-primary/10 text-primary font-bold"
-                        : "border-transparent text-ink3 hover:bg-primary/5 hover:text-primary"
-                    }
-                    max-lg:w-auto max-lg:px-3 max-lg:py-2 max-lg:text-xs`}
+                  className={`flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border text-sm font-semibold transition-all font-body
+                    ${filters.category === key ? "border-primary bg-primary/10 text-primary" : "border-transparent text-ink3 hover:bg-primary/5"}`}
                 >
-                  <Icon size={14} className="flex-shrink-0" />
-                  {label}
+                  <Icon size={14} /> {label}
                 </button>
               ))}
             </div>
 
             <SubFilterPanel />
 
-            {/* Sort */}
             <div className="hidden lg:block mt-2 pt-4 border-t border-sand3">
               <p className="flex items-center gap-1.5 text-[11px] font-extrabold tracking-widest uppercase text-ink3 font-body mb-2">
                 <ArrowDownUp size={11} /> Sort by
               </p>
-              <FilterSelect
-                value={filters.sortBy}
-                onChange={(e) => dispatch(setFilterSortBy(e.target.value))}
-              >
-                {SORT_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
+              <FilterSelect value={filters.sortBy} onChange={(e) => dispatch(setFilterSortBy(e.target.value))}>
+                {SORT_OPTIONS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
               </FilterSelect>
             </div>
           </aside>
 
-          {/* ── Guide list ── */}
-          <div className="flex flex-col gap-3.5">
-            {guidesToShow.length === 0 ? (
+          {/* Liste de Guides */}
+          <div className="flex flex-col gap-4">
+            {loading ? (
+              <div className="flex flex-col items-center justify-center py-20 gap-4">
+                <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+                <p className="font-body text-sm text-ink3">Finding local experts...</p>
+              </div>
+            ) : error ? (
+              <div className="p-10 text-center bg-white rounded-3xl border-2 border-dashed border-red-100">
+                <p className="text-red-500 font-bold mb-2">Server Connection Error</p>
+                <p className="text-ink3 text-xs mb-4">{error}</p>
+                <code className="text-[10px] bg-sand p-2 rounded block">Check if json-server is running on port 3001</code>
+              </div>
+            ) : guidesToShow.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-16 gap-3 text-center">
-                <span className="text-5xl leading-none">🔍</span>
-                <p className="font-body text-sm text-ink3">
-                  No guides match your search.
-                </p>
-                <button
-                  onClick={() => dispatch(resetFilters())}
-                  className="flex items-center gap-1.5 px-5 py-2.5 rounded-full border border-primary text-primary font-body text-sm font-bold hover:bg-primary hover:text-white transition-all duration-150"
-                >
-                  <X size={13} /> Reset filters
-                </button>
+                <span className="text-5xl mb-2">🔍</span>
+                <p className="font-body text-sm text-ink3">No guides found for your criteria.</p>
+                <button onClick={() => dispatch(resetFilters())} className="text-primary font-bold hover:underline">Clear all filters</button>
               </div>
             ) : (
               guidesToShow.map((g, i) => (
-                <GuideListItem
-                  key={g.id}
-                  guide={g}
-                  index={i}
-                  onClick={() => goToGuide(g)}
-                />
+                <GuideListItem key={g.id} guide={g} index={i} onClick={() => goToGuide(g)} />
               ))
             )}
 
-            {hasMore && (
+            {hasMore && !loading && (
               <button
                 onClick={() => dispatch(loadMore())}
-                className="flex items-center justify-center gap-2 w-full py-3.5 mt-1.5 rounded-2xl border border-sand3 bg-white text-ink2 font-body text-sm font-bold hover:bg-sand hover:border-primary hover:text-primary transition-all duration-150"
+                className="w-full py-4 bg-white border border-sand3 rounded-2xl font-bold text-sm hover:border-primary transition-all mt-2"
               >
-                <ChevronDown size={16} />
-                Load more ({filteredGuides.length - visibleCount} remaining)
+                Load more guides ({filteredGuides.length - visibleCount} left)
               </button>
             )}
           </div>

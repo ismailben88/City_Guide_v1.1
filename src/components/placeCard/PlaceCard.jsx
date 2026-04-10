@@ -4,20 +4,11 @@ import { RiMapPin2Line, RiLeafLine, RiShareLine } from "react-icons/ri";
 import { TbTicket, TbTag, TbShoppingBag } from "react-icons/tb";
 import { HiArrowRight } from "react-icons/hi2";
 
-/**
- * PlaceCard — grid card for the PlacesPage.
- *
- * Props:
- *   place   {object}  place data from API (merged places + cities + categories)
- *   index   {number}  stagger animation index
- *   onClick {fn}      navigate to PlaceDetailPage
- */
 export default function PlaceCard({ place, index = 0, onClick }) {
-  // Place data structure from API merge:
-  // - From places: id, name, description, categoryId, cityId, address, phone, website,
-  //   openingHours, entryFee, location, isVerifiedBusiness, isFeatured, averageRating,
-  //   reviewCount, images
-  // - Merged: cityName, category, categoryIcon
+  // Logic pour extraire le texte de la catégorie si c'est un objet
+  const categoryDisplayName = typeof place.category === 'object' 
+    ? (place.category.name || "Lieu") 
+    : (place.category || "Lieu");
 
   const fullStars = Math.floor(place.averageRating || 0);
   const emptyStars = 5 - fullStars;
@@ -35,7 +26,6 @@ export default function PlaceCard({ place, index = 0, onClick }) {
     }
   };
 
-  // Use first image or fallback
   const mainImage = place.images?.[0] || place.img || `https://picsum.photos/seed/${place.id}/800/600`;
 
   return (
@@ -67,14 +57,14 @@ export default function PlaceCard({ place, index = 0, onClick }) {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(61,43,26,0.45)]" />
       </div>
 
-      {/* ── Category badge ── */}
+      {/* ── Category badge (CORRIGÉ ICI) ── */}
       {place.category && (
         <span className="absolute top-3 left-3 z-2 bg-[rgba(255,255,255,0.92)] text-[#6b9c3e]
                          font-[Nunito,sans-serif] text-[10px] font-bold tracking-[0.08em] uppercase
                          px-[10px] py-1 rounded-full border border-[rgba(107,156,62,0.2)]
                          flex items-center gap-1">
           <RiLeafLine size={10} />
-          {place.category}
+          {categoryDisplayName}
         </span>
       )}
 
@@ -93,7 +83,6 @@ export default function PlaceCard({ place, index = 0, onClick }) {
 
       {/* ── Body ── */}
       <div className="p-[14px_16px_16px] flex flex-col gap-2 flex-1">
-        {/* City */}
         {place.cityName && (
           <p className="font-[Nunito,sans-serif] text-[11px] text-[#9e8e80] m-0
                         flex items-center gap-1">
@@ -102,16 +91,14 @@ export default function PlaceCard({ place, index = 0, onClick }) {
           </p>
         )}
 
-        {/* Title */}
         <h3 className="font-[Playfair_Display,Georgia,serif] text-[15px] font-bold text-[#3d2b1a] m-0
                        leading-[1.3] line-clamp-2 overflow-hidden">
           {place.name}
         </h3>
 
-        {/* Description */}
         {place.description && (
           <p className="font-[Nunito,sans-serif] text-[12px] text-[#7a6a58] m-0 leading-[1.5]
-                        line-clamp-2 overflow-hidden">
+                         line-clamp-2 overflow-hidden">
             {place.description}
           </p>
         )}
@@ -158,7 +145,6 @@ export default function PlaceCard({ place, index = 0, onClick }) {
 
         {/* ── Actions ── */}
         <div className="flex items-center gap-2 mt-1 pt-2.5 border-t border-[#f0ebe4]">
-          {/* Learn more button */}
           <button
             type="button"
             className="flex-1 flex items-center justify-center gap-[5px] px-[10px] py-[7px]
@@ -174,7 +160,6 @@ export default function PlaceCard({ place, index = 0, onClick }) {
             Learn more <HiArrowRight size={12} />
           </button>
 
-          {/* Buy / Rent button */}
           <button
             type="button"
             className="flex-1 flex items-center justify-center gap-[5px] px-[10px] py-[7px]
@@ -188,7 +173,6 @@ export default function PlaceCard({ place, index = 0, onClick }) {
             <TbShoppingBag size={13} /> Buy / Rent
           </button>
 
-          {/* Share button */}
           <button
             type="button"
             onClick={handleShare}
