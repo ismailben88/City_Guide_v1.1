@@ -699,6 +699,16 @@
       "avatarUrl": "https://i.pravatar.cc/150?u=49",
       "city": "Agadir",
       "createdAt": "2025-11-05T20:57:44.202Z"
+    },
+    {
+      "id": "876a",
+      "name": "wafaa",
+      "email": "wafaa@gmail.com",
+      "password": "12345678",
+      "avatar": "https://ui-avatars.com/api/?name=wafaa&background=6b9c3e&color=fff",
+      "city": "",
+      "joinedAt": "2026-04-10",
+      "role": "user"
     }
   ],
   "cities": [

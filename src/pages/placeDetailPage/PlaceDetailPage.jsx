@@ -1,781 +1,255 @@
-// pages/PlaceDetailPage.jsx
-// Requires: npm install leaflet react-leaflet
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import CommentSection from "../../components/comentSection/CommentSection";
+// Import de ton service API centralisé
+import { api } from "../../services/api"; 
 
-import { IoStarSharp, IoStarOutline } from "react-icons/io5";
+import { 
+  IoStarSharp, IoStarOutline 
+} from "react-icons/io5";
 import {
-  RiArrowLeftLine,
-  RiMapPin2Line,
-  RiMailLine,
-  RiPhoneLine,
-  RiInstagramLine,
-  RiTwitterXLine,
-  RiImageLine,
-  RiInformationLine,
-  RiSendPlaneLine,
-  RiCheckLine,
-  RiUserLine,
-  RiShareLine,
-  RiPriceTag3Line,
-  RiCompassLine,
-  RiStarLine,
-  RiHeartLine,
+  RiArrowLeftLine, RiMapPin2Line, RiMailLine, RiPhoneLine,
+  RiImageLine, RiInformationLine, RiCheckLine, RiUserLine, 
+  RiPriceTag3Line, RiCompassLine, RiHeartLine, RiShareLine
 } from "react-icons/ri";
-import { TbTag, TbCalendarEvent, TbMap2 } from "react-icons/tb";
+import { TbCalendarEvent, TbMap2 } from "react-icons/tb";
 
-import { selectUser, selectIsLoggedIn } from "../../store/slices/authSlice";
-import { selectSelectedPlace } from "../../store/slices/navigationSlice";
-
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
-
-// ── Fix Leaflet default marker icons in Vite ──────────────────────────────────
+// Leaflet fix pour les icônes
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
+  iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+  iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+  shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
 });
 
-// ── Constants ─────────────────────────────────────────────────────────────────
-const RATING_LABELS = {
-  1: "Poor",
-  2: "Fair",
-  3: "Good",
-  4: "Very good",
-  5: "Excellent",
-};
-
-const EXTRA_IMGS = [
-  "https://images.unsplash.com/photo-1548013146-72479768bada?w=600&q=80",
-  "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=600&q=80",
-  "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=600&q=80",
-];
-
-const CITY_COORDS = {
-  Marrakech: [31.6295, -7.9811],
-  Fès: [34.0181, -5.0078],
-  Casablanca: [33.5731, -7.5898],
-  Chefchaouen: [35.1688, -5.2697],
-  Essaouira: [31.5125, -9.77],
-  Agadir: [30.4278, -9.5981],
-  Merzouga: [31.0997, -4.0136],
-  Ouarzazate: [30.9335, -6.937],
-  Azilal: [31.9697, -6.5736],
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  Import styled components
-// ─────────────────────────────────────────────────────────────────────────────
-import {
-  PageWrap,
-  HeroWrap,
-  HeroImg,
-  HeroGradient,
-  BackBtn,
-  HeroContent,
-  HeroCategoryRow,
-  HeroCategoryBadge,
-  HeroCityBadge,
-  HeroTitle,
-  HeroTagsRow,
-  HeroTag,
-  StatsBar,
-  StatCell,
-  StatIcon,
-  StatVal,
-  StatLbl,
-  StarRow,
-  Container,
-  Grid,
-  Card,
-  CardLabel,
-  DescText,
-  Gallery,
-  GalleryThumb,
-  MapWrap,
-  ContactRow,
-  ContactIconWrap,
-  ChipRow,
-  Chip,
-  PriceWrap,
-  FreeBadge,
-  BookBtn,
-  ShareBtn,
-  ReviewsHeader,
-  AvgRatingBlock,
-  BigRating,
-  RatingMeta,
-  StarsDisplay,
-  ReviewCountText,
-  ReviewList,
-  ReviewCard,
-  ReviewAvatar,
-  ReviewBody,
-  ReviewTop,
-  ReviewAuthor,
-  ReviewMeta,
-  ReviewDate,
-  ReviewCountry,
-  ReviewStars,
-  ReviewText,
-  EmptyReviews,
-  FormDivider,
-  FormHeading,
-  StarPicker,
-  StarPickerBtn,
-  RatingLabel,
-  FormGrid,
-  FormInput,
-  FormTextarea,
-  FieldErr,
-  SubmitBtn,
-  SuccessBanner,
-  LoginNudge,
-  LoginNudgeBtn,
-} from "./PlaceDetailPage.styles";
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  StarRatingPicker
-// ─────────────────────────────────────────────────────────────────────────────
-function StarRatingPicker({ value, onChange }) {
-  const [hovered, setHovered] = useState(0);
-  const active = hovered || value;
-
-  return (
-    <StarPicker>
-      {[1, 2, 3, 4, 5].map((n) => (
-        <StarPickerBtn
-          key={n}
-          type="button"
-          $lit={n <= active}
-          onMouseEnter={() => setHovered(n)}
-          onMouseLeave={() => setHovered(0)}
-          onClick={() => onChange(n)}
-          aria-label={`Rate ${n}`}
-        >
-          {n <= active ? "★" : "☆"}
-        </StarPickerBtn>
-      ))}
-      {active > 0 && <RatingLabel>{RATING_LABELS[active]}</RatingLabel>}
-    </StarPicker>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  ReviewForm
-// ─────────────────────────────────────────────────────────────────────────────
-function ReviewForm({ placeId, onAdd, setShowLogin }) {
-  const user = useSelector(selectUser);
-  const isLogged = useSelector(selectIsLoggedIn);
-
-  const [rating, setRating] = useState(0);
-  const [text, setText] = useState("");
-  const [name, setName] = useState(user?.name || "");
-  const [country, setCountry] = useState("");
-  const [errors, setErrors] = useState({});
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const validate = () => {
-    const e = {};
-    if (!rating) e.rating = "Please select a rating";
-    if (!text.trim()) e.text = "Please write your review";
-    if (!name.trim()) e.name = "Your name is required";
-    return e;
-  };
-
-  const handleSubmit = async () => {
-    const e = validate();
-    if (Object.keys(e).length) {
-      setErrors(e);
-      return;
-    }
-    setLoading(true);
-
-    const newReview = {
-      placeId,
-      author: name.trim(),
-      avatar:
-        user?.avatar ||
-        `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6b9c3e&color=fff&size=80`,
-      country: country.trim() || "Morocco",
-      rating,
-      date: new Date().toISOString().split("T")[0],
-      text: text.trim(),
-    };
-
-    try {
-      const res = await fetch(`${BASE_URL}/guideComments`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newReview),
-      });
-      const saved = await res.json();
-      onAdd(saved);
-      setSuccess(true);
-      setText("");
-      setRating(0);
-      setCountry("");
-      setTimeout(() => setSuccess(false), 4000);
-    } catch {
-      setErrors({ text: "Server error — please try again." });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div>
-      <FormDivider />
-      <FormHeading>
-        <RiStarLine size={12} /> Write a Review
-      </FormHeading>
-
-      {!isLogged && (
-        <LoginNudge>
-          <RiUserLine size={16} color="#9e8e80" />
-          You must be signed in to leave a review.
-          <LoginNudgeBtn onClick={() => setShowLogin(true)}>
-            Sign in
-          </LoginNudgeBtn>
-        </LoginNudge>
-      )}
-
-      {success && (
-        <SuccessBanner>
-          <RiCheckLine size={16} /> Thank you! Your review has been published.
-        </SuccessBanner>
-      )}
-
-      {/* Stars */}
-      <StarRatingPicker
-        value={rating}
-        onChange={(v) => {
-          setRating(v);
-          setErrors((p) => ({ ...p, rating: "" }));
-        }}
-      />
-      {errors.rating && <FieldErr>{errors.rating}</FieldErr>}
-
-      {/* Name + Country */}
-      <FormGrid>
-        <div>
-          <FormInput
-            placeholder="Your name *"
-            value={name}
-            disabled={!!user}
-            $err={!!errors.name}
-            onChange={(e) => {
-              setName(e.target.value);
-              setErrors((p) => ({ ...p, name: "" }));
-            }}
-          />
-          {errors.name && <FieldErr>{errors.name}</FieldErr>}
-        </div>
-        <FormInput
-          placeholder="Your country (optional)"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-        />
-      </FormGrid>
-
-      {/* Text */}
-      <FormTextarea
-        placeholder="Describe your experience at this place…"
-        value={text}
-        disabled={!isLogged}
-        $err={!!errors.text}
-        onChange={(e) => {
-          setText(e.target.value);
-          setErrors((p) => ({ ...p, text: "" }));
-        }}
-      />
-      {errors.text && <FieldErr>{errors.text}</FieldErr>}
-
-      <SubmitBtn onClick={handleSubmit} disabled={loading || !isLogged}>
-        <RiSendPlaneLine size={15} />
-        {loading ? "Submitting…" : "Publish Review"}
-      </SubmitBtn>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  PlaceDetailPage
-// ─────────────────────────────────────────────────────────────────────────────
-export default function PlaceDetailPage({ setShowLogin }) {
+export default function PlaceDetailPage() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const selected = useSelector(selectSelectedPlace);
 
-  const [place, setPlace] = useState(selected || null);
+  const [place, setPlace] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(!selected);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [liked, setLiked] = useState(false);
 
-  // ── Fetch place from db.json if not in Redux ──────────────────────────────
+  // 1. Chargement des données via api.js
   useEffect(() => {
-    if (!place && id) {
-      fetch(`${BASE_URL}/places/${id}`)
-        .then((r) => r.json())
-        .then((data) => {
-          setPlace(data);
-          setLoading(false);
-        })
-        .catch(() => setLoading(false));
-    }
-  }, [id,place]);
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [placeData, commentsData] = await Promise.all([
+          api.getPlaceById(id),
+          api.getCommentsByTarget(id, "place")
+        ]);
 
-  // ── Fetch reviews for this place ─────────────────────────────────────────
-  useEffect(() => {
-    if (!place?.id) return;
-    fetch(`${BASE_URL}/guideComments?placeId=${place.id}`)
-      .then((r) => r.json())
-      .then(setReviews)
-      .catch(() => {});
-  }, [place?.id]);
+        if (!placeData) throw new Error("Place not found");
 
-  const handleAddReview = (newReview) => {
-    setReviews((prev) => [newReview, ...prev]);
-  };
+        setPlace(placeData);
+        setReviews(commentsData || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (loading)
-    return (
-      <PageWrap
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "60vh",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Nunito', sans-serif",
-            color: "#9e8e80",
-            fontSize: 14,
-          }}
-        >
-          Loading…
-        </span>
-      </PageWrap>
-    );
+    if (id) loadData();
+  }, [id]);
 
-  if (!place)
-    return (
-      <PageWrap
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "60vh",
-          gap: 12,
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: 22,
-            color: "#3d2b1a",
-          }}
-        >
-          Place not found
-        </span>
-        <button
-          onClick={() => navigate(-1)}
-          style={{
-            background: "none",
-            border: "none",
-            color: "#6b9c3e",
-            fontFamily: "'Nunito',sans-serif",
-            fontWeight: 700,
-            cursor: "pointer",
-            fontSize: 14,
-          }}
-        >
-          ← Go back
-        </button>
-      </PageWrap>
-    );
+  if (loading) return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-sand gap-4">
+      <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      <p className="text-ink3 font-body text-sm">Discovering the magic...</p>
+    </div>
+  );
+
+  if (error || !place) return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-sand px-6 text-center">
+      <h2 className="text-2xl font-display font-bold text-ink2 mb-2">Oops! Location lost.</h2>
+      <p className="text-ink3 mb-6">We couldn't find the destination you're looking for.</p>
+      <button onClick={() => navigate("/places")} className="px-6 py-2 bg-primary text-white rounded-full font-bold shadow-lg">
+        Go Back
+      </button>
+    </div>
+  );
 
   const p = place;
-  const isFree = p.price === 0 || p.price === "0";
-  const coords = p.coordinates ?? CITY_COORDS[p.city] ?? [31.6295, -7.9811];
-  const avgRating = reviews.length
-    ? (
-        reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length
-      ).toFixed(1)
-    : p.rating;
-
-  const CONTACTS = [
-    {
-      icon: <RiMailLine size={15} />,
-      href: `mailto:${p.contact?.email}`,
-      label: p.contact?.email,
-    },
-    {
-      icon: <RiInstagramLine size={15} />,
-      href: `https://instagram.com/${p.contact?.instagram}`,
-      label: p.contact?.instagram,
-    },
-    {
-      icon: <RiTwitterXLine size={14} />,
-      href: `https://twitter.com/${p.contact?.twitter}`,
-      label: p.contact?.twitter,
-    },
-    {
-      icon: <RiPhoneLine size={15} />,
-      href: `tel:${p.contact?.phone}`,
-      label: p.contact?.phone,
-    },
-  ].filter((c) => c.label);
-
-  const galleryImgs = [p.img, ...EXTRA_IMGS].filter(Boolean).slice(0, 3);
+  const isFree = !p.price || p.price === 0 || p.price === "0";
+  const coords = p.location?.coordinates || [31.7917, -7.0926]; // Fallback Morocco center
 
   return (
-    <PageWrap>
-      {/* ── Hero ── */}
-      <HeroWrap>
-        <HeroImg src={p.img} alt={p.title} />
-        <HeroGradient />
+    <div className="min-h-screen bg-sand font-body text-ink2">
+      {/* --- HERO SECTION --- */}
+      <div className="relative w-full h-[400px] md:h-[550px] overflow-hidden">
+        <img 
+          src={p.coverImage || p.images?.[0] || "https://images.unsplash.com/photo-1539020140153-e479b8e201e7"} 
+          alt={p.name} 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
+        
+        {/* Top Buttons */}
+        <div className="absolute top-6 left-6 right-6 flex justify-between z-10">
+          <button 
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full text-xs font-bold transition-all hover:bg-white/40"
+          >
+            <RiArrowLeftLine /> Back
+          </button>
+          <button className="p-2.5 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full hover:bg-white/40">
+            <RiShareLine size={18} />
+          </button>
+        </div>
 
-        <BackBtn onClick={() => navigate(-1)}>
-          <RiArrowLeftLine size={14} /> Back
-        </BackBtn>
+        {/* Hero Info */}
+        <div className="absolute bottom-10 left-0 w-full px-6 md:px-12">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex gap-2 mb-4">
+              <span className="bg-primary/90 backdrop-blur-sm text-white text-[10px] font-extrabold uppercase tracking-widest px-3 py-1 rounded-full flex items-center gap-1">
+                <RiCompassLine size={10} /> {p.categoryName}
+              </span>
+              <span className="bg-white/20 backdrop-blur-sm border border-white/30 text-white text-[10px] font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                <RiMapPin2Line size={10} /> {p.cityName}
+              </span>
+            </div>
+            <h1 className="font-display text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg leading-tight">
+              {p.name}
+            </h1>
+            <p className="text-white/80 max-w-xl text-sm md:text-base line-clamp-2">
+              {p.shortDescription}
+            </p>
+          </div>
+        </div>
+      </div>
 
-        <HeroContent>
-          <HeroCategoryRow>
-            {p.category && (
-              <HeroCategoryBadge>
-                <RiCompassLine size={11} /> {p.category}
-              </HeroCategoryBadge>
-            )}
-            {p.city && (
-              <HeroCityBadge>
-                <RiMapPin2Line size={11} /> {p.city}
-              </HeroCityBadge>
-            )}
-          </HeroCategoryRow>
+      {/* --- STATS BAR --- */}
+      <div className="relative z-20 max-w-4xl mx-auto -mt-10 px-4">
+        <div className="bg-white rounded-[24px] shadow-2xl border border-sand3 flex divide-x divide-sand2 overflow-hidden">
+          <div className="flex-1 flex flex-col items-center py-6">
+            <div className="flex gap-0.5 text-yellow-500 mb-1">
+              {[...Array(5)].map((_, i) => i < Math.round(p.averageRating || 0) ? <IoStarSharp key={i} size={14}/> : <IoStarOutline key={i} size={14}/>)}
+            </div>
+            <span className="font-display text-2xl font-bold">{p.averageRating || "—"}</span>
+            <span className="text-[10px] font-bold text-ink3 uppercase tracking-widest">Rating</span>
+          </div>
+          <div className="flex-1 flex flex-col items-center py-6">
+            <RiUserLine className="text-primary mb-1" size={20} />
+            <span className="font-display text-2xl font-bold">{reviews.length}</span>
+            <span className="text-[10px] font-bold text-ink3 uppercase tracking-widest">Reviews</span>
+          </div>
+          <div className="flex-1 flex flex-col items-center py-6">
+            <RiPriceTag3Line className="text-primary mb-1" size={20} />
+            <span className="font-display text-2xl font-bold">{isFree ? "Free" : `${p.price} MAD`}</span>
+            <span className="text-[10px] font-bold text-ink3 uppercase tracking-widest">Price</span>
+          </div>
+        </div>
+      </div>
 
-          <HeroTitle>{p.title}</HeroTitle>
+      {/* --- MAIN CONTENT --- */}
+      <main className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10">
+        
+        {/* Left Column: Details */}
+        <div className="space-y-8">
+          <section className="bg-white p-8 rounded-[32px] border border-sand3 shadow-sm">
+            <h3 className="text-[11px] font-extrabold uppercase tracking-widest text-ink3 mb-5 flex items-center gap-2">
+              <RiInformationLine size={16} /> History & Description
+            </h3>
+            <p className="text-base leading-relaxed text-ink2/80 font-medium">{p.description}</p>
+          </section>
 
-          {p.tags?.length > 0 && (
-            <HeroTagsRow>
-              {p.tags.map((t) => (
-                <HeroTag key={t}>{t}</HeroTag>
-              ))}
-            </HeroTagsRow>
+          {/* Gallery */}
+          {p.images?.length > 0 && (
+            <section className="bg-white p-8 rounded-[32px] border border-sand3 shadow-sm">
+              <h3 className="text-[11px] font-extrabold uppercase tracking-widest text-ink3 mb-5 flex items-center gap-2">
+                <RiImageLine size={16} /> Photo Gallery
+              </h3>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {p.images.map((img, i) => (
+                  <div key={i} className="aspect-square rounded-2xl overflow-hidden group cursor-pointer relative">
+                    <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-dark/0 group-hover:bg-dark/10 transition-colors" />
+                  </div>
+                ))}
+              </div>
+            </section>
           )}
-        </HeroContent>
-      </HeroWrap>
 
-      {/* ── Floating stats bar ── */}
-      <StatsBar>
-        <StatCell>
-          <StatIcon>
-            <RiStarLine size={16} />
-          </StatIcon>
-          <StarRow>
-            {Array.from({ length: 5 }).map((_, i) =>
-              i < Math.round(avgRating) ? (
-                <IoStarSharp key={i} size={13} />
-              ) : (
-                <IoStarOutline key={i} size={13} />
-              ),
-            )}
-          </StarRow>
-          <StatVal>{avgRating || "—"}</StatVal>
-          <StatLbl>Rating</StatLbl>
-        </StatCell>
+          {/* Map */}
+          <section className="bg-white p-8 rounded-[32px] border border-sand3 shadow-sm">
+            <h3 className="text-[11px] font-extrabold uppercase tracking-widest text-ink3 mb-5 flex items-center gap-2">
+              <TbMap2 size={16} /> Find us on Map
+            </h3>
+            <div className="h-[300px] rounded-2xl overflow-hidden border border-sand3">
+              <MapContainer center={coords} zoom={15} className="h-full w-full" zoomControl={false}>
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker position={coords}><Popup>{p.name}</Popup></Marker>
+              </MapContainer>
+            </div>
+          </section>
+        </div>
 
-        <StatCell>
-          <StatIcon>
-            <RiUserLine size={16} />
-          </StatIcon>
-          <StatVal>{reviews.length || p.reviews || "—"}</StatVal>
-          <StatLbl>Reviews</StatLbl>
-        </StatCell>
-
-        <StatCell>
-          <StatIcon>
-            <RiPriceTag3Line size={16} />
-          </StatIcon>
-          <StatVal>{isFree ? "Free" : `${p.price} MAD`}</StatVal>
-          <StatLbl>Entry</StatLbl>
-        </StatCell>
-
-        <StatCell>
-          <StatIcon>
-            <RiMapPin2Line size={16} />
-          </StatIcon>
-          <StatVal style={{ fontSize: 14 }}>{p.city || "—"}</StatVal>
-          <StatLbl>City</StatLbl>
-        </StatCell>
-      </StatsBar>
-
-      {/* ── Body ── */}
-      <Container>
-        <Grid>
-          {/* ── Left column ── */}
-          <div>
-            {/* About */}
-            <Card $delay="0ms">
-              <CardLabel>
-                <RiInformationLine size={12} /> About this place
-              </CardLabel>
-              <DescText>
-                {p.description ||
-                  "No description available for this place yet."}
-              </DescText>
-            </Card>
-
-            {/* Gallery */}
-            <Card $delay="60ms">
-              <CardLabel>
-                <RiImageLine size={12} /> Gallery
-              </CardLabel>
-              <Gallery>
-                {galleryImgs.map((src, i) => (
-                  <GalleryThumb key={i}>
-                    <img src={src} alt={`${p.title} ${i + 1}`} />
-                  </GalleryThumb>
-                ))}
-              </Gallery>
-            </Card>
-
-            {/* Map */}
-            <Card $delay="100ms">
-              <CardLabel>
-                <TbMap2 size={12} /> Location on map
-              </CardLabel>
-              <MapWrap>
-                <MapContainer
-                  center={coords}
-                  zoom={14}
-                  style={{ width: "100%", height: "100%" }}
-                  scrollWheelZoom={false}
-                  attributionControl={false}
-                >
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <Marker position={coords}>
-                    <Popup>
-                      <strong>{p.title}</strong>
-                      <br />
-                      {p.city}
-                    </Popup>
-                  </Marker>
-                </MapContainer>
-              </MapWrap>
-            </Card>
-
-            {/* Contact */}
-            {CONTACTS.length > 0 && (
-              <Card $delay="130ms">
-                <CardLabel>
-                  <RiMailLine size={12} /> Contact
-                </CardLabel>
-                {CONTACTS.map((c) => (
-                  <ContactRow
-                    key={c.label}
-                    href={c.href}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <ContactIconWrap>{c.icon}</ContactIconWrap>
-                    {c.label}
-                  </ContactRow>
-                ))}
-              </Card>
-            )}
-
-            {/* Reviews */}
-            <Card $delay="160ms">
-              <ReviewsHeader>
-                <AvgRatingBlock>
-                  <BigRating>{avgRating || "—"}</BigRating>
-                  <RatingMeta>
-                    <StarsDisplay>
-                      {Array.from({ length: 5 }).map((_, i) =>
-                        i < Math.round(avgRating) ? (
-                          <IoStarSharp key={i} size={15} />
-                        ) : (
-                          <IoStarOutline key={i} size={15} />
-                        ),
-                      )}
-                    </StarsDisplay>
-                    <ReviewCountText>
-                      {reviews.length} review{reviews.length !== 1 ? "s" : ""}
-                    </ReviewCountText>
-                  </RatingMeta>
-                </AvgRatingBlock>
-                <CardLabel style={{ margin: 0 }}>
-                  <RiStarLine size={12} /> Reviews
-                </CardLabel>
-              </ReviewsHeader>
-
-              {reviews.length > 0 ? (
-                <ReviewList>
-                  {reviews.map((r, i) => (
-                    <ReviewCard key={r.id || i} $i={i}>
-                      <ReviewAvatar
-                        src={
-                          r.avatar ||
-                          `https://ui-avatars.com/api/?name=${encodeURIComponent(r.author)}&background=6b9c3e&color=fff&size=80`
-                        }
-                        alt={r.author}
-                      />
-                      <ReviewBody>
-                        <ReviewTop>
-                          <ReviewAuthor>{r.author}</ReviewAuthor>
-                          <ReviewMeta>
-                            <ReviewDate>{r.date}</ReviewDate>
-                            {r.country && (
-                              <ReviewCountry>{r.country}</ReviewCountry>
-                            )}
-                          </ReviewMeta>
-                        </ReviewTop>
-                        <ReviewStars>
-                          {Array.from({ length: 5 }).map((_, j) =>
-                            j < (r.rating || 0) ? (
-                              <IoStarSharp key={j} size={13} />
-                            ) : (
-                              <IoStarOutline key={j} size={13} />
-                            ),
-                          )}
-                        </ReviewStars>
-                        <ReviewText>{r.text}</ReviewText>
-                      </ReviewBody>
-                    </ReviewCard>
-                  ))}
-                </ReviewList>
-              ) : (
-                <EmptyReviews>
-                  <RiStarLine
-                    size={28}
-                    style={{
-                      display: "block",
-                      margin: "0 auto 8px",
-                      opacity: 0.3,
-                    }}
-                  />
-                  No reviews yet — be the first to share your experience!
-                </EmptyReviews>
-              )}
-
-              {/* Add review form */}
-              <ReviewForm
-                placeId={p.id}
-                onAdd={handleAddReview}
-                setShowLogin={setShowLogin}
-              />
-            </Card>
-          </div>
-
-          {/* ── Right sidebar ── */}
-          <div>
-            {/* Pricing */}
-            <Card $delay="30ms">
-              <CardLabel>
-                <RiPriceTag3Line size={12} /> Pricing
-              </CardLabel>
+        {/* Right Sidebar: Actions & Contact */}
+        <aside className="space-y-6">
+          <div className="bg-white p-8 rounded-[32px] border border-sand3 shadow-sm sticky top-24">
+            <h3 className="text-[11px] font-extrabold uppercase tracking-widest text-ink3 mb-6 flex items-center gap-2">
+              <RiPriceTag3Line size={16} /> Plan your visit
+            </h3>
+            
+            <div className="mb-6">
               {isFree ? (
-                <FreeBadge>
-                  <RiCheckLine size={15} /> Free Entry
-                </FreeBadge>
+                <div className="bg-emerald-50 text-emerald-600 px-4 py-3 rounded-2xl font-bold text-sm flex items-center gap-2">
+                  <RiCheckLine size={18} /> No Entry Fee Required
+                </div>
               ) : (
-                <PriceWrap>
-                  <strong>{p.price}</strong>
-                  <span>MAD / person</span>
-                </PriceWrap>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-display font-bold text-ink2">{p.price}</span>
+                  <span className="text-ink3 text-sm font-bold">MAD / person</span>
+                </div>
               )}
-              <BookBtn>
-                <TbCalendarEvent size={17} /> Book a Visit
-              </BookBtn>
-              <ShareBtn
-                onClick={() =>
-                  navigator.share?.({
-                    title: p.title,
-                    url: window.location.href,
-                  })
-                }
-              >
-                <RiShareLine size={14} /> Share this place
-              </ShareBtn>
-            </Card>
+            </div>
 
-            {/* Location */}
-            <Card $delay="60ms">
-              <CardLabel>
-                <RiMapPin2Line size={12} /> City & Region
-              </CardLabel>
-              <ChipRow>
-                {p.city && (
-                  <Chip>
-                    <RiMapPin2Line size={11} /> {p.city}
-                  </Chip>
+            <div className="space-y-3">
+              <button className="w-full py-4 bg-primary text-white rounded-2xl font-bold text-sm shadow-xl shadow-primary/20 hover:bg-ink2 transition-all flex items-center justify-center gap-2 group">
+                <TbCalendarEvent size={18} className="group-hover:scale-110 transition-transform" /> 
+                Book Local Tour
+              </button>
+              <button 
+                onClick={() => setLiked(!liked)}
+                className={`w-full py-4 rounded-2xl border font-bold text-sm transition-all flex items-center justify-center gap-2 
+                  ${liked ? 'bg-accent text-white border-transparent' : 'border-sand3 text-ink2 hover:bg-sand'}`}
+              >
+                <RiHeartLine className={liked ? "fill-current" : ""} /> 
+                {liked ? "Saved to Favorites" : "Save for Later"}
+              </button>
+            </div>
+
+            {/* Contact Details */}
+            <div className="mt-8 pt-8 border-t border-sand2 space-y-4">
+              <h4 className="text-[10px] font-extrabold uppercase tracking-tighter text-ink3">Contact Information</h4>
+              <div className="space-y-3">
+                {p.contactEmail && (
+                  <a href={`mailto:${p.contactEmail}`} className="flex items-center gap-3 text-sm font-semibold hover:text-primary transition-colors">
+                    <span className="w-8 h-8 rounded-lg bg-sand flex items-center justify-center text-ink3"><RiMailLine /></span>
+                    {p.contactEmail}
+                  </a>
                 )}
-              </ChipRow>
-            </Card>
-
-            {/* Category */}
-            {p.category && (
-              <Card $delay="80ms">
-                <CardLabel>
-                  <RiCompassLine size={12} /> Category
-                </CardLabel>
-                <ChipRow>
-                  <Chip>
-                    <RiCompassLine size={11} /> {p.category}
-                  </Chip>
-                </ChipRow>
-              </Card>
-            )}
-
-            {/* Tags */}
-            {p.tags?.length > 0 && (
-              <Card $delay="100ms">
-                <CardLabel>
-                  <TbTag size={12} /> Tags
-                </CardLabel>
-                <ChipRow>
-                  {p.tags.map((t) => (
-                    <Chip key={t}>
-                      <TbTag size={11} /> {t}
-                    </Chip>
-                  ))}
-                </ChipRow>
-              </Card>
-            )}
-
-            {/* Save */}
-            <Card $delay="120ms">
-              <BookBtn
-                onClick={() => setLiked((v) => !v)}
-                style={{
-                  background: liked
-                    ? "linear-gradient(135deg,#e05a5a,#c84040)"
-                    : undefined,
-                  boxShadow: liked
-                    ? "0 4px 16px rgba(224,90,90,0.3)"
-                    : undefined,
-                }}
-              >
-                <RiHeartLine size={16} />
-                {liked ? "Saved to Favourites" : "Save to Favourites"}
-              </BookBtn>
-            </Card>
+                {p.contactPhone && (
+                  <a href={`tel:${p.contactPhone}`} className="flex items-center gap-3 text-sm font-semibold hover:text-primary transition-colors">
+                    <span className="w-8 h-8 rounded-lg bg-sand flex items-center justify-center text-ink3"><RiPhoneLine /></span>
+                    {p.contactPhone}
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
-        </Grid>
-      </Container>
-    </PageWrap>
+        </aside>
+        <CommentSection targetId={id} targetType="Place" />
+      </main>
+      
+
+    </div>
   );
 }

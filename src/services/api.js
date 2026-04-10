@@ -129,6 +129,9 @@ export const api = {
       });
   },
 
+
+
+
   // ── Le reste (inchangé) ───────────────────────────────────────────────────
 
   getInterestCategories: () => fetchData("categories"),
