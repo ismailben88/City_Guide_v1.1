@@ -1,5 +1,4 @@
-// pages/NotificationsPage.jsx
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   RiSearchLine, RiNotification3Line, RiMapPin2Line,
   RiCalendarEventLine, RiShieldCheckLine, RiMegaphoneLine,
@@ -8,281 +7,193 @@ import { IoHeartOutline, IoHeart } from "react-icons/io5";
 import { HiXMark, HiCheck } from "react-icons/hi2";
 import { TbTrash, TbClock } from "react-icons/tb";
 
-import { notifications, notificationCategories } from "../../data/index";
+import { api } from "../../services/api"; 
 import { DateTimePicker } from "../../components/ui/DateTimePicker";
-import { SortDropdown }   from "../../components/ui/SortDropdown";
+import { SortDropdown } from "../../components/ui/SortDropdown";
 
-import {
-  PageWrap, PageHeader, HeaderLeft, PageEyebrow, PageTitle,
-  UnreadBadge, MarkAllBtn,
-  Container, Sidebar, SidebarLabel, CatBtn, CatCount,
-  Content, Toolbar, ToolSearchWrap, ToolSearchIcon,
-  ToolSearchInput, ToolDivider, ToolBtn, DeleteBtn, DateChip,
-  NotifItem, NotifIconWrap, NotifBody, NotifText, NotifMeta,
-  NotifTime, UnreadDot, NotifActions, SmallActionBtn,
-  EmptyState, EmptyIcon, EmptyText,
-} from "./NotificationsPage.styles";
-
-// ─── Category icon map ────────────────────────────────────────────────────────
-const CAT_ICONS = {
-  "All":                    <RiNotification3Line size={14} />,
-  "Places":                 <RiMapPin2Line       size={14} />,
-  "Events":                 <RiCalendarEventLine size={14} />,
-  "Guides":                 <RiShieldCheckLine   size={14} />,
-  "Updates":                <RiMegaphoneLine     size={14} />,
+// Mapping des types de l'API vers tes icônes et couleurs
+const TYPE_CONFIG = {
+  "SYSTEM_BROADCAST": { icon: <RiMegaphoneLine size={14} />, label: "Updates", bg: "bg-blue-50", text: "text-blue-600" },
+  "BOOKING_CONFIRMATION": { icon: <RiCalendarEventLine size={14} />, label: "Events", bg: "bg-emerald-50", text: "text-emerald-600" },
+  "GUIDE_ALERT": { icon: <RiShieldCheckLine size={14} />, label: "Guides", bg: "bg-amber-50", text: "text-amber-600" },
+  "LOCATION_UPDATE": { icon: <RiMapPin2Line size={14} />, label: "Places", bg: "bg-orange-50", text: "text-orange-600" },
 };
 
-const CAT_COLORS = {
-  "Places":  { bg: "rgba(107,156,62,0.12)",  icon: "#6b9c3e"  },
-  "Events":  { bg: "rgba(200,118,26,0.12)",  icon: "#c8761a"  },
-  "Guides":  { bg: "rgba(61,43,26,0.09)",    icon: "#3d2b1a"  },
-  "Updates": { bg: "rgba(100,120,200,0.1)",  icon: "#6478c8"  },
-};
+const CATEGORIES = ["All", "SYSTEM_BROADCAST", "BOOKING_CONFIRMATION", "GUIDE_ALERT", "LOCATION_UPDATE"];
 
 const SORT_OPTIONS = [
-  { value: "recent",  label: "Most Recent",  icon: "🕐" },
-  { value: "oldest",  label: "Oldest First", icon: "🕰" },
-  { value: "unread",  label: "Unread First", icon: "🔵" },
+  { value: "recent", label: "Most Recent", icon: "🕐" },
+  { value: "oldest", label: "Oldest First", icon: "🕰" },
+  { value: "unread", label: "Unread First", icon: "🔵" },
 ];
 
-// ─────────────────────────────────────────────────────────────────────────────
 export default function NotificationsPage() {
+  const [notifications, setNotifications] = useState([]);
   const [activeCategory, setActiveCategory] = useState("All");
-  const [query,          setQuery]          = useState("");
-  const [liked,          setLiked]          = useState(new Set());
-  const [deleted,        setDeleted]        = useState(new Set());
-  const [readAll,        setReadAll]        = useState(false);
+  const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [dateFilter, setDateFilter] = useState(null);
+  const [sortBy, setSortBy] = useState("recent");
 
-  // ── new state for the two toolbar controls ────────────────────────────────
-  const [dateFilter, setDateFilter] = useState(null);   // { date, timeStr } | null
-  const [sortBy,     setSortBy]     = useState("recent");
+  // 1. Fetch data from API
+  useEffect(() => {
+    const fetchNotifs = async () => {
+      try {
+        setLoading(true);
+        const data = await api.getNotifications(); // Assure-toi que cette méthode existe dans api.js
+        setNotifications(data);
+      } catch (err) {
+        console.error("Failed to load notifications", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchNotifs();
+  }, []);
 
-  // ── filter + sort ─────────────────────────────────────────────────────────
+  // 2. Logic de filtrage mise à jour
   const visible = useMemo(() => {
-    let list = notifications.filter((n) => !deleted.has(n.id));
+    let list = [...notifications];
 
-    if (activeCategory !== "All")
-      list = list.filter((n) => n.category === activeCategory);
+    if (activeCategory !== "All") {
+      list = list.filter((n) => n.type === activeCategory);
+    }
 
     if (query.trim()) {
       const q = query.toLowerCase();
-      list = list.filter((n) => n.text?.toLowerCase().includes(q));
+      list = list.filter((n) => 
+        n.title?.toLowerCase().includes(q) || 
+        n.message?.toLowerCase().includes(q)
+      );
     }
 
-    // date filter — keep only notifications whose date matches selected date
     if (dateFilter?.date) {
-      const sel = dateFilter.date;
-      list = list.filter((n) => {
-        const d = new Date(n.date);
-        return (
-          d.getFullYear() === sel.getFullYear() &&
-          d.getMonth()    === sel.getMonth()    &&
-          d.getDate()     === sel.getDate()
-        );
-      });
+      const sel = dateFilter.date.toDateString();
+      list = list.filter((n) => new Date(n.createdAt).toDateString() === sel);
     }
 
-    // sort
-    if (sortBy === "recent") {
-      list = [...list].sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (sortBy === "oldest") {
-      list = [...list].sort((a, b) => new Date(a.date) - new Date(b.date));
-    } else if (sortBy === "unread") {
-      list = [...list].sort((a, b) => {
-        const au = !a.read && !readAll ? 0 : 1;
-        const bu = !b.read && !readAll ? 0 : 1;
-        return au - bu;
-      });
-    }
+    list.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      if (sortBy === "recent") return dateB - dateA;
+      if (sortBy === "oldest") return dateA - dateB;
+      if (sortBy === "unread") return (a.isRead === b.isRead) ? 0 : a.isRead ? 1 : -1;
+      return 0;
+    });
 
     return list;
-  }, [activeCategory, query, deleted, dateFilter, sortBy, readAll]);
+  }, [notifications, activeCategory, query, dateFilter, sortBy]);
 
-  // ── counts ────────────────────────────────────────────────────────────────
-  const countFor = (cat) =>
-    cat === "All"
-      ? notifications.filter((n) => !deleted.has(n.id)).length
-      : notifications.filter((n) => !deleted.has(n.id) && n.category === cat).length;
+  // Actions API
+  const handleMarkAsRead = async (id) => {
+    try {
+      await api.markNotificationRead(id);
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
+    } catch (err) { console.error(err); }
+  };
 
-  const unreadCount = readAll ? 0 : visible.filter((n) => !n.read).length;
+  const handleDelete = async (id) => {
+    try {
+      await api.deleteNotification(id);
+      setNotifications(prev => prev.filter(n => n.id !== id));
+    } catch (err) { console.error(err); }
+  };
 
-  // ── label shown on the DateChip ───────────────────────────────────────────
-  const chipLabel = dateFilter?.date
-    ? dateFilter.date.toLocaleDateString("en-US", { month: "short", day: "2-digit" })
-    : "Apr 05";
+  const unreadCount = notifications.filter(n => !n.isRead).length;
 
-  const toggleLike  = (id) => setLiked((s)  => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
-  const deleteNotif = (id) => setDeleted((s) => new Set(s).add(id));
-  const clearAll    = ()   => setDeleted(new Set(notifications.map((n) => n.id)));
-
-  // ─────────────────────────────────────────────────────────────────────────
   return (
-    <PageWrap>
-
-      {/* ── Header ── */}
-      <PageHeader>
-        <HeaderLeft>
-          <PageEyebrow>Inbox</PageEyebrow>
-          <PageTitle>Notifications</PageTitle>
-        </HeaderLeft>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          {unreadCount > 0 && (
-            <UnreadBadge>
-              <RiNotification3Line size={11} />
-              {unreadCount} unread
-            </UnreadBadge>
-          )}
-          <MarkAllBtn onClick={() => setReadAll(true)}>
-            <HiCheck size={13} /> Mark all as read
-          </MarkAllBtn>
+    <div className="min-h-screen bg-[#fafafa]">
+      <header className="bg-[#3d2b1a] px-5 py-6 md:px-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col gap-1">
+          <span className="font-bold tracking-widest uppercase text-[#6b9c3e] text-[10px]">Portal 2026</span>
+          <h1 className="font-display text-3xl font-bold text-white">Notifications</h1>
         </div>
-      </PageHeader>
+        <div className="flex items-center gap-2.5">
+          {unreadCount > 0 && (
+            <span className="bg-[#6b9c3e]/20 border border-[#6b9c3e]/40 text-[#c8d98a] text-[11px] font-bold px-3 py-1 rounded-full">
+              {unreadCount} new
+            </span>
+          )}
+        </div>
+      </header>
 
-      <Container>
-
-        {/* ── Sidebar ── */}
-        <Sidebar>
-          <SidebarLabel>Categories</SidebarLabel>
-          {notificationCategories.map((cat) => (
-            <CatBtn
+      <main className="max-w-6xl mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-[240px_1fr] gap-8">
+        {/* SIDEBAR */}
+        <aside className="flex flex-col gap-2">
+          {CATEGORIES.map((cat) => (
+            <button
               key={cat}
-              $active={activeCategory === cat}
               onClick={() => setActiveCategory(cat)}
+              className={`flex items-center justify-between px-4 py-2.5 rounded-xl border-2 transition-all text-sm
+                ${activeCategory === cat ? 'border-[#6b9c3e] bg-[#6b9c3e]/5 text-[#6b9c3e] font-bold' : 'border-transparent text-ink3 hover:bg-sand'}`}
             >
-              <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                {CAT_ICONS[cat] || <RiNotification3Line size={14} />}
-                {cat}
+              <span>{TYPE_CONFIG[cat]?.label || cat}</span>
+              <span className="text-[10px] opacity-60">
+                {cat === "All" ? notifications.length : notifications.filter(n => n.type === cat).length}
               </span>
-              <CatCount $active={activeCategory === cat}>
-                {countFor(cat)}
-              </CatCount>
-            </CatBtn>
+            </button>
           ))}
-        </Sidebar>
+        </aside>
 
-        {/* ── Content ── */}
-        <Content>
+        {/* LIST */}
+        <div className="space-y-3">
+          {/* TOOLBAR */}
+          <div className="flex items-center gap-3 bg-white p-2 rounded-2xl border border-sand3 shadow-sm">
+            <RiSearchLine className="ml-2 text-ink3" />
+            <input 
+              className="flex-1 bg-transparent outline-none text-sm font-medium" 
+              placeholder="Search in messages..." 
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <DateTimePicker value={dateFilter?.date} onChange={setDateFilter} />
+            <SortDropdown value={sortBy} onChange={setSortBy} options={SORT_OPTIONS} />
+          </div>
 
-          {/* ── Toolbar ── */}
-          <Toolbar>
-            <ToolSearchWrap>
-              <ToolSearchIcon><RiSearchLine size={15} /></ToolSearchIcon>
-              <ToolSearchInput
-                placeholder="Search notifications…"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              {query && (
-                <ToolBtn onClick={() => setQuery("")} aria-label="Clear search">
-                  <HiXMark size={13} />
-                </ToolBtn>
-              )}
-            </ToolSearchWrap>
-
-            <ToolDivider />
-
-            {/* ── Calendar picker ── */}
-            <DateTimePicker
-              value={dateFilter?.date}
-              onChange={(val) => setDateFilter(val)}
-            >
-              <DateChip
-                $active={!!dateFilter}
-                title={dateFilter ? "Click to change date filter" : "Filter by date"}
-              >
-                <RiCalendarEventLine size={12} />
-                {chipLabel}
-                {dateFilter && (
-                  <span
-                    onClick={(e) => { e.stopPropagation(); setDateFilter(null); }}
-                    style={{ marginLeft: 4, opacity: 0.7, fontSize: 11 }}
-                    title="Clear date filter"
-                  >
-                    ✕
-                  </span>
-                )}
-              </DateChip>
-            </DateTimePicker>
-
-            {/* ── Sort dropdown ── */}
-            <SortDropdown
-              value={sortBy}
-              onChange={setSortBy}
-              options={SORT_OPTIONS}
-              label="Sort by"
-            >
-              <ToolBtn
-                aria-label="Sort"
-                title="Sort notifications"
-                style={{ color: sortBy !== "recent" ? "var(--color-primary)" : undefined }}
-              >
-                <TbClock size={15} />
-              </ToolBtn>
-            </SortDropdown>
-
-            <DeleteBtn
-              aria-label="Clear all"
-              onClick={clearAll}
-              disabled={visible.length === 0}
-            >
-              <TbTrash size={15} />
-            </DeleteBtn>
-          </Toolbar>
-
-          {/* ── Notification list ── */}
-          {visible.length === 0 ? (
-            <EmptyState>
-              <EmptyIcon>🔔</EmptyIcon>
-              <EmptyText>
-                {query
-                  ? "No notifications match your search."
-                  : dateFilter
-                  ? "No notifications for this date."
-                  : "No notifications in this category."}
-              </EmptyText>
-            </EmptyState>
+          {loading ? (
+             <div className="text-center py-20 animate-pulse text-ink3">Syncing with server...</div>
+          ) : visible.length === 0 ? (
+            <div className="text-center py-20 bg-white rounded-3xl border-2 border-dashed border-sand3">
+              <p className="text-ink3 text-sm">No notifications found.</p>
+            </div>
           ) : (
-            visible.map((n, i) => {
-              const colors   = CAT_COLORS[n.category] || CAT_COLORS["Places"];
-              const isUnread = !n.read && !readAll;
-              const isLiked  = liked.has(n.id);
-
+            visible.map((n) => {
+              const config = TYPE_CONFIG[n.type] || TYPE_CONFIG["SYSTEM_BROADCAST"];
               return (
-                <NotifItem key={n.id} $unread={isUnread} $index={i}>
+                <div 
+                  key={n.id} 
+                  onClick={() => !n.isRead && handleMarkAsRead(n.id)}
+                  className={`group flex items-start gap-4 p-5 rounded-2xl border transition-all cursor-pointer
+                    ${!n.isRead ? 'bg-[#f8fdf2] border-[#6b9c3e]/30 shadow-md shadow-emerald-900/5' : 'bg-white border-sand3'}`}
+                >
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${config.bg} ${config.text}`}>
+                    {config.icon}
+                  </div>
+                  
+                  <div className="flex-1">
+                    <div className="flex justify-between items-start mb-1">
+                      <h4 className={`text-sm ${!n.isRead ? 'font-bold' : 'font-semibold text-ink2'}`}>{n.title}</h4>
+                      <span className="text-[10px] text-ink3 font-bold">{new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                    </div>
+                    <p className="text-xs text-ink3 leading-relaxed mb-2">{n.message}</p>
+                    <div className="flex items-center gap-3 text-[10px] text-ink3 font-bold uppercase tracking-tighter">
+                       <span className="flex items-center gap-1"><TbClock /> {new Date(n.createdAt).toLocaleDateString()}</span>
+                       <span>•</span>
+                       <span>{n.type.replace('_', ' ')}</span>
+                    </div>
+                  </div>
 
-                  <NotifIconWrap $color={colors.bg} $iconColor={colors.icon}>
-                    {n.icon || <RiNotification3Line size={18} />}
-                  </NotifIconWrap>
-
-                  <NotifBody>
-                    <NotifText $unread={isUnread}>{n.text}</NotifText>
-                    <NotifMeta>
-                      <NotifTime><TbClock size={11} />{n.time}</NotifTime>
-                      <NotifTime><RiCalendarEventLine size={11} />{n.date}</NotifTime>
-                    </NotifMeta>
-                  </NotifBody>
-
-                  {isUnread && <UnreadDot />}
-
-                  <NotifActions>
-                    <SmallActionBtn onClick={() => toggleLike(n.id)} aria-label={isLiked ? "Unlike" : "Like"}>
-                      {isLiked
-                        ? <IoHeart size={14} style={{ color: "#e05a5a" }} />
-                        : <IoHeartOutline size={14} />
-                      }
-                    </SmallActionBtn>
-                    <SmallActionBtn $danger onClick={() => deleteNotif(n.id)} aria-label="Delete">
-                      <TbTrash size={14} />
-                    </SmallActionBtn>
-                  </NotifActions>
-
-                </NotifItem>
+                  <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onClick={(e) => { e.stopPropagation(); handleDelete(n.id); }} className="p-2 hover:bg-red-50 text-ink3 hover:text-red-500 rounded-lg">
+                      <TbTrash size={16} />
+                    </button>
+                  </div>
+                </div>
               );
             })
           )}
-
-        </Content>
-      </Container>
-    </PageWrap>
+        </div>
+      </main>
+    </div>
   );
 }
