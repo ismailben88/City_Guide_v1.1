@@ -129,9 +129,6 @@ export const api = {
       });
   },
 
-
-
-
   // ── Le reste (inchangé) ───────────────────────────────────────────────────
 
   getInterestCategories: () => fetchData("categories"),
@@ -192,4 +189,19 @@ export const api = {
   getTours: () => fetchData("places"),
   getTestimonials: () => fetchData("comments"),
   getNavLinks: () => fetchData("media"),
+  // POST /comments  → crée un nouveau commentaire
+  postComment: async (commentData) => {
+    const res = await axios.post(`${BASE_URL}/comments`, commentData);
+    return res.data;
+  },
+
+  // PATCH /comments/:id  → met à jour likes + likedBy
+  // json-server supporte PATCH nativement (mise à jour partielle)
+  toggleLikeComment: async (commentId, newLikes, newLikedBy) => {
+    const res = await axios.patch(`${BASE_URL}/comments/${commentId}`, {
+      likes: newLikes,
+      likedBy: newLikedBy,
+    });
+    return res.data;
+  },
 };

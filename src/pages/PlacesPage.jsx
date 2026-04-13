@@ -1,9 +1,9 @@
 // pages/PlacesPage.jsx
 import { useState, useMemo, useEffect, useRef } from "react";
-import { useNavigation } from "../../hooks/useNavigation";
+import { useNavigation } from "../hooks/useNavigation";
 
-import { api } from "../../services/api";
-import PlaceCard from "../../components/placeCard/PlaceCard"; 
+import { api } from "../services/api";
+import PlaceCard from "../components/placeCard/PlaceCard"; 
 
 // ─── Inline SVG icons (zero extra deps) ──────────────────────────────────────
 const IconSearch  = () => <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>;

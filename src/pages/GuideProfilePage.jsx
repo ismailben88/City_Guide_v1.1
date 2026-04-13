@@ -8,8 +8,8 @@ import {
 } from "react-icons/ri";
 import { TbLanguage, TbTargetArrow, TbCalendarEvent } from "react-icons/tb";
 
-import { api } from "../../services/api"; // Ton service API mis à jour
-import CommentSection from "../../components/comentSection/CommentSection"; // Vérifie l'import
+import { api } from "../services/api"; // Ton service API mis à jour
+import CommentSection from "../components/comentSection/CommentSection"; // Vérifie l'import
 
 export default function GuideProfilePage() {
   const { id } = useParams();

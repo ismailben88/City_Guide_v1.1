@@ -5,7 +5,6 @@
 //  (e.g. selected place/guide data passed between pages).
 // ─────────────────────────────────────────────────────────────────────────────
 import { createSlice } from "@reduxjs/toolkit";
-
 const navigationSlice = createSlice({
   name: "navigation",
   initialState: {

@@ -71,39 +71,39 @@ export function ImgCard({ title, subtitle, img, onClick }) {
 // }
 
 /* ── CommentSection ─────────────────────── */
-export function CommentSection({ comments }) {
-  return (
-    <div className="comment-section">
-      <div className="comment-section__title">Comments</div>
+// export function CommentSection({ comments }) {
+//   return (
+//     <div className="comment-section">
+//       <div className="comment-section__title">Comments</div>
 
-      {/* Input row */}
-      <div className="comment-input-row">
-        <div className="comment-input-avatar">👤</div>
-        <input className="comment-input" placeholder="leave comment..." />
-        <Stars rating={0} size="lg" />
-      </div>
-      <div className="comment-publish-row">
-        <button className="btn btn-primary">Publish</button>
-      </div>
+//       {/* Input row */}
+//       <div className="comment-input-row">
+//         <div className="comment-input-avatar">👤</div>
+//         <input className="comment-input" placeholder="leave comment..." />
+//         <Stars rating={0} size="lg" />
+//       </div>
+//       <div className="comment-publish-row">
+//         <button className="btn btn-primary">Publish</button>
+//       </div>
 
-      {/* Comment list */}
-      {comments.map((c) => (
-        <div key={c.id} className="comment-item">
-          <div className="comment-item__header">
-            <img className="comment-item__avatar" src={c.img} alt={c.user} />
-            <span className="comment-item__user">{c.user}</span>
-            <Stars rating={c.rating} />
-          </div>
-          <p className="comment-item__text">{c.text}</p>
-          <div className="comment-item__meta">
-            {c.likes} ♡ &nbsp; ▼ {c.dislikes} &nbsp; 🔴
-          </div>
-        </div>
-      ))}
-      <div className="load-more">load more</div>
-    </div>
-  );
-}
+//       {/* Comment list */}
+//       {comments.map((c) => (
+//         <div key={c.id} className="comment-item">
+//           <div className="comment-item__header">
+//             <img className="comment-item__avatar" src={c.img} alt={c.user} />
+//             <span className="comment-item__user">{c.user}</span>
+//             <Stars rating={c.rating} />
+//           </div>
+//           <p className="comment-item__text">{c.text}</p>
+//           <div className="comment-item__meta">
+//             {c.likes} ♡ &nbsp; ▼ {c.dislikes} &nbsp; 🔴
+//           </div>
+//         </div>
+//       ))}
+//       <div className="load-more">load more</div>
+//     </div>
+//   );
+// }
 
 /* ── SearchBar ──────────────────────────── */
 export function SearchBar({ placeholder = "Explore..." }) {

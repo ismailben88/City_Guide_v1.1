@@ -15,18 +15,23 @@ import LoginModal from "./components/login/LoginModal";
 import HomePage         from "./pages/HomePage";
 // import GuidePage        from "./pages/GuidePage";
 
-import PlacesPage       from "./pages/place/PlacesPage";
-import PlaceDetailPage  from "./pages/placeDetailPage/PlaceDetailPage";
+import PlacesPage       from "./pages/PlacesPage";
+import PlaceDetailPage  from "./pages/PlaceDetailPage";
 import AboutPage        from "./pages/AboutPage";
 import ContactPage      from "./pages/ContactPage";
-import AccountPage      from "./pages/AccountPage/AccountPage";
+import AccountPage      from "./pages/AccountPage";
 import EventsPage from "./pages/EventsPage";
 
 // ── Global styles ─────────────────────────────────────────────────────────────
 import "./styles/global.css";
 import NotificationsPage from "./pages/notification/NotificationsPage";
-import GuideProfilePage from "./pages/GuideProfilePage/GuideProfilePage";
+// import NotificationsPage from "./pages/NotificationsPage"; 
+// import {NotificationsPage} from "./pages/NotificationsPage";
+import GuideProfilePage from "./pages/GuideProfilePage";
 import GuidePage from "./pages/GuidePage";
+// import PlaceDetailPage from "./pages/PlaceDetailPage";
+// import NotificationsPage from "./pages/NotificationsPage";
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Layout wrapper — renders on every route
@@ -63,7 +68,7 @@ function AppLayout() {
 
           {/* ── Account ── */}
           <Route path="/account" element={<AccountPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/notifications" element={<NotificationsPage/> } />
 
           {/* ── 404 — redirect to home ── */}
           <Route path="*" element={<Navigate to="/" replace />} />
