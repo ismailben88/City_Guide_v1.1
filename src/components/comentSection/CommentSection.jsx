@@ -168,7 +168,7 @@ export default function CommentSection({ targetId, targetType = "Place" }) {
 
   useEffect(() => {
     if (targetId) loadComments();
-  }, [targetId, targetType]);
+  }, [targetId]);
 
   // ── Post comment (with optimistic UI) ─────────────────────────────────────
   const handlePublish = async () => {

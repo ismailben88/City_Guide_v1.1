@@ -41,7 +41,11 @@ L.Icon.Default.mergeOptions({
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BookingModal
+// BookingModal 
+const formatCoords = (coords) => {
+  if (!coords || coords.length !== 2) return [31.7917, -7.0926];
+  return [coords[1], coords[0]];
+};
 // ─────────────────────────────────────────────────────────────────────────────
 function BookingModal({ place, onClose }) {
   const dispatch = useDispatch();
@@ -296,7 +300,7 @@ export default function PlaceDetailPage() {
 
   const p      = place;
   const isFree = !p.price || p.price === 0 || p.price === "0";
-  const coords = p.location?.coordinates || [31.7917, -7.0926];
+const coords = formatCoords(p.location?.coordinates);
 
   return (
     <div className="min-h-screen bg-sand font-body text-ink2">

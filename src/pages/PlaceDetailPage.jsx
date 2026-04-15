@@ -24,7 +24,10 @@ L.Icon.Default.mergeOptions({
   iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
   shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
 });
-
+const formatCoords = (coords) => {
+  if (!coords || coords.length !== 2) return [31.7917, -7.0926];
+  return [coords[1], coords[0]];
+};
 export default function PlaceDetailPage() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -78,7 +81,7 @@ export default function PlaceDetailPage() {
 
   const p = place;
   const isFree = !p.price || p.price === 0 || p.price === "0";
-  const coords = p.location?.coordinates || [31.7917, -7.0926]; // Fallback Morocco center
+ const coords = formatCoords(p.location?.coordinates); // Fallback Morocco center
 
   return (
     <div className="min-h-screen bg-sand font-body text-ink2">
@@ -178,17 +181,48 @@ export default function PlaceDetailPage() {
           )}
 
           {/* Map */}
-          <section className="bg-white p-8 rounded-[32px] border border-sand3 shadow-sm">
-            <h3 className="text-[11px] font-extrabold uppercase tracking-widest text-ink3 mb-5 flex items-center gap-2">
-              <TbMap2 size={16} /> Find us on Map
-            </h3>
-            <div className="h-[300px] rounded-2xl overflow-hidden border border-sand3">
-              <MapContainer center={coords} zoom={15} className="h-full w-full" zoomControl={false}>
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker position={coords}><Popup>{p.name}</Popup></Marker>
-              </MapContainer>
-            </div>
-          </section>
+         <section className="bg-white p-8 rounded-[32px] border border-sand3 shadow-sm">
+  <h3 className="text-[11px] font-extrabold uppercase tracking-widest text-ink3 mb-5 flex items-center gap-2">
+    <TbMap2 size={16} /> Nous trouver
+  </h3>
+
+  <div className="h-[320px] rounded-2xl overflow-hidden border border-sand3 relative">
+
+    {/* Overlay UX */}
+    <div className="absolute top-3 left-3 z-[1000] bg-white/90 px-3 py-1 rounded-full text-xs shadow">
+      📍 {p.name}
+    </div>
+
+    <MapContainer
+      center={coords}
+      zoom={15}
+      className="h-full w-full"
+      zoomControl={false}
+      scrollWheelZoom={true}
+    >
+      <TileLayer
+        attribution="&copy; OpenStreetMap contributors"
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+
+      <Marker position={coords}>
+        <Popup>
+          <div className="space-y-1">
+            <h4 className="font-bold text-sm">{p.name}</h4>
+            <p className="text-xs text-gray-500">{p.cityName}</p>
+          </div>
+        </Popup>
+      </Marker>
+    </MapContainer>
+  </div>
+<a
+  href={`https://www.google.com/maps?q=${coords[0]},${coords[1]}`}
+  target="_blank"
+  className="text-primary text-xs font-bold mt-2 inline-block"
+>
+  Ouvrir dans Google Maps
+</a>
+</section> 
         </div>
 
         {/* Right Sidebar: Actions & Contact */}
