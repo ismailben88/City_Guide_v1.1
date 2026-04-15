@@ -20275,6 +20275,18 @@
   ],
   "notifications": [
     {
+      "id": "notif_sys_876a",
+      "recipientId": "876a",
+      "senderId": "u_admin",
+      "type": "SYSTEM_BROADCAST",
+      "title": "New Policy for 2026",
+      "message": "Important update regarding guide certifications in Morocco.",
+      "targetType": "System",
+      "targetId": null,
+      "isRead": false,
+      "createdAt": "2026-04-12T10:10:27.803Z"
+    },
+    {
       "id": "notif_sys_u1",
       "recipientId": "u1",
       "senderId": "u_admin",
