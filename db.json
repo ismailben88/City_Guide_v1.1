@@ -5,7 +5,7 @@
       "firstName": "Ismail",
       "lastName": "Benjalloul",
       "email": "admin@cityguide.ma",
-      "passwordHash": "admin123",
+      "passwordHash": "ismailben",
       "role": "admin",
       "isGuide": false,
       "isVerified": true,
@@ -708,6 +708,16 @@
       "avatar": "https://ui-avatars.com/api/?name=wafaa&background=6b9c3e&color=fff",
       "city": "",
       "joinedAt": "2026-04-10",
+      "role": "user"
+    },
+    {
+      "id": "0de6",
+      "name": "ismail benjalloul",
+      "email": "ismailbenjalloul1@gmail.com",
+      "password": "ismailben",
+      "avatar": "https://ui-avatars.com/api/?name=ismail%20benjalloul&background=6b9c3e&color=fff",
+      "city": "",
+      "joinedAt": "2026-04-12",
       "role": "user"
     }
   ],
@@ -13124,7 +13134,8 @@
       "parentCommentId": null,
       "likes": 29,
       "status": "active",
-      "createdAt": "2026-04-10T09:00:55.425Z"
+      "createdAt": "2026-04-10T09:00:55.425Z",
+      "likedBy": []
     },
     {
       "id": "com2",
@@ -13141,7 +13152,8 @@
       "parentCommentId": null,
       "likes": 21,
       "status": "active",
-      "createdAt": "2026-04-09T14:37:37.508Z"
+      "createdAt": "2026-04-09T14:37:37.508Z",
+      "likedBy": []
     },
     {
       "id": "com3",
@@ -13175,7 +13187,8 @@
       "parentCommentId": null,
       "likes": 42,
       "status": "active",
-      "createdAt": "2026-04-10T08:41:49.743Z"
+      "createdAt": "2026-04-10T08:41:49.743Z",
+      "likedBy": []
     },
     {
       "id": "com5",
@@ -17103,6 +17116,128 @@
       "likes": 49,
       "status": "active",
       "createdAt": "2026-04-09T17:29:09.979Z"
+    },
+    {
+      "id": "ca8b",
+      "targetId": "p2",
+      "targetType": "Place",
+      "authorId": "794a",
+      "author": {
+        "id": "794a",
+        "avatarUrl": ""
+      },
+      "content": "cccc",
+      "rating": 0,
+      "parentCommentId": null,
+      "likes": 1,
+      "likedBy": [
+        "794a"
+      ],
+      "status": "active",
+      "createdAt": "2026-04-12T18:18:44.501Z"
+    },
+    {
+      "id": "2340",
+      "targetId": "p2",
+      "targetType": "Place",
+      "authorId": "794a",
+      "author": {
+        "id": "794a",
+        "avatarUrl": ""
+      },
+      "content": "ddd",
+      "rating": 4,
+      "parentCommentId": null,
+      "likes": 1,
+      "likedBy": [
+        "794a"
+      ],
+      "status": "active",
+      "createdAt": "2026-04-12T18:18:50.542Z"
+    },
+    {
+      "id": "ba22",
+      "targetId": "p2",
+      "targetType": "Place",
+      "authorId": "794a",
+      "author": {
+        "id": "794a",
+        "avatarUrl": ""
+      },
+      "content": "ismail benjalloul",
+      "rating": 0,
+      "parentCommentId": null,
+      "likes": 1,
+      "likedBy": [
+        "794a"
+      ],
+      "status": "active",
+      "createdAt": "2026-04-12T18:20:05.735Z"
+    },
+    {
+      "id": "117b",
+      "targetId": "gp15",
+      "targetType": "Guide",
+      "authorId": "794a",
+      "author": {
+        "id": "794a",
+        "avatarUrl": ""
+      },
+      "content": "cccc",
+      "rating": 0,
+      "parentCommentId": null,
+      "likes": 0,
+      "likedBy": [],
+      "status": "active",
+      "createdAt": "2026-04-12T18:23:30.062Z"
+    },
+    {
+      "id": "temp-1776019679511",
+      "targetId": "p14",
+      "targetType": "Place",
+      "authorId": "794a",
+      "author": {
+        "id": "794a",
+        "avatarUrl": ""
+      },
+      "content": "dddddddddd",
+      "rating": 4,
+      "likes": 0,
+      "likedBy": [],
+      "status": "active",
+      "createdAt": "2026-04-12T18:47:59.511Z"
+    },
+    {
+      "id": "temp-1776020755691",
+      "targetId": "p2",
+      "targetType": "Place",
+      "authorId": "0de6",
+      "author": {
+        "id": "0de6",
+        "avatarUrl": ""
+      },
+      "content": "cccc",
+      "rating": 2,
+      "likes": 0,
+      "likedBy": [],
+      "status": "active",
+      "createdAt": "2026-04-12T19:05:55.691Z"
+    },
+    {
+      "id": "temp-1776068041366",
+      "targetId": "gp10",
+      "targetType": "Guide",
+      "authorId": "0de6",
+      "author": {
+        "id": "0de6",
+        "avatarUrl": ""
+      },
+      "content": "ddd",
+      "rating": 2,
+      "likes": 0,
+      "likedBy": [],
+      "status": "active",
+      "createdAt": "2026-04-13T08:14:01.366Z"
     }
   ],
   "media": [
@@ -20288,7 +20423,7 @@
     },
     {
       "id": "notif_sys_u1",
-      "recipientId": "u1",
+      "recipientId": "0de6",
       "senderId": "u_admin",
       "type": "SYSTEM_BROADCAST",
       "title": "New Policy for 2026",
@@ -20300,7 +20435,7 @@
     },
     {
       "id": "notif_sys_u2",
-      "recipientId": "u2",
+      "recipientId": "0de6",
       "senderId": "u_admin",
       "type": "SYSTEM_BROADCAST",
       "title": "New Policy for 2026",
@@ -21546,5 +21681,6 @@
       "isRead": false,
       "createdAt": "2026-04-09T11:36:13.793Z"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
