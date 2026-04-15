@@ -77,7 +77,14 @@ export default function HomePage() {
     <div className="page-content">
       
       {/* Hero : on passe handleSearch pour la barre de recherche principale */}
-      <Hero onSearch={handleSearch} />
+      
+    <Hero 
+      onSearch={handleSearch} 
+      allData={{ 
+        places: topSearchPlaces, 
+        guides: guides, 
+        events: events 
+      }} />
 
       {/* TopSearch : On lui passe maintenant les trendingSearches pour afficher les tags cliquables */}
       <TopSearch 

@@ -17238,6 +17238,22 @@
       "likedBy": [],
       "status": "active",
       "createdAt": "2026-04-13T08:14:01.366Z"
+    },
+    {
+      "id": "temp-1776243653978",
+      "targetId": "p21",
+      "targetType": "Place",
+      "authorId": "876a",
+      "author": {
+        "id": "876a",
+        "avatarUrl": ""
+      },
+      "content": "very nice",
+      "rating": 4,
+      "likes": 0,
+      "likedBy": [],
+      "status": "active",
+      "createdAt": "2026-04-15T09:00:53.978Z"
     }
   ],
   "media": [
