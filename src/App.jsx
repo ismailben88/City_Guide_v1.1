@@ -24,11 +24,11 @@ import EventsPage from "./pages/EventsPage";
 
 // ── Global styles ─────────────────────────────────────────────────────────────
 import "./styles/global.css";
-import NotificationsPage from "./pages/notification/NotificationsPage";
-// import NotificationsPage from "./pages/NotificationsPage"; 
-// import {NotificationsPage} from "./pages/NotificationsPage";
+// import NotificationsPage from "./pages/notification/NotificationsPage";
+
 import GuideProfilePage from "./pages/GuideProfilePage";
 import GuidePage from "./pages/GuidePage";
+import NotificationsPage from "./pages/NotificationsPage";
 // import PlaceDetailPage from "./pages/PlaceDetailPage";
 // import NotificationsPage from "./pages/NotificationsPage";
 

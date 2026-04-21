@@ -17245,22 +17245,7 @@
       "status": "active",
       "createdAt": "2026-04-13T08:14:01.366Z"
     },
-    {
-      "id": "temp-1776098684069",
-      "targetId": "p1",
-      "targetType": "Place",
-      "authorId": "0de6",
-      "author": {
-        "id": "0de6",
-        "avatarUrl": ""
-      },
-      "content": "ccc",
-      "rating": 4,
-      "likes": 0,
-      "likedBy": [],
-      "status": "active",
-      "createdAt": "2026-04-13T16:44:44.069Z"
-    },
+   
     {
       "id": "temp-1776098698861",
       "targetId": "p1",
@@ -20466,6 +20451,18 @@
   ],
   "notifications": [
     {
+      "id": "notif_sys_876a",
+      "recipientId": "876a",
+      "senderId": "u_admin",
+      "type": "SYSTEM_BROADCAST",
+      "title": "New Policy for 2026",
+      "message": "Important update regarding guide certifications in Morocco.",
+      "targetType": "System",
+      "targetId": null,
+      "isRead": false,
+      "createdAt": "2026-04-12T10:10:27.803Z"
+    },
+    {
       "id": "notif_sys_u1",
       "recipientId": "0de6",
       "senderId": "u_admin",
@@ -21725,6 +21722,6 @@
       "isRead": false,
       "createdAt": "2026-04-09T11:36:13.793Z"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
+
 }
