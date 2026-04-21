@@ -13,8 +13,9 @@ import LoginModal from "./components/login/LoginModal";
 
 // ── Pages ─────────────────────────────────────────────────────────────────────
 import HomePage         from "./pages/HomePage";
-// import GuidePage        from "./pages/GuidePage";
-
+import GuideProfilePage from "./pages/GuideProfilePage";
+import GuidePage from "./pages/GuidePage";
+import NotificationsPage from "./pages/NotificationsPage";
 import PlacesPage       from "./pages/PlacesPage";
 import PlaceDetailPage  from "./pages/PlaceDetailPage";
 import AboutPage        from "./pages/AboutPage";
@@ -24,14 +25,6 @@ import EventsPage from "./pages/EventsPage";
 
 // ── Global styles ─────────────────────────────────────────────────────────────
 import "./styles/global.css";
-// import NotificationsPage from "./pages/notification/NotificationsPage";
-
-import GuideProfilePage from "./pages/GuideProfilePage";
-import GuidePage from "./pages/GuidePage";
-import NotificationsPage from "./pages/NotificationsPage";
-// import PlaceDetailPage from "./pages/PlaceDetailPage";
-// import NotificationsPage from "./pages/NotificationsPage";
-
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Layout wrapper — renders on every route
