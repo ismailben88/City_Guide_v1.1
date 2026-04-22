@@ -63,7 +63,7 @@ function UserDropdown({ user, avatarSrc, onClose }) {
 
   const MENU_ITEMS = [
     { icon: <RiUserLine        size={15} />, label: "My Profile",         path: "/account"          },
-    { icon: <RiHeartLine       size={15} />, label: "Saved Places",       path: "/account#saved"    },
+    { icon: <RiHeartLine       size={15} />, label: "Favorites",       path: "/favorites"    },
     { icon: <RiSettingsLine    size={15} />, label: "Settings",           path: "/account#settings" },
     { icon: <RiShieldCheckLine size={15} />, label: "Privacy & Security", path: "/account#privacy"  },
   ];

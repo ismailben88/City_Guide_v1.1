@@ -15,7 +15,7 @@
 
 import { MapPin, ShieldCheck, ArrowRight, Clock } from "lucide-react";
 import { IoStarSharp } from "react-icons/io5";
-
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 // Returns open days summary: "Mon · Tue · Thu · Sat"
 function getOpenDays(schedule = []) {
   return schedule
@@ -164,17 +164,29 @@ export default function GuideListItem({ guide, index, onClick }) {
             </span>
           )}
         </div>
-
-        {/* View button */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onClick();
-          }}
-          className="flex items-center gap-1.5 bg-primary text-white rounded-full px-4 py-1.5 font-body text-xs font-bold hover:bg-accent transition-all duration-150 hover:gap-2.5"
+          
+         <div
+          className="flex items-center gap-2"
+          onClick={(e) => e.stopPropagation()} // prevent card click when interacting with buttons
         >
-          View <ArrowRight size={11} />
-        </button>
+          <FavoriteButton
+            targetId={guide.id}
+            targetType="GuideProfile"
+            size="sm"
+          />
+ 
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onClick();
+            }}
+            className="flex items-center gap-1.5 bg-primary text-white rounded-full
+                       px-4 py-1.5 font-body text-xs font-bold
+                       hover:bg-accent transition-all duration-150 hover:gap-2.5"
+          >
+            View <ArrowRight size={11} />
+          </button>
+        </div>
       </div>
     </div>
   );

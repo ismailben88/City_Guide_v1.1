@@ -97,7 +97,7 @@ export default function Hero({ onSearch, allData }) {
   const slide = SLIDES[cur];
 
   return (
-    <section className="relative w-full h-screen min-h-[580px] overflow-hidden bg-[#1a1206]">
+    <section className="relative w-full h-screen min-h-[580px] overflow-hidden bg-[#160f03]">
       {/* Progress bar */}
       <div key={`prog-${cur}`} className="absolute top-0 left-0 h-[3px] bg-[#6b9c3e] z-30 animate-prog" />
 
@@ -113,14 +113,14 @@ export default function Hero({ onSearch, allData }) {
       <div className="absolute inset-0 z-[5] pointer-events-none bg-gradient-to-t from-[#3d2b1a]/90 via-black/30 to-transparent" />
 
       {/* Content */}
-      <div className="absolute bottom-[110px] left-14 right-14 z-20 flex flex-col gap-7 max-sm:left-5 max-sm:right-5">
+      <div className="absolute bottom-[200px] left-20 right-14 z-20 flex flex-col gap-7 max-sm:left-5 max-sm:right-5">
         <div key={`txt-${cur}`} className="flex flex-col gap-2">
-          <span className="inline-flex items-center gap-1.5 w-fit px-3 py-1.5 rounded-full text-[11px] font-bold tracking-widest uppercase text-[#c8d98a] bg-[#6b9c3e]/20 border border-[#6b9c3e]/40 backdrop-blur-md animate-slide-up-1">
+          <span className="inline-flex items-center gap-1.5 w-fit px-3 py-1.5 rounded-full text-s font-bold tracking-widest uppercase text-[#d4f06f] bg-[#6b9c3e]/20 border border-[#6b9c3e]/40 backdrop-blur-md animate-slide-up-1">
             <TbMapPin size={13} /> {slide.tag}
           </span>
           <div className="flex items-center gap-2.5 animate-slide-up-2">
-            <span className="w-9 h-px bg-white/40" />
-            <span className="text-[11px] font-semibold tracking-[0.26em] uppercase text-white/60">{slide.label}</span>
+            <span className="w-9 h-px bg-white" />
+            <span className="text-s font-semibold tracking-[0.26em] uppercase text-white  ">{slide.label}</span>
           </div>
           <h1 className="text-[clamp(52px,9vw,112px)] font-bold leading-[0.92] text-white tracking-tight font-display animate-slide-up-3">
             {slide.city}
@@ -174,12 +174,12 @@ export default function Hero({ onSearch, allData }) {
 
         {/* Quick Chips */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-semibold text-white/50">Popular:</span>
+          <span className="text-s font-semibold text-white/90">Popular:</span>
           {QUICK_TERMS.map((t) => (
             <button
               key={t}
               onClick={() => { setQuery(t); onSearch?.(t); }}
-              className="text-xs font-semibold px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 backdrop-blur-md hover:bg-[#6b9c3e]/30 hover:border-[#6b9c3e]/50 hover:text-[#c8d98a] transition-all"
+              className="text-s font-semibold px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-white/90 backdrop-blur-md hover:bg-[#6b9c3e]/30 hover:border-[#6b9c3e]/50 hover:text-[#c8d98a] transition-all"
             >
               {t}
             </button>

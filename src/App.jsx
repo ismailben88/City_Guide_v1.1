@@ -1,9 +1,11 @@
 // App.jsx
 import { useState } from "react";
 import { Provider }  from "react-redux";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate,Outlet } from "react-router-dom";
 import store from "./store/index";
 
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "./store/slices/authSlice";
 // ── Layout ────────────────────────────────────────────────────────────────────
 import Navbar  from "./components/layout/navBar/Navbar";
 import Footer  from "./components/layout/footer/Footer";
@@ -22,10 +24,15 @@ import AboutPage        from "./pages/AboutPage";
 import ContactPage      from "./pages/ContactPage";
 import AccountPage      from "./pages/AccountPage";
 import EventsPage from "./pages/EventsPage";
-
+import FavoritesPage from "./pages/FavoritesPage";
 // ── Global styles ─────────────────────────────────────────────────────────────
 import "./styles/global.css";
-
+function ProtectedRoute() {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  return isLoggedIn
+    ? <Outlet />
+    : <Navigate to="/login" replace state={{ from: "/favorites" }} />;
+}
 // ─────────────────────────────────────────────────────────────────────────────
 //  Layout wrapper — renders on every route
 // ─────────────────────────────────────────────────────────────────────────────
@@ -54,7 +61,9 @@ function AppLayout() {
             path="/places/:id"
             element={<PlaceDetailPage setShowLogin={setShowLogin} />}
           />
-
+          <Route element={<ProtectedRoute />}>
+          <Route path="/favorites" element={<FavoritesPage />} />
+          </Route>
           {/* ── Static pages ── */}
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />

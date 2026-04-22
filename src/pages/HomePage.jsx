@@ -15,6 +15,8 @@ import "../styles/Pages.css";
 // On élargit le filtre pour inclure les nouvelles catégories dynamiques
 const FILTER_MAP = {
   "guides": "guides",
+  "events": "events",
+  "festivals": "events",
   "restaurants": "places",
   "riads": "places",
   "desert tours": "destinations",
