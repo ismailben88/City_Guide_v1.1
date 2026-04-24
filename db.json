@@ -20321,7 +20321,7 @@
       "message": "Selena left a review on Kreiger, Wunsch and Funk Park",
       "targetType": "Place",
       "targetId": "p57",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-04-09T23:10:28.507Z"
     },
     {
@@ -20333,7 +20333,7 @@
       "message": "Avis left a review on Kreiger, Wunsch and Funk Park",
       "targetType": "Place",
       "targetId": "p57",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-04-09T20:59:21.997Z"
     },
     {
@@ -20345,7 +20345,7 @@
       "message": "Ismail left a review on Goodwin and Sons Park",
       "targetType": "Place",
       "targetId": "p58",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-04-10T08:41:31.131Z"
     },
     {
@@ -20357,7 +20357,7 @@
       "message": "Jose left a review on Goodwin and Sons Park",
       "targetType": "Place",
       "targetId": "p58",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-04-09T17:40:26.735Z"
     },
     {
@@ -20369,7 +20369,7 @@
       "message": "Sherman left a review on Goodwin and Sons Park",
       "targetType": "Place",
       "targetId": "p58",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-04-09T14:54:16.257Z"
     },
     {
@@ -20381,7 +20381,7 @@
       "message": "Cicero left a review on Goodwin and Sons Park",
       "targetType": "Place",
       "targetId": "p58",
-      "isRead": false,
+      "isRead": true,
       "createdAt": "2026-04-09T11:36:13.793Z"
     }
   ],
