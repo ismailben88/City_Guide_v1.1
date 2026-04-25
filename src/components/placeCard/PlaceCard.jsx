@@ -1,19 +1,20 @@
 // components/placeCard/PlaceCard.jsx
 import { IoStarSharp, IoStarOutline } from "react-icons/io5";
 import { RiMapPin2Line, RiLeafLine, RiShareLine } from "react-icons/ri";
-import { TbTicket, TbTag, TbShoppingBag } from "react-icons/tb";
+import { TbTicket, TbTag } from "react-icons/tb";
 import { HiArrowRight } from "react-icons/hi2";
+import FavoriteButton from "../FavoriteButton/FavoriteButton";
 
 export default function PlaceCard({ place, index = 0, onClick }) {
-  // Logic pour extraire le texte de la catégorie si c'est un objet
-  const categoryDisplayName = typeof place.category === 'object' 
-    ? (place.category.name || "Lieu") 
-    : (place.category || "Lieu");
+  const categoryDisplayName =
+    typeof place.category === "object"
+      ? place.category.name || "Lieu"
+      : place.category || "Lieu";
 
-  const fullStars = Math.floor(place.averageRating || 0);
+  const fullStars  = Math.floor(place.averageRating || 0);
   const emptyStars = 5 - fullStars;
-  const isFree = place.entryFee === 0;
-  const price = isFree
+  const isFree     = place.entryFee === 0;
+  const price      = isFree
     ? "Free entry"
     : place.entryFee
       ? `${place.entryFee} MAD`
@@ -26,7 +27,10 @@ export default function PlaceCard({ place, index = 0, onClick }) {
     }
   };
 
-  const mainImage = place.images?.[0] || place.img || `https://picsum.photos/seed/${place.id}/800/600`;
+  const mainImage =
+    place.images?.[0] ||
+    place.img ||
+    `https://picsum.photos/seed/${place.id}/800/600`;
 
   return (
     <div
@@ -51,18 +55,22 @@ export default function PlaceCard({ place, index = 0, onClick }) {
                      group-hover:scale-106"
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = `https://picsum.photos/seed/${place.id || place.name}/800/600`;
+            e.currentTarget.src = `https://picsum.photos/seed/${
+              place.id || place.name
+            }/800/600`;
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[rgba(61,43,26,0.45)]" />
       </div>
 
-      {/* ── Category badge (CORRIGÉ ICI) ── */}
+      {/* ── Category badge ── */}
       {place.category && (
-        <span className="absolute top-3 left-3 z-2 bg-[rgba(255,255,255,0.92)] text-[#6b9c3e]
-                         font-[Nunito,sans-serif] text-[10px] font-bold tracking-[0.08em] uppercase
-                         px-[10px] py-1 rounded-full border border-[rgba(107,156,62,0.2)]
-                         flex items-center gap-1">
+        <span
+          className="absolute top-3 left-3 z-10 bg-[rgba(255,255,255,0.92)] text-[#6b9c3e]
+                     font-[Nunito,sans-serif] text-[10px] font-bold tracking-[0.08em] uppercase
+                     px-[10px] py-1 rounded-full border border-[rgba(107,156,62,0.2)]
+                     flex items-center gap-1"
+        >
           <RiLeafLine size={10} />
           {categoryDisplayName}
         </span>
@@ -70,12 +78,16 @@ export default function PlaceCard({ place, index = 0, onClick }) {
 
       {/* ── Price badge ── */}
       {price && (
-        <span className={`absolute top-3 right-3 z-2
-                          font-[Nunito,sans-serif] text-[11px] font-bold px-[10px] py-1 rounded-full
-                          backdrop-blur-[6px] flex items-center gap-1
-                          ${isFree
-                            ? "bg-[rgba(107,156,62,0.88)] text-[#e8f5c8]"
-                            : "bg-[rgba(61,43,26,0.78)] text-[#f4c67a]"}`}>
+        <span
+          className={`absolute top-3 right-3 z-10
+                      font-[Nunito,sans-serif] text-[11px] font-bold px-[10px] py-1 rounded-full
+                      backdrop-blur-[6px] flex items-center gap-1
+                      ${
+                        isFree
+                          ? "bg-[rgba(107,156,62,0.88)] text-[#e8f5c8]"
+                          : "bg-[rgba(61,43,26,0.78)] text-[#f4c67a]"
+                      }`}
+        >
           {isFree ? <RiLeafLine size={11} /> : <TbTicket size={11} />}
           {price}
         </span>
@@ -83,6 +95,8 @@ export default function PlaceCard({ place, index = 0, onClick }) {
 
       {/* ── Body ── */}
       <div className="p-[14px_16px_16px] flex flex-col gap-2 flex-1">
+
+        {/* City */}
         {place.cityName && (
           <p className="font-[Nunito,sans-serif] text-[11px] text-[#9e8e80] m-0
                         flex items-center gap-1">
@@ -91,11 +105,13 @@ export default function PlaceCard({ place, index = 0, onClick }) {
           </p>
         )}
 
+        {/* Name */}
         <h3 className="font-[Playfair_Display,Georgia,serif] text-[15px] font-bold text-[#3d2b1a] m-0
                        leading-[1.3] line-clamp-2 overflow-hidden">
           {place.name}
         </h3>
 
+        {/* Description */}
         {place.description && (
           <p className="font-[Nunito,sans-serif] text-[12px] text-[#7a6a58] m-0 leading-[1.5]
                          line-clamp-2 overflow-hidden">
@@ -145,6 +161,8 @@ export default function PlaceCard({ place, index = 0, onClick }) {
 
         {/* ── Actions ── */}
         <div className="flex items-center gap-2 mt-1 pt-2.5 border-t border-[#f0ebe4]">
+
+          {/* Learn more */}
           <button
             type="button"
             className="flex-1 flex items-center justify-center gap-[5px] px-[10px] py-[7px]
@@ -160,19 +178,7 @@ export default function PlaceCard({ place, index = 0, onClick }) {
             Learn more <HiArrowRight size={12} />
           </button>
 
-          <button
-            type="button"
-            className="flex-1 flex items-center justify-center gap-[5px] px-[10px] py-[7px]
-                       rounded-[10px] border-[1.5px] border-[#e0d8ce] bg-transparent text-[#7a6a58]
-                       font-[Nunito,sans-serif] text-[11px] font-bold cursor-pointer
-                       transition-all duration-[180ms] ease-in-out
-                       hover:bg-[#f7f3ee] hover:border-[#c8b8a8] hover:text-[#3d2b1a]
-                       hover:-translate-y-[1px]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <TbShoppingBag size={13} /> Buy / Rent
-          </button>
-
+          {/* Share */}
           <button
             type="button"
             onClick={handleShare}
@@ -185,6 +191,10 @@ export default function PlaceCard({ place, index = 0, onClick }) {
           >
             <RiShareLine size={14} />
           </button>
+
+          {/* ❤ Favourite */}
+          <FavoriteButton targetId={place.id} targetType="Place" />
+
         </div>
       </div>
     </div>

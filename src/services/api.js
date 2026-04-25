@@ -419,6 +419,47 @@ export const api = {
     patch(`/comments/${commentId}`, { likes: newLikes, likedBy: newLikedBy }),
 
   // ═══════════════════════════════════════════════════════════════════════════
+  // 10. FAVORITES  (4 endpoints)
+  //
+  // Record shape: { id, userId, targetId, targetType, createdAt }
+  // targetType  : "Place" | "GuideProfile" | "Event"
+  //
+  // Useful json-server queries:
+  //   All user favourites            → GET /favorites?userId=u1
+  //   User's favourite places only   → GET /favorites?userId=u1&targetType=Place
+  //   Check if a specific item saved → GET /favorites?userId=u1&targetId=p3&targetType=Place
+  // ═══════════════════════════════════════════════════════════════════════════
+ 
+  /**
+   * GET /favorites
+   * Pass any combination of { userId, targetId, targetType } as params.
+   * Returns an array — check records.length > 0 to know if already saved.
+   */
+  getFavorites: (params) => get("/favorites", params),
+ 
+  /**
+   * GET /favorites?userId=
+   * Convenience: fetch all favourites for one user, optionally filtered by type.
+   * Example: api.getUserFavorites("u1", "Place")
+   */
+  getUserFavorites: (userId, targetType) =>
+    get("/favorites", targetType ? { userId, targetType } : { userId }),
+ 
+  /**
+   * POST /favorites
+   * Body: { userId, targetId, targetType, createdAt }
+   * Returns the created record with its server-generated id.
+   */
+  addFavorite: (data) => post("/favorites", data),
+ 
+  /**
+   * DELETE /favorites/:id
+   * Use the record's id returned by getFavorites / addFavorite.
+   */
+  deleteFavorite: (id) => del(`/favorites/${id}`),
+ 
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // 10. MEDIA  (4 endpoints)
   // ═══════════════════════════════════════════════════════════════════════════
 
