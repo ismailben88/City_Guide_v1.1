@@ -5,28 +5,24 @@ import { useDispatch, useSelector }    from "react-redux";
 
 import { IoNotificationsOutline, IoNotifications } from "react-icons/io5";
 import { HiOutlineUser }                           from "react-icons/hi2";
-import { RiMapPinLine, RiUserLine, RiHeartLine,
-         RiSettingsLine, RiShieldCheckLine,
-         RiLogoutBoxRLine }                        from "react-icons/ri";
+import { RiMapPinLine, RiLogoutBoxRLine }           from "react-icons/ri";
 import { HiOutlineMenuAlt3, HiX }                  from "react-icons/hi";
 import { TbChevronDown }                            from "react-icons/tb";
 
-import LogoCityg from "../../../images/logoCityGuide";
 import { selectUser, selectIsLoggedIn, logout } from "../../../store/slices/authSlice";
 
 import {
   Nav, NavInner,
-  LogoWrapper, LogoText, LogoCity, LogoGuide,
   NavLinks, NavLink, ActiveBar,
   Actions, BellBtn, NotifWrap, NotifDot,
   SignInBtn, BurgerBtn,
   AvatarDropWrap, AvatarTrigger, AvatarImg, AvatarFirstName, ChevronWrap,
-  DropdownWrap, DropdownHeader, DropdownAvatar, DropdownUserInfo,
-  DropdownName, DropdownEmail, AdminBadge,
-  DropdownDivider, DropdownItem, DropdownIcon,
   MobileDrawer, MobileLink, DrawerDivider,
   MobileUserRow, MobileAvatarImg, MobileUserName, MobileUserEmail,
 } from "./Navbar.styles";
+
+import CityGuideLogo from "./components/CityGuideLogo";
+import UserDropdown  from "./components/UserDropdown";
 
 // ─── Nav links ────────────────────────────────────────────────────────────────
 const NAV_LINKS = [
@@ -36,72 +32,6 @@ const NAV_LINKS = [
   { id: 4, label: "Events",   path: "/events" },
   { id: 5, label: "About us", path: "/about"  },
 ];
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  Logo
-// ─────────────────────────────────────────────────────────────────────────────
-function CityGuideLogo({ onClick }) {
-  return (
-    <LogoWrapper onClick={onClick} aria-label="Go to home">
-      <LogoCityg />
-      <LogoText>
-        <LogoCity>City</LogoCity>
-        <LogoGuide>Guide</LogoGuide>
-      </LogoText>
-    </LogoWrapper>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-//  UserDropdown
-// ─────────────────────────────────────────────────────────────────────────────
-function UserDropdown({ user, avatarSrc, onClose }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const go = (path) => { navigate(path); onClose(); };
-
-  const MENU_ITEMS = [
-    { icon: <RiUserLine        size={15} />, label: "My Profile",         path: "/account"          },
-    { icon: <RiHeartLine       size={15} />, label: "Saved Places",       path: "/account#saved"    },
-    { icon: <RiSettingsLine    size={15} />, label: "Settings",           path: "/account#settings" },
-    { icon: <RiShieldCheckLine size={15} />, label: "Privacy & Security", path: "/account#privacy"  },
-  ];
-
-  return (
-    <DropdownWrap>
-      <DropdownHeader onClick={() => go("/account")}>
-        <DropdownAvatar src={avatarSrc} alt={user?.name} />
-        <DropdownUserInfo>
-          <DropdownName>{user?.name}</DropdownName>
-          <DropdownEmail>{user?.email}</DropdownEmail>
-          {user?.role === "admin" && (
-            <AdminBadge><RiShieldCheckLine size={9} /> Admin</AdminBadge>
-          )}
-        </DropdownUserInfo>
-      </DropdownHeader>
-
-      <DropdownDivider />
-
-      {MENU_ITEMS.map((item) => (
-        <DropdownItem key={item.label} onClick={() => go(item.path)}>
-          <DropdownIcon>{item.icon}</DropdownIcon>
-          {item.label}
-        </DropdownItem>
-      ))}
-
-      <DropdownDivider />
-
-      <DropdownItem
-        $danger
-        onClick={() => { dispatch(logout()); navigate("/"); onClose(); }}
-      >
-        <DropdownIcon><RiLogoutBoxRLine size={15} /></DropdownIcon>
-        Sign out
-      </DropdownItem>
-    </DropdownWrap>
-  );
-}
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Navbar
