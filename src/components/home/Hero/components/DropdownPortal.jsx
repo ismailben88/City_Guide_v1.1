@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
+// Uses position:fixed so coordinates are always viewport-relative.
+// No window.scrollY offset needed — the scroll listener keeps pos in sync.
 export default function DropdownPortal({ anchorRef, children, onClose }) {
   const [pos, setPos] = useState({ top: 0, left: 0, width: 0 });
 
@@ -8,7 +10,7 @@ export default function DropdownPortal({ anchorRef, children, onClose }) {
     const update = () => {
       if (!anchorRef.current) return;
       const r = anchorRef.current.getBoundingClientRect();
-      setPos({ top: r.bottom + window.scrollY + 8, left: r.left + window.scrollX, width: r.width });
+      setPos({ top: r.bottom + 8, left: r.left, width: r.width });
     };
     update();
     window.addEventListener("resize", update);
@@ -29,7 +31,7 @@ export default function DropdownPortal({ anchorRef, children, onClose }) {
 
   return createPortal(
     <div
-      style={{ position: "absolute", top: pos.top, left: pos.left, width: pos.width, zIndex: 9999 }}
+      style={{ position: "fixed", top: pos.top, left: pos.left, width: pos.width, zIndex: 9999 }}
       className="animate-fade-in"
     >
       {children}
