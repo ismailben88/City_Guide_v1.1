@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { HiArrowRight } from "react-icons/hi2";
 import { useDispatch, useSelector } from "react-redux";
 import {
   X,
@@ -253,122 +254,123 @@ export default function GuidePage() {
     <div className="min-h-screen bg-sand">
 
       {/* ── HERO ─────────────────────────────────────────────────────────── */}
-      <div className="relative w-full h-[580px] overflow-hidden">
+      <section className="relative h-[540px] overflow-hidden">
 
         {/* Background */}
         <img
           src={heroImg}
-          alt="Morocco"
-          className="absolute inset-0 w-full h-full object-cover object-top"
+          alt="Morocco guides"
+          className="absolute inset-0 w-full h-full object-cover object-[center_30%] scale-[1.04]"
         />
 
-        {/* Cinematic gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/90" />
+        {/* Gradient layers — same structure as Places */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent" />
 
-        {/* Radial vignette */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.5)_100%)]" />
+        {/* Left accent bar */}
+        <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-gradient-to-b from-[#6b9c3e] via-[#a8d060] to-transparent" />
 
-        {/* Warm bloom — top right */}
-        <div className="absolute -top-16 -right-16 w-[500px] h-[500px] rounded-full bg-accent/20 blur-[100px] pointer-events-none" />
+        {/* Content — left-aligned */}
+        <div className="absolute inset-0 flex flex-col justify-center px-8 sm:px-14 lg:px-20 max-w-5xl pb-[80px]">
 
-        {/* Content */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center pb-6">
-
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-[7px] mb-7 animate-slide-up-1">
-            <ShieldCheck size={11} className="text-emerald-400" />
-            <span className="font-body text-[10.5px] font-bold tracking-[0.13em] uppercase text-white/85">
-              200+ Verified Local Experts
-            </span>
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full w-fit
+                          bg-[#6b9c3e]/70 backdrop-blur-sm border border-[#a8d060]/40
+                          text-white text-[11px] font-bold uppercase tracking-widest font-body
+                          animate-slide-up-1">
+            <ShieldCheck size={12} />
+            Verified Local Experts
           </div>
 
           {/* Title */}
-          <h1 className="font-display font-bold text-white leading-[1.08] mb-3 animate-slide-up-2 [text-shadow:0_2px_20px_rgba(0,0,0,0.4)]"
-            style={{ fontSize: "clamp(2.5rem,5.6vw,4.4rem)" }}>
-            Find Your Perfect
-            <br />
-            <span className="text-accent italic">Local Guide</span>
+          <h1 className="font-display text-[clamp(2.6rem,6vw,4.2rem)] font-bold leading-[1.08]
+                         text-white mb-4 drop-shadow-xl animate-slide-up-2">
+            Find Your{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a8d060] to-[#6b9c3e]">
+              Perfect Guide
+            </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="font-body text-[15px] text-white/58 max-w-[420px] leading-relaxed mb-8 animate-slide-up-3">
-            Handpicked experts across Morocco's iconic cities —
+          <p className="text-white/65 text-[15px] max-w-md font-body leading-relaxed mb-8 animate-slide-up-3">
+            Handpicked experts across Morocco's iconic cities —<br />
             trusted by thousands of travelers
           </p>
 
           {/* Search bar */}
-          <div className="w-full max-w-[600px] animate-slide-up-4">
-            <div className={`flex items-center gap-3 px-5 py-[10px] rounded-[18px] border-2 transition-all duration-200
-              shadow-[0_8px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)]
-              backdrop-blur-2xl
-              ${searchFocused
-                ? "bg-white/20 border-white/50"
-                : "bg-white/10 border-white/18"}`}>
-
-              <Search size={16} className="text-white/50 shrink-0" />
-
+          <div className="flex items-center gap-2 max-w-lg animate-slide-up-4">
+            <div className="relative flex-1">
+              <Search
+                size={16}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 pointer-events-none"
+              />
               <input
                 type="text"
-                placeholder="Search by name, city, language..."
                 value={searchQuery}
                 onChange={(e) => dispatch(setSearchQuery(e.target.value))}
                 onFocus={() => setSearchFocused(true)}
                 onBlur={() => setSearchFocused(false)}
-                className="flex-1 bg-transparent border-none outline-none font-body text-sm text-white placeholder:text-white/38 py-1.5"
+                placeholder="Search guides, cities, languages…"
+                className="w-full pl-11 pr-10 py-3.5 rounded-[14px]
+                           bg-white/15 backdrop-blur-md border border-white/25
+                           text-white placeholder:text-white/45 text-[13px] font-body
+                           focus:outline-none focus:border-[#a8d060]/60
+                           focus:bg-white/20 transition-all"
               />
-
               {searchQuery && (
                 <button
                   onClick={() => dispatch(setSearchQuery(""))}
-                  className="shrink-0 w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors"
                 >
-                  <X size={11} />
+                  <X size={14} />
                 </button>
               )}
-
-              <div className="w-px h-5 bg-white/18 shrink-0" />
-
-              <button className="shrink-0 flex items-center gap-1.5 bg-white hover:bg-sand text-ink1 rounded-xl px-5 py-2 font-body text-[13px] font-bold transition-all hover:scale-[1.03] shadow-[0_2px_12px_rgba(0,0,0,0.2)]">
-                <Search size={12} /> Search
-              </button>
             </div>
-
-            {(searchQuery || activeFiltersCount > 0) && (
-              <div className="flex items-center justify-between px-1 pt-3">
-                <span className="font-body text-xs font-semibold text-white/50">
-                  {filteredGuides.length} guide{filteredGuides.length !== 1 ? "s" : ""} found
-                </span>
-                <button
-                  onClick={() => dispatch(resetFilters())}
-                  className="flex items-center gap-1.5 font-body text-xs font-bold text-white/50 hover:text-white transition-colors"
-                >
-                  <RotateCcw size={10} /> Reset
-                </button>
-              </div>
-            )}
+            <button
+              className="flex items-center justify-center w-12 h-12 rounded-[14px] flex-shrink-0
+                         bg-[#6b9c3e] hover:bg-[#5a8833] text-white
+                         transition-all duration-200 hover:scale-105 active:scale-95
+                         shadow-[0_4px_16px_rgba(107,156,62,0.5)]"
+            >
+              <HiArrowRight size={18} />
+            </button>
           </div>
 
-          {/* Stats bar */}
-          <div className="flex items-stretch mt-8 rounded-2xl overflow-hidden border border-white/12 backdrop-blur-xl bg-white/7 animate-slide-up-5">
+          {/* Reset link when active filters */}
+          {(searchQuery || activeFiltersCount > 0) && (
+            <div className="flex items-center gap-4 mt-3 animate-fade-in">
+              <span className="font-body text-[12px] text-white/55">
+                {filteredGuides.length} guide{filteredGuides.length !== 1 ? "s" : ""} found
+              </span>
+              <button
+                onClick={() => dispatch(resetFilters())}
+                className="flex items-center gap-1.5 font-body text-[12px] font-bold text-[#a8d060] hover:text-white transition-colors"
+              >
+                <RotateCcw size={11} /> Clear filters
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Stats strip — frosted glass pinned to bottom */}
+        <div className="absolute bottom-0 left-0 right-0 bg-black/30 backdrop-blur-md border-t border-white/10">
+          <div className="max-w-5xl px-8 sm:px-14 lg:px-20 py-4 flex items-center animate-slide-up-5">
             {[
-              { icon: <Star size={14} className="text-yellow-400 fill-yellow-400" />, value: "4.9", label: "Avg Rating" },
-              { icon: <MapPin size={14} className="text-emerald-400" />, value: "15+", label: "Cities" },
-              { icon: <Globe size={14} className="text-sky-400" />, value: "8", label: "Languages" },
-              { icon: <ShieldCheck size={14} className="text-primary" />, value: "200+", label: "Verified" },
-            ].map((s, i) => (
-              <div key={s.label}
-                className={`flex items-center gap-2.5 px-5 py-3 ${i < 3 ? "border-r border-white/10" : ""}`}>
-                <span className="flex shrink-0">{s.icon}</span>
-                <div className="text-left">
-                  <p className="font-body text-[13px] font-bold text-white leading-none">{s.value}</p>
-                  <p className="font-body text-[10px] text-white/42 leading-none mt-[3px]">{s.label}</p>
-                </div>
+              { value: "200+", label: "Expert Guides" },
+              { value: "15+",  label: "Cities"        },
+              { value: "8",    label: "Languages"     },
+              { value: "4.9",  label: "Avg Rating"    },
+            ].map(({ value, label }, i) => (
+              <div key={label}
+                className={`flex items-center gap-3 pr-8 ${i > 0 ? "pl-8 border-l border-white/15" : ""}`}>
+                <span className="font-display text-[22px] font-bold text-white">{value}</span>
+                <span className="text-white/50 text-[11px] font-bold uppercase tracking-widest font-body">{label}</span>
               </div>
             ))}
           </div>
-
         </div>
-      </div>
+
+      </section>
 
       {/* Layout Principal */}
       <div className="max-w-7xl mx-auto px-7 py-10">
