@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 
 // Import de ton service API
-import { api } from "../services/api"; 
+import { api } from "../services/api";
+
+import heroImg from "../images/heroSlider/1.png";
 
 import {
   setGuides,
@@ -249,54 +251,123 @@ export default function GuidePage() {
 
   return (
     <div className="min-h-screen bg-sand">
-      {/* Hero Section */}
-      <div className="relative w-full h-72 overflow-hidden">
+
+      {/* ── HERO ─────────────────────────────────────────────────────────── */}
+      <div className="relative w-full h-[580px] overflow-hidden">
+
+        {/* Background */}
         <img
-          src="https://images.unsplash.com/photo-1539020140153-e479b8e201e7?w=1400&q=85"
+          src={heroImg}
           alt="Morocco"
-          className="w-full h-full object-cover object-[center_60%]"
+          className="absolute inset-0 w-full h-full object-cover object-top"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/30 to-dark/70 flex flex-col items-center justify-center gap-2 text-center">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-white animate-slide-up-1">
-            Find your local Guide
-          </h1>
-          <p className="font-body text-sm text-white/70 animate-slide-up-2">
-            Handpicked experts across Morocco's most iconic cities
-          </p>
-        </div>
-      </div>
 
-      {/* Barre de Recherche */}
-      <div className="max-w-2xl mx-auto px-5 -mt-7 relative z-10">
-        <div className={`flex items-center bg-white rounded-2xl px-4 py-1.5 gap-3 shadow-xl border-2 transition-all 
-          ${searchFocused ? "border-primary" : "border-transparent"}`}>
-          <Search size={18} className="text-primary" />
-          <input
-            type="text"
-            placeholder="Search by name, city, language..."
-            value={searchQuery}
-            onChange={(e) => dispatch(setSearchQuery(e.target.value))}
-            onFocus={() => setSearchFocused(true)}
-            onBlur={() => setSearchFocused(false)}
-            className="flex-1 border-none outline-none bg-transparent font-body text-sm py-2"
-          />
-          {searchQuery && (
-            <button onClick={() => dispatch(setSearchQuery(""))} className="w-7 h-7 rounded-full bg-sand2 text-ink3 flex items-center justify-center">
-              <X size={13} />
-            </button>
-          )}
-        </div>
+        {/* Cinematic gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/55 to-black/90" />
 
-        {(searchQuery || activeFiltersCount > 0) && (
-          <div className="flex items-center justify-between px-1 pt-2.5">
-            <span className="font-body text-xs font-semibold text-ink3">
-              {filteredGuides.length} guide{filteredGuides.length !== 1 ? "s" : ""} found
+        {/* Radial vignette */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(0,0,0,0.5)_100%)]" />
+
+        {/* Warm bloom — top right */}
+        <div className="absolute -top-16 -right-16 w-[500px] h-[500px] rounded-full bg-accent/20 blur-[100px] pointer-events-none" />
+
+        {/* Content */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center pb-6">
+
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-[7px] mb-7 animate-slide-up-1">
+            <ShieldCheck size={11} className="text-emerald-400" />
+            <span className="font-body text-[10.5px] font-bold tracking-[0.13em] uppercase text-white/85">
+              200+ Verified Local Experts
             </span>
-            <button onClick={() => dispatch(resetFilters())} className="flex items-center gap-1.5 font-body text-xs font-bold text-accent hover:text-ink2">
-              <RotateCcw size={11} /> Reset filters
-            </button>
           </div>
-        )}
+
+          {/* Title */}
+          <h1 className="font-display font-bold text-white leading-[1.08] mb-3 animate-slide-up-2 [text-shadow:0_2px_20px_rgba(0,0,0,0.4)]"
+            style={{ fontSize: "clamp(2.5rem,5.6vw,4.4rem)" }}>
+            Find Your Perfect
+            <br />
+            <span className="text-accent italic">Local Guide</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="font-body text-[15px] text-white/58 max-w-[420px] leading-relaxed mb-8 animate-slide-up-3">
+            Handpicked experts across Morocco's iconic cities —
+            trusted by thousands of travelers
+          </p>
+
+          {/* Search bar */}
+          <div className="w-full max-w-[600px] animate-slide-up-4">
+            <div className={`flex items-center gap-3 px-5 py-[10px] rounded-[18px] border-2 transition-all duration-200
+              shadow-[0_8px_40px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.12)]
+              backdrop-blur-2xl
+              ${searchFocused
+                ? "bg-white/20 border-white/50"
+                : "bg-white/10 border-white/18"}`}>
+
+              <Search size={16} className="text-white/50 shrink-0" />
+
+              <input
+                type="text"
+                placeholder="Search by name, city, language..."
+                value={searchQuery}
+                onChange={(e) => dispatch(setSearchQuery(e.target.value))}
+                onFocus={() => setSearchFocused(true)}
+                onBlur={() => setSearchFocused(false)}
+                className="flex-1 bg-transparent border-none outline-none font-body text-sm text-white placeholder:text-white/38 py-1.5"
+              />
+
+              {searchQuery && (
+                <button
+                  onClick={() => dispatch(setSearchQuery(""))}
+                  className="shrink-0 w-7 h-7 rounded-full bg-white/15 hover:bg-white/25 text-white flex items-center justify-center transition-colors"
+                >
+                  <X size={11} />
+                </button>
+              )}
+
+              <div className="w-px h-5 bg-white/18 shrink-0" />
+
+              <button className="shrink-0 flex items-center gap-1.5 bg-white hover:bg-sand text-ink1 rounded-xl px-5 py-2 font-body text-[13px] font-bold transition-all hover:scale-[1.03] shadow-[0_2px_12px_rgba(0,0,0,0.2)]">
+                <Search size={12} /> Search
+              </button>
+            </div>
+
+            {(searchQuery || activeFiltersCount > 0) && (
+              <div className="flex items-center justify-between px-1 pt-3">
+                <span className="font-body text-xs font-semibold text-white/50">
+                  {filteredGuides.length} guide{filteredGuides.length !== 1 ? "s" : ""} found
+                </span>
+                <button
+                  onClick={() => dispatch(resetFilters())}
+                  className="flex items-center gap-1.5 font-body text-xs font-bold text-white/50 hover:text-white transition-colors"
+                >
+                  <RotateCcw size={10} /> Reset
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Stats bar */}
+          <div className="flex items-stretch mt-8 rounded-2xl overflow-hidden border border-white/12 backdrop-blur-xl bg-white/7 animate-slide-up-5">
+            {[
+              { icon: <Star size={14} className="text-yellow-400 fill-yellow-400" />, value: "4.9", label: "Avg Rating" },
+              { icon: <MapPin size={14} className="text-emerald-400" />, value: "15+", label: "Cities" },
+              { icon: <Globe size={14} className="text-sky-400" />, value: "8", label: "Languages" },
+              { icon: <ShieldCheck size={14} className="text-primary" />, value: "200+", label: "Verified" },
+            ].map((s, i) => (
+              <div key={s.label}
+                className={`flex items-center gap-2.5 px-5 py-3 ${i < 3 ? "border-r border-white/10" : ""}`}>
+                <span className="flex shrink-0">{s.icon}</span>
+                <div className="text-left">
+                  <p className="font-body text-[13px] font-bold text-white leading-none">{s.value}</p>
+                  <p className="font-body text-[10px] text-white/42 leading-none mt-[3px]">{s.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
       </div>
 
       {/* Layout Principal */}
