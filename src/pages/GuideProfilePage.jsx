@@ -162,6 +162,191 @@ function ContactCard({ contact }) {
   );
 }
 
+// ─── Booking modal ────────────────────────────────────────────────────────────
+function BookingModal({ guide, onClose }) {
+  const name    = guide.name || "the guide";
+  const contact = guide.contact || {};
+
+  const waNumber = (contact.whatsapp || contact.phone || "")
+    .replace(/[^0-9]/g, "");
+
+  const waMsg = encodeURIComponent(
+    `Hello ${name.split(" ")[0]}, I found your profile on City Guide and I'd like to book a guided tour with you. Could you share your availability?`
+  );
+  const emailSubject = encodeURIComponent("Booking Request — City Guide");
+  const emailBody    = encodeURIComponent(
+    `Hello ${name.split(" ")[0]},\n\nI found your profile on City Guide and I'd like to book a guided tour with you.\n\nCould you please share your availability and rates?\n\nThank you!`
+  );
+
+  const options = [
+    waNumber && {
+      key:   "whatsapp",
+      icon:  <RiWhatsappLine size={20} />,
+      label: "Chat on WhatsApp",
+      sub:   "Fastest response",
+      href:  `https://wa.me/${waNumber}?text=${waMsg}`,
+      color: "#25d366",
+      bg:    "#f0fdf4",
+      border:"#bbf7d0",
+    },
+    contact.email && {
+      key:   "email",
+      icon:  <RiMailLine size={20} />,
+      label: "Send an Email",
+      sub:   "Reply within 24h",
+      href:  `mailto:${contact.email}?subject=${emailSubject}&body=${emailBody}`,
+      color: "#3b82f6",
+      bg:    "#eff6ff",
+      border:"#bfdbfe",
+    },
+    contact.phone && {
+      key:   "phone",
+      icon:  <RiPhoneLine size={20} />,
+      label: "Call Directly",
+      sub:   contact.phone,
+      href:  `tel:${contact.phone.replace(/\s/g, "")}`,
+      color: "#c8761a",
+      bg:    "#fdf6ec",
+      border:"#fde68a",
+    },
+  ].filter(Boolean);
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center
+                 justify-center p-0 sm:p-4"
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/50 backdrop-blur-[2px]
+                   animate-[fadeIn_0.2s_ease]"
+        onClick={onClose}
+      />
+
+      {/* Modal card */}
+      <div
+        className="relative w-full sm:max-w-[420px] bg-white
+                   rounded-t-[28px] sm:rounded-[28px]
+                   shadow-[0_24px_80px_rgba(0,0,0,0.22)]
+                   animate-[slideUp_0.3s_cubic-bezier(.25,.8,.25,1)]
+                   overflow-hidden"
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full
+                     bg-[#f5f0ea] flex items-center justify-center
+                     text-[#9e8e80] hover:bg-[#ede8e0] hover:text-[#3d2b1a]
+                     transition-colors"
+        >
+          <TbX size={15} />
+        </button>
+
+        {/* Guide header */}
+        <div className="flex items-center gap-4 p-6 pb-5
+                        border-b border-[#f0ebe4]">
+          <div className="w-14 h-14 rounded-[14px] overflow-hidden
+                          border-2 border-[#ede8e0] shrink-0">
+            <img
+              src={guide.avatar}
+              alt={name}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.currentTarget.src = `https://i.pravatar.cc/150?u=${guide.id}`;
+              }}
+            />
+          </div>
+          <div className="min-w-0">
+            <h2 className="font-[Playfair_Display,Georgia,serif] text-[18px]
+                           font-bold text-[#3d2b1a] leading-tight mb-0.5 truncate">
+              {name}
+            </h2>
+            {guide.cityNames?.length > 0 && (
+              <p className="flex items-center gap-1 text-[12px] text-[#9e8e80]
+                            font-[Nunito,sans-serif]">
+                <RiMapPin2Line size={11} className="text-[#6b9c3e] shrink-0" />
+                {guide.cityNames.slice(0, 2).join(" · ")}
+              </p>
+            )}
+            <p className="text-[11px] font-bold text-[#6b9c3e]
+                          font-[Nunito,sans-serif] mt-0.5">
+              {guide.pricePerHour} MAD / hour
+            </p>
+          </div>
+        </div>
+
+        {/* Options */}
+        <div className="p-5">
+          <p className="text-[12px] font-black uppercase tracking-widest
+                        text-[#9e8e80] font-[Nunito,sans-serif] mb-3">
+            How would you like to reach out?
+          </p>
+
+          <div className="flex flex-col gap-2.5">
+            {options.map(({ key, icon, label, sub, href, color, bg, border }) => (
+              <a
+                key={key}
+                href={href}
+                target={key === "phone" ? "_self" : "_blank"}
+                rel="noopener noreferrer"
+                onClick={onClose}
+                className="group flex items-center gap-4 p-4 rounded-[16px]
+                           border-[1.5px] transition-all duration-200
+                           hover:-translate-y-px
+                           hover:shadow-[0_6px_20px_rgba(0,0,0,0.08)]"
+                style={{ borderColor: border, backgroundColor: bg }}
+              >
+                {/* Icon */}
+                <span
+                  className="w-10 h-10 rounded-[12px] flex items-center
+                             justify-center shrink-0 transition-transform
+                             duration-200 group-hover:scale-110"
+                  style={{ background: color + "1a", color }}
+                >
+                  {icon}
+                </span>
+
+                {/* Text */}
+                <div className="flex-1 min-w-0">
+                  <p className="font-[Nunito,sans-serif] text-[14px] font-bold
+                                text-[#3d2b1a] leading-none mb-0.5">
+                    {label}
+                  </p>
+                  <p className="font-[Nunito,sans-serif] text-[11px]
+                                text-[#9e8e80]">
+                    {sub}
+                  </p>
+                </div>
+
+                <HiArrowRight
+                  size={15}
+                  className="shrink-0 transition-all duration-200
+                             group-hover:translate-x-1"
+                  style={{ color }}
+                />
+              </a>
+            ))}
+          </div>
+
+          <p className="text-center text-[11px] text-[#c4b8a8]
+                        font-[Nunito,sans-serif] mt-4">
+            Your request goes directly to the guide — no middleman.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── Loading skeleton ─────────────────────────────────────────────────────────
 function LoadingSkeleton() {
   return (
@@ -193,8 +378,9 @@ function LoadingSkeleton() {
 export default function GuideProfilePage() {
   const { id }    = useParams();
   const navigate  = useNavigate();
-  const [guide,   setGuide]   = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [guide,       setGuide]       = useState(null);
+  const [loading,     setLoading]     = useState(true);
+  const [showBooking, setShowBooking] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -378,6 +564,7 @@ export default function GuideProfilePage() {
                            shadow-[0_4px_16px_rgba(107,156,62,0.45)]
                            hover:bg-[#c8761a] hover:-translate-y-0.5
                            transition-all duration-200"
+                onClick={() => setShowBooking(true)}
               >
                 <TbCalendarEvent size={15} />
                 Book This Guide
@@ -526,6 +713,7 @@ export default function GuideProfilePage() {
                            font-[Nunito,sans-serif] text-[13px]
                            hover:bg-[#c8761a] hover:-translate-y-px
                            transition-all duration-200"
+                onClick={() => setShowBooking(true)}
               >
                 <TbCalendarEvent size={15} /> Book Now
                 <HiArrowRight size={13} />
@@ -596,6 +784,14 @@ export default function GuideProfilePage() {
           </aside>
         </div>
       </div>
+
+      {/* ── Booking modal ── */}
+      {showBooking && (
+        <BookingModal
+          guide={g}
+          onClose={() => setShowBooking(false)}
+        />
+      )}
     </div>
   );
 }
