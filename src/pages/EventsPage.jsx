@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../services/api";
 import FavoriteButton from "../components/FavoriteButton/FavoriteButton";
 import {
@@ -15,8 +16,8 @@ import { RiCalendarEventLine } from "react-icons/ri";
 import { HiArrowRight } from "react-icons/hi2";
 
 const formatDate = (dateStr) => {
-  if (!dateStr) return "Date à venir";
-  return new Date(dateStr).toLocaleDateString("fr-FR", {
+  if (!dateStr) return "Date TBA";
+  return new Date(dateStr).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
     year: "numeric",
@@ -24,7 +25,7 @@ const formatDate = (dateStr) => {
 };
 
 // ─── Featured EventCard (horizontal) ─────────────────────────────────────────
-function FeaturedEventCard({ event }) {
+function FeaturedEventCard({ event, onClick }) {
   const isFree = event.ticketPrice === 0;
 
   return (
@@ -57,7 +58,7 @@ function FeaturedEventCard({ event }) {
                       ${isFree ? "bg-[#6b9c3e] text-white" : "bg-[#c8761a] text-white"}`}
         >
           <TbTicket size={12} />
-          {isFree ? "Gratuit" : `${event.ticketPrice} DH`}
+          {isFree ? "Free" : `${event.ticketPrice} DH`}
         </span>
 
         {/* Favorite */}
@@ -75,7 +76,7 @@ function FeaturedEventCard({ event }) {
                         font-[Nunito,sans-serif]"
           >
             <RiCalendarEventLine size={11} />
-            À la une
+            Featured
           </div>
 
           <h3
@@ -121,11 +122,12 @@ function FeaturedEventCard({ event }) {
           </span>
 
           <button
+            onClick={onClick}
             className="ml-auto flex items-center gap-2 px-5 py-2 rounded-[10px]
                        bg-[#6b9c3e] text-white font-[Nunito,sans-serif] text-[12px] font-bold
                        transition-all duration-200 hover:bg-[#c8761a] hover:-translate-y-px"
           >
-            Voir <HiArrowRight size={13} />
+            View <HiArrowRight size={13} />
           </button>
         </div>
       </div>
@@ -134,7 +136,7 @@ function FeaturedEventCard({ event }) {
 }
 
 // ─── EventCard (grid) ─────────────────────────────────────────────────────────
-function EventCard({ event }) {
+function EventCard({ event, onClick }) {
   const isFree = event.ticketPrice === 0;
 
   return (
@@ -167,7 +169,7 @@ function EventCard({ event }) {
                       ${isFree ? "bg-[#6b9c3e] text-white" : "bg-[#c8761a] text-white"}`}
         >
           <TbTicket size={10} />
-          {isFree ? "Gratuit" : `${event.ticketPrice} DH`}
+          {isFree ? "Free" : `${event.ticketPrice} DH`}
         </span>
 
         {/* Favorite */}
@@ -205,11 +207,12 @@ function EventCard({ event }) {
             {formatDate(event.createdAt)}
           </span>
           <button
+            onClick={onClick}
             className="flex items-center gap-1 px-3 py-[6px] rounded-[8px]
                        bg-[#6b9c3e] text-white font-[Nunito,sans-serif] text-[11px] font-bold
                        transition-all duration-200 hover:bg-[#c8761a] hover:-translate-y-px"
           >
-            Voir <HiArrowRight size={11} />
+            View <HiArrowRight size={11} />
           </button>
         </div>
       </div>
@@ -234,6 +237,8 @@ function SkeletonEventCard() {
 
 // ─── EventsPage ───────────────────────────────────────────────────────────────
 export default function EventsPage() {
+  const navigate = useNavigate();
+
   const [events, setEvents]       = useState([]);
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState(null);
@@ -328,26 +333,26 @@ export default function EventsPage() {
                         text-white text-[12px] font-[Nunito,sans-serif]"
           >
             <RiCalendarEventLine size={14} />
-            Découvrez les événements au Maroc
+            Discover events across Morocco
           </div>
 
           <h1
             className="font-[Playfair_Display,Georgia,serif] text-4xl md:text-5xl font-bold
                        text-white mb-4 drop-shadow-lg"
           >
-            Événements & Festivals
+            Events & Festivals
           </h1>
 
           <p className="text-white/75 text-[15px] max-w-xl font-[Nunito,sans-serif] mb-8">
-            Concerts, festivals et expériences culturelles partout au Maroc
+            Concerts, festivals and cultural experiences across Morocco
           </p>
 
           {!loading && (
             <div className="flex gap-10">
               {[
-                { value: events.length, label: "Événements" },
-                { value: freeCount,     label: "Gratuits"    },
-                { value: cityCount,     label: "Villes"      },
+                { value: events.length, label: "Events"  },
+                { value: freeCount,     label: "Free"    },
+                { value: cityCount,     label: "Cities"  },
               ].map(({ value, label }) => (
                 <div key={label} className="text-center">
                   <div
@@ -384,7 +389,7 @@ export default function EventsPage() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Rechercher un événement..."
+                placeholder="Search events..."
                 className="w-full pl-9 pr-8 py-2 text-[13px] rounded-[10px]
                            border-[1.5px] border-[#ede8e0] bg-[#faf7f2]
                            font-[Nunito,sans-serif] text-[#3d2b1a] placeholder-[#c4b8a8]
@@ -409,9 +414,9 @@ export default function EventsPage() {
                          hover:border-[#6b9c3e] hover:text-[#6b9c3e] transition-all"
             >
               {sortOrder === "desc" ? (
-                <><TbSortDescending size={15} /> Plus récents</>
+                <><TbSortDescending size={15} /> Newest first</>
               ) : (
-                <><TbSortAscending size={15} /> Plus anciens</>
+                <><TbSortAscending size={15} /> Oldest first</>
               )}
             </button>
 
@@ -423,7 +428,7 @@ export default function EventsPage() {
                            border-[1.5px] border-[#f0d4a0] bg-[#fdf6ec]
                            hover:bg-[#faebd7] transition-colors"
               >
-                <TbX size={13} /> Réinitialiser
+                <TbX size={13} /> Clear filters
               </button>
             )}
           </div>
@@ -431,9 +436,9 @@ export default function EventsPage() {
           {/* Row 2: Price pills + divider + City pills */}
           <div className="flex items-center gap-2 flex-wrap">
             {[
-              { val: "all",  label: "Tous les prix" },
-              { val: "free", label: "Gratuit"        },
-              { val: "paid", label: "Payant"         },
+              { val: "all",  label: "All prices" },
+              { val: "free", label: "Free"        },
+              { val: "paid", label: "Paid"        },
             ].map(({ val, label }) => (
               <button
                 key={val}
@@ -466,7 +471,7 @@ export default function EventsPage() {
                             }`}
               >
                 {city === "all" ? (
-                  "Toutes les villes"
+                  "All cities"
                 ) : (
                   <>
                     <TbMapPin size={10} />
@@ -486,8 +491,7 @@ export default function EventsPage() {
         {!loading && !error && (
           <p className="font-[Nunito,sans-serif] text-[13px] text-[#9e8e80] mb-6">
             <span className="font-bold text-[#3d2b1a]">{filtered.length}</span>
-            {" "}événement{filtered.length > 1 ? "s" : ""} trouvé
-            {filtered.length > 1 ? "s" : ""}
+            {" "}event{filtered.length !== 1 ? "s" : ""} found
           </p>
         )}
 
@@ -507,7 +511,7 @@ export default function EventsPage() {
               <TbX size={24} className="text-red-400" />
             </div>
             <h3 className="font-[Playfair_Display,serif] text-lg font-bold text-[#3d2b1a] mb-2">
-              Erreur de chargement
+              Failed to load events
             </h3>
             <p className="text-[13px] text-[#9e8e80] font-[Nunito,sans-serif]">{error}</p>
           </div>
@@ -520,10 +524,10 @@ export default function EventsPage() {
               <TbCalendarEvent size={28} className="text-[#c4b8a8]" />
             </div>
             <h3 className="font-[Playfair_Display,serif] text-lg font-bold text-[#3d2b1a] mb-2">
-              Aucun événement trouvé
+              No events found
             </h3>
             <p className="text-[13px] text-[#9e8e80] font-[Nunito,sans-serif] max-w-xs mb-6">
-              Essayez d&apos;ajuster vos filtres pour trouver des événements.
+              Try adjusting your filters to find events.
             </p>
             <button
               onClick={resetFilters}
@@ -531,7 +535,7 @@ export default function EventsPage() {
                          bg-[#6b9c3e] text-white font-[Nunito,sans-serif] text-sm font-bold
                          hover:bg-[#c8761a] transition-colors duration-200"
             >
-              Réinitialiser les filtres
+              Clear all filters
             </button>
           </div>
         )}
@@ -547,9 +551,12 @@ export default function EventsPage() {
                              text-[#3d2b1a] mb-4 flex items-center gap-2"
                 >
                   <span className="inline-flex w-1 h-5 rounded-full bg-[#6b9c3e]" />
-                  À la une
+                  Featured
                 </h2>
-                <FeaturedEventCard event={featured} />
+                <FeaturedEventCard
+                  event={featured}
+                  onClick={() => navigate(`/events/${featured.id}`)}
+                />
               </section>
             )}
 
@@ -561,7 +568,7 @@ export default function EventsPage() {
                              text-[#3d2b1a] mb-4 flex items-center gap-2"
                 >
                   <span className="inline-flex w-1 h-5 rounded-full bg-[#6b9c3e]" />
-                  Tous les événements
+                  All Events
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                   {rest.map((event, i) => (
@@ -570,7 +577,10 @@ export default function EventsPage() {
                       style={{ animationDelay: `${i * 40}ms` }}
                       className="animate-[fade-up_0.4s_ease_both]"
                     >
-                      <EventCard event={event} />
+                      <EventCard
+                        event={event}
+                        onClick={() => navigate(`/events/${event.id}`)}
+                      />
                     </div>
                   ))}
                 </div>
