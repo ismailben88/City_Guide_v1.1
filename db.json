@@ -1372,7 +1372,14 @@
       "averageRating": 4.2,
       "reviewCount": 183,
       "verificationStatus": "verified",
-      "createdAt": "2025-07-12T19:06:50.741Z"
+      "createdAt": "2025-07-12T19:06:50.741Z",
+      "contact": {
+        "email": "frankie.gutmann@cityguide.ma",
+        "phone": "+212 660 001 357",
+        "whatsapp": "+212 660 001 357",
+        "instagram": "@frankie_gutmann_guide",
+        "website": null
+      }
     },
     {
       "id": "gp2",
@@ -1500,7 +1507,14 @@
       "averageRating": 4.2,
       "reviewCount": 148,
       "verificationStatus": "verified",
-      "createdAt": "2026-02-03T06:35:40.734Z"
+      "createdAt": "2026-02-03T06:35:40.734Z",
+      "contact": {
+        "email": "amalia.deckowreichert@cityguide.ma",
+        "phone": "+212 660 002 715",
+        "whatsapp": "+212 660 002 715",
+        "instagram": "@amalia_deckowreichert_guide",
+        "website": null
+      }
     },
     {
       "id": "gp3",
@@ -1622,7 +1636,14 @@
       "averageRating": 3.7,
       "reviewCount": 81,
       "verificationStatus": "verified",
-      "createdAt": "2026-03-29T14:59:17.277Z"
+      "createdAt": "2026-03-29T14:59:17.277Z",
+      "contact": {
+        "email": "dan.koepp@cityguide.ma",
+        "phone": "+212 660 004 073",
+        "whatsapp": "+212 660 004 073",
+        "instagram": "@dan_koepp_guide",
+        "website": "https://guide-dan.koepp.ma"
+      }
     },
     {
       "id": "gp4",
@@ -1738,7 +1759,14 @@
       "averageRating": 3.7,
       "reviewCount": 88,
       "verificationStatus": "verified",
-      "createdAt": "2025-07-06T22:45:58.878Z"
+      "createdAt": "2025-07-06T22:45:58.878Z",
+      "contact": {
+        "email": "janie.medhurst@cityguide.ma",
+        "phone": "+212 660 005 431",
+        "whatsapp": "+212 660 005 431",
+        "instagram": "@janie_medhurst_guide",
+        "website": null
+      }
     },
     {
       "id": "gp5",
@@ -1866,7 +1894,14 @@
       "averageRating": 4.8,
       "reviewCount": 59,
       "verificationStatus": "verified",
-      "createdAt": "2025-08-06T01:26:45.622Z"
+      "createdAt": "2025-08-06T01:26:45.622Z",
+      "contact": {
+        "email": "hector.skilesolson@cityguide.ma",
+        "phone": "+212 660 006 789",
+        "whatsapp": "+212 660 006 789",
+        "instagram": "@hector_skilesolson_guide",
+        "website": null
+      }
     },
     {
       "id": "gp6",
@@ -1982,7 +2017,14 @@
       "averageRating": 3.5,
       "reviewCount": 2,
       "verificationStatus": "verified",
-      "createdAt": "2026-03-16T19:49:13.949Z"
+      "createdAt": "2026-03-16T19:49:13.949Z",
+      "contact": {
+        "email": "garfield.hilll@cityguide.ma",
+        "phone": "+212 660 008 147",
+        "whatsapp": "+212 660 008 147",
+        "instagram": "@garfield_hilll_guide",
+        "website": "https://guide-garfield.hilll.ma"
+      }
     },
     {
       "id": "gp7",
@@ -2098,7 +2140,14 @@
       "averageRating": 4.6,
       "reviewCount": 61,
       "verificationStatus": "verified",
-      "createdAt": "2025-10-25T00:58:59.668Z"
+      "createdAt": "2025-10-25T00:58:59.668Z",
+      "contact": {
+        "email": "jaunita.jacobson@cityguide.ma",
+        "phone": "+212 660 009 505",
+        "whatsapp": "+212 660 009 505",
+        "instagram": "@jaunita_jacobson_guide",
+        "website": null
+      }
     },
     {
       "id": "gp8",
@@ -2226,7 +2275,14 @@
       "averageRating": 3.9,
       "reviewCount": 97,
       "verificationStatus": "verified",
-      "createdAt": "2025-12-25T06:20:47.524Z"
+      "createdAt": "2025-12-25T06:20:47.524Z",
+      "contact": {
+        "email": "athena.jaskolski@cityguide.ma",
+        "phone": "+212 660 010 863",
+        "whatsapp": "+212 660 010 863",
+        "instagram": "@athena_jaskolski_guide",
+        "website": null
+      }
     },
     {
       "id": "gp9",
@@ -2342,7 +2398,14 @@
       "averageRating": 4.3,
       "reviewCount": 137,
       "verificationStatus": "verified",
-      "createdAt": "2025-09-05T07:32:36.591Z"
+      "createdAt": "2025-09-05T07:32:36.591Z",
+      "contact": {
+        "email": "selena.hettinger@cityguide.ma",
+        "phone": "+212 660 012 221",
+        "whatsapp": "+212 660 012 221",
+        "instagram": "@selena_hettinger_guide",
+        "website": "https://guide-selena.hettinger.ma"
+      }
     },
     {
       "id": "gp10",
@@ -2464,7 +2527,14 @@
       "averageRating": 4.7,
       "reviewCount": 68,
       "verificationStatus": "verified",
-      "createdAt": "2026-02-09T23:57:34.403Z"
+      "createdAt": "2026-02-09T23:57:34.403Z",
+      "contact": {
+        "email": "sue.padberg@cityguide.ma",
+        "phone": "+212 660 013 579",
+        "whatsapp": "+212 660 013 579",
+        "instagram": "@sue_padberg_guide",
+        "website": null
+      }
     },
     {
       "id": "gp11",
@@ -2592,7 +2662,14 @@
       "averageRating": 4.6,
       "reviewCount": 27,
       "verificationStatus": "verified",
-      "createdAt": "2025-11-23T04:02:47.912Z"
+      "createdAt": "2025-11-23T04:02:47.912Z",
+      "contact": {
+        "email": "wilson.lebsack@cityguide.ma",
+        "phone": "+212 660 014 936",
+        "whatsapp": "+212 660 014 936",
+        "instagram": "@wilson_lebsack_guide",
+        "website": null
+      }
     },
     {
       "id": "gp12",
@@ -2708,7 +2785,14 @@
       "averageRating": 4.5,
       "reviewCount": 52,
       "verificationStatus": "verified",
-      "createdAt": "2025-07-29T17:55:04.980Z"
+      "createdAt": "2025-07-29T17:55:04.980Z",
+      "contact": {
+        "email": "skylar.jacobidamore@cityguide.ma",
+        "phone": "+212 660 016 294",
+        "whatsapp": "+212 660 016 294",
+        "instagram": "@skylar_jacobidamore_guide",
+        "website": "https://guide-skylar.jacobidamore.ma"
+      }
     },
     {
       "id": "gp13",
@@ -2836,7 +2920,14 @@
       "averageRating": 4.8,
       "reviewCount": 197,
       "verificationStatus": "verified",
-      "createdAt": "2025-04-20T22:02:55.024Z"
+      "createdAt": "2025-04-20T22:02:55.024Z",
+      "contact": {
+        "email": "cheyenne.ondricka@cityguide.ma",
+        "phone": "+212 660 017 652",
+        "whatsapp": "+212 660 017 652",
+        "instagram": "@cheyenne_ondricka_guide",
+        "website": null
+      }
     },
     {
       "id": "gp14",
@@ -2964,7 +3055,14 @@
       "averageRating": 4.4,
       "reviewCount": 183,
       "verificationStatus": "verified",
-      "createdAt": "2026-01-21T21:58:26.242Z"
+      "createdAt": "2026-01-21T21:58:26.242Z",
+      "contact": {
+        "email": "reynold.frami@cityguide.ma",
+        "phone": "+212 660 019 010",
+        "whatsapp": "+212 660 019 010",
+        "instagram": "@reynold_frami_guide",
+        "website": null
+      }
     },
     {
       "id": "gp15",
@@ -3092,7 +3190,14 @@
       "averageRating": 4.8,
       "reviewCount": 149,
       "verificationStatus": "verified",
-      "createdAt": "2026-02-21T21:58:09.319Z"
+      "createdAt": "2026-02-21T21:58:09.319Z",
+      "contact": {
+        "email": "rosemarie.bashirian@cityguide.ma",
+        "phone": "+212 660 020 368",
+        "whatsapp": "+212 660 020 368",
+        "instagram": "@rosemarie_bashirian_guide",
+        "website": "https://guide-rosemarie.bashirian.ma"
+      }
     },
     {
       "id": "gp16",
@@ -3208,7 +3313,14 @@
       "averageRating": 4.1,
       "reviewCount": 31,
       "verificationStatus": "verified",
-      "createdAt": "2026-02-25T02:19:17.730Z"
+      "createdAt": "2026-02-25T02:19:17.730Z",
+      "contact": {
+        "email": "alton.price@cityguide.ma",
+        "phone": "+212 660 021 726",
+        "whatsapp": "+212 660 021 726",
+        "instagram": "@alton_price_guide",
+        "website": null
+      }
     },
     {
       "id": "gp17",
@@ -3330,7 +3442,14 @@
       "averageRating": 4.5,
       "reviewCount": 195,
       "verificationStatus": "verified",
-      "createdAt": "2025-04-12T05:35:13.855Z"
+      "createdAt": "2025-04-12T05:35:13.855Z",
+      "contact": {
+        "email": "clyde.champlin@cityguide.ma",
+        "phone": "+212 660 023 084",
+        "whatsapp": "+212 660 023 084",
+        "instagram": "@clyde_champlin_guide",
+        "website": null
+      }
     },
     {
       "id": "gp18",
@@ -3458,7 +3577,14 @@
       "averageRating": 3.9,
       "reviewCount": 108,
       "verificationStatus": "verified",
-      "createdAt": "2025-07-02T00:54:47.163Z"
+      "createdAt": "2025-07-02T00:54:47.163Z",
+      "contact": {
+        "email": "shane.monahan@cityguide.ma",
+        "phone": "+212 660 024 442",
+        "whatsapp": "+212 660 024 442",
+        "instagram": "@shane_monahan_guide",
+        "website": "https://guide-shane.monahan.ma"
+      }
     },
     {
       "id": "gp19",
@@ -3586,7 +3712,14 @@
       "averageRating": 4,
       "reviewCount": 62,
       "verificationStatus": "verified",
-      "createdAt": "2025-08-11T08:55:46.542Z"
+      "createdAt": "2025-08-11T08:55:46.542Z",
+      "contact": {
+        "email": "ervin.haag@cityguide.ma",
+        "phone": "+212 660 025 800",
+        "whatsapp": "+212 660 025 800",
+        "instagram": "@ervin_haag_guide",
+        "website": null
+      }
     },
     {
       "id": "gp20",
@@ -3702,7 +3835,14 @@
       "averageRating": 5,
       "reviewCount": 108,
       "verificationStatus": "verified",
-      "createdAt": "2025-09-03T01:53:24.780Z"
+      "createdAt": "2025-09-03T01:53:24.780Z",
+      "contact": {
+        "email": "lyle.walker@cityguide.ma",
+        "phone": "+212 660 027 158",
+        "whatsapp": "+212 660 027 158",
+        "instagram": "@lyle_walker_guide",
+        "website": null
+      }
     }
   ],
   "places": [
@@ -17146,6 +17286,23 @@
       "content": "test update comment",
       "rating": 3,
       "id": "temp-1777138008535"
+    },
+    {
+      "id": "temp-1777284825342",
+      "targetId": "gp13",
+      "targetType": "Guide",
+      "authorId": "0de6",
+      "author": {
+        "id": "0de6",
+        "name": "ismail benjalloul",
+        "avatarUrl": "https://ui-avatars.com/api/?name=ismail%20benjalloul&background=6b9c3e&color=fff"
+      },
+      "content": "test comment",
+      "rating": 4,
+      "likes": 0,
+      "likedBy": [],
+      "status": "active",
+      "createdAt": "2026-04-27T10:13:45.342Z"
     }
   ],
   "media": [
@@ -20399,13 +20556,6 @@
       "createdAt": "2026-04-22T20:26:28.149Z"
     },
     {
-      "id": "611c",
-      "userId": "876a",
-      "targetId": "p4",
-      "targetType": "Place",
-      "createdAt": "2026-04-22T20:27:07.013Z"
-    },
-    {
       "id": "5609",
       "userId": "876a",
       "targetId": "p6",
@@ -20439,13 +20589,6 @@
       "targetId": "gp13",
       "targetType": "GuideProfile",
       "createdAt": "2026-04-22T20:49:37.451Z"
-    },
-    {
-      "id": "c898",
-      "userId": "0de6",
-      "targetId": "p2",
-      "targetType": "Place",
-      "createdAt": "2026-04-25T17:21:59.288Z"
     },
     {
       "id": "35a7",
@@ -20518,6 +20661,7 @@
       "createdAt": "2026-04-27T09:11:46.677Z"
     },
     {
+
       "id": "b8df",
       "userId": "0de6",
       "targetId": "e5",
@@ -20544,6 +20688,20 @@
       "targetId": "gp20",
       "targetType": "GuideProfile",
       "createdAt": "2026-04-27T10:43:57.433Z"
+
+      "id": "ace3",
+      "userId": "0de6",
+      "targetId": "p2",
+      "targetType": "Place",
+      "createdAt": "2026-04-27T09:58:24.419Z"
+    },
+    {
+      "id": "73e4",
+      "userId": "0de6",
+      "targetId": "e11",
+      "targetType": "Event",
+      "createdAt": "2026-04-27T10:31:22.721Z"
+
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

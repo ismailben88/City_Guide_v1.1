@@ -59,7 +59,7 @@ function DestinationCard({ city, index, onClick }) {
                        text-[10px] font-bold font-[Nunito,sans-serif]"
           >
             <TbCalendarEvent size={10} />
-            {city.upcomingEvents} événement{city.upcomingEvents > 1 ? "s" : ""}
+            {city.upcomingEvents} event{city.upcomingEvents > 1 ? "s" : ""}
           </span>
         )}
 
@@ -81,7 +81,7 @@ function DestinationCard({ city, index, onClick }) {
             className="text-white text-[12px] font-bold font-[Nunito,sans-serif]
                        flex items-center gap-1.5"
           >
-            Découvrir <HiArrowRight size={13} />
+            Discover <HiArrowRight size={13} />
           </span>
         </div>
       </div>
@@ -142,18 +142,18 @@ export default function TopDestinationsSection({ destinations }) {
             className="font-[Nunito,sans-serif] text-[11px] font-bold tracking-[0.13em]
                        uppercase text-[#6b9c3e]"
           >
-            Tendances
+            Trending
           </span>
           <h2
             className="font-[Playfair_Display,Georgia,serif]
                        text-[clamp(1.3rem,2.5vw,1.8rem)] font-bold text-[#3d2b1a]
                        m-0 leading-[1.2]"
           >
-            Top Destinations en{" "}
+            Top Destinations in{" "}
             <span className="text-[#6b9c3e]">{season}</span>
           </h2>
           <p className="font-[Nunito,sans-serif] text-[13px] text-[#9e8e80] m-0 mt-0.5">
-            {destinations.length} villes à explorer cette saison
+            {destinations.length} cities to explore this season
           </p>
         </div>
 
@@ -162,7 +162,7 @@ export default function TopDestinationsSection({ destinations }) {
             <button
               onClick={() => scrollBy(-1)}
               disabled={!canLeft}
-              aria-label="Précédent"
+              aria-label="Previous"
               className="w-9 h-9 rounded-full border-[1.5px] border-[#dde8cc] bg-white
                          text-[#3d2b1a] flex items-center justify-center shadow-sm
                          transition-all duration-200
@@ -175,7 +175,7 @@ export default function TopDestinationsSection({ destinations }) {
             <button
               onClick={() => scrollBy(1)}
               disabled={!canRight}
-              aria-label="Suivant"
+              aria-label="Next"
               className="w-9 h-9 rounded-full border-[1.5px] border-[#dde8cc] bg-white
                          text-[#3d2b1a] flex items-center justify-center shadow-sm
                          transition-all duration-200
