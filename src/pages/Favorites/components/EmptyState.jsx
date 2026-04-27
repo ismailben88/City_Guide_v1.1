@@ -15,6 +15,13 @@ const config = {
     cta:   "Browse Guides",
     href:  "/guides",
   },
+  events: {
+    emoji: "🗓",
+    title: "No saved events yet",
+    sub:   "Browse events and tap ❤ on any event you'd like to attend.",
+    cta:   "Explore Events",
+    href:  "/events",
+  },
 };
 
 export default function EmptyState({ tab }) {
