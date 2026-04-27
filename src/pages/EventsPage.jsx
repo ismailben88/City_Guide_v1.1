@@ -318,59 +318,140 @@ export default function EventsPage() {
     <div className="min-h-screen bg-[#faf7f2]">
 
       {/* ── Hero ── */}
-      <section className="relative h-[380px] overflow-hidden">
-        <img
-          src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1400&auto=format"
-          alt="Events hero"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/80" />
+      <section className="relative h-[540px] overflow-hidden">
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+        {/* Background image — slight zoom for depth */}
+        <img
+          src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&auto=format&fit=crop"
+          alt="Events hero"
+          className="absolute inset-0 w-full h-full object-cover scale-[1.04]
+                     transition-transform duration-[8000ms] ease-out"
+        />
+
+        {/* Gradient layers */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+
+        {/* Decorative vertical accent */}
+        <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-gradient-to-b from-[#6b9c3e] via-[#a8d060] to-transparent" />
+
+        {/* Content — left-aligned, vertically centred */}
+        <div className="absolute inset-0 flex flex-col justify-center
+                        px-8 sm:px-14 lg:px-20 max-w-5xl pb-[72px]">
+
+          {/* Eyebrow badge */}
           <div
-            className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full
-                        bg-white/10 backdrop-blur-sm border border-white/20
-                        text-white text-[12px] font-[Nunito,sans-serif]"
+            className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full w-fit
+                        bg-[#6b9c3e]/70 backdrop-blur-sm border border-[#a8d060]/40
+                        text-white text-[11px] font-bold uppercase tracking-widest
+                        font-[Nunito,sans-serif]"
           >
-            <RiCalendarEventLine size={14} />
-            Discover events across Morocco
+            <RiCalendarEventLine size={12} />
+            Morocco's Finest Events
           </div>
 
+          {/* Title */}
           <h1
-            className="font-[Playfair_Display,Georgia,serif] text-4xl md:text-5xl font-bold
-                       text-white mb-4 drop-shadow-lg"
+            className="font-[Playfair_Display,Georgia,serif]
+                       text-[clamp(2.6rem,6vw,4.2rem)] font-bold leading-[1.08]
+                       text-white mb-4 drop-shadow-xl"
           >
-            Events & Festivals
+            Events &{" "}
+            <span
+              className="text-transparent bg-clip-text
+                         bg-gradient-to-r from-[#a8d060] to-[#6b9c3e]"
+            >
+              Festivals
+            </span>
           </h1>
 
-          <p className="text-white/75 text-[15px] max-w-xl font-[Nunito,sans-serif] mb-8">
+          {/* Subtitle */}
+          <p
+            className="text-white/65 text-[15px] max-w-md font-[Nunito,sans-serif]
+                       leading-relaxed mb-8"
+          >
             Concerts, festivals and cultural experiences across Morocco
           </p>
 
-          {!loading && (
-            <div className="flex gap-10">
-              {[
+          {/* Hero search bar */}
+          <div className="flex items-center gap-2 max-w-lg">
+            <div className="relative flex-1">
+              <TbSearch
+                size={16}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50"
+              />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search events, cities, organizers…"
+                className="w-full pl-11 pr-10 py-3.5 rounded-[14px]
+                           bg-white/15 backdrop-blur-md border border-white/25
+                           text-white placeholder-white/45 text-[13px]
+                           font-[Nunito,sans-serif]
+                           focus:outline-none focus:border-[#a8d060]/60
+                           focus:bg-white/20 transition-all"
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2
+                             text-white/50 hover:text-white transition-colors"
+                >
+                  <TbX size={14} />
+                </button>
+              )}
+            </div>
+            <button
+              onClick={() => {/* scroll to results */}}
+              className="flex items-center justify-center w-12 h-12 rounded-[14px]
+                         bg-[#6b9c3e] hover:bg-[#5a8833] text-white flex-shrink-0
+                         transition-all duration-200 hover:scale-105 active:scale-95
+                         shadow-[0_4px_16px_rgba(107,156,62,0.5)]"
+            >
+              <HiArrowRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* Stats strip — frosted glass pinned to bottom */}
+        <div className="absolute bottom-0 left-0 right-0
+                        bg-black/30 backdrop-blur-md border-t border-white/10">
+          <div className="max-w-5xl px-8 sm:px-14 lg:px-20 py-4
+                          flex items-center gap-0">
+            {!loading ? (
+              [
                 { value: events.length, label: "Events"  },
                 { value: freeCount,     label: "Free"    },
                 { value: cityCount,     label: "Cities"  },
-              ].map(({ value, label }) => (
-                <div key={label} className="text-center">
-                  <div
-                    className="text-2xl font-bold text-white
-                               font-[Playfair_Display,Georgia,serif]"
+              ].map(({ value, label }, i) => (
+                <div
+                  key={label}
+                  className={`flex items-center gap-3 pr-8
+                              ${i > 0 ? "pl-8 border-l border-white/15" : ""}`}
+                >
+                  <span
+                    className="font-[Playfair_Display,Georgia,serif]
+                               text-[22px] font-bold text-white"
                   >
                     {value}
-                  </div>
-                  <div
-                    className="text-white/60 text-[11px] uppercase tracking-wider
-                               font-[Nunito,sans-serif]"
+                  </span>
+                  <span
+                    className="text-white/50 text-[11px] font-bold uppercase
+                               tracking-widest font-[Nunito,sans-serif]"
                   >
                     {label}
-                  </div>
+                  </span>
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            ) : (
+              <div className="flex gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="h-4 w-20 rounded-full bg-white/10 animate-pulse" />
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
