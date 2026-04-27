@@ -24,6 +24,7 @@ import AboutPage        from "./pages/AboutPage";
 import ContactPage      from "./pages/ContactPage";
 import AccountPage      from "./pages/AccountPage";
 import EventsPage from "./pages/EventsPage";
+import EventDetailPage from "./pages/EventDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import CityDetailPage from "./pages/CityDetailPage";
 // ── Global styles ─────────────────────────────────────────────────────────────
@@ -55,6 +56,7 @@ function AppLayout() {
 
           {/* ── Events ── */}
           <Route path="/events" element={<EventsPage />} />
+          <Route path="/events/:id" element={<EventDetailPage />} />
 
           {/* ── City detail ── */}
           <Route path="/city/:citySlug" element={<CityDetailPage />} />
