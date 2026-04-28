@@ -27,6 +27,12 @@ import EventsPage from "./pages/EventsPage";
 import EventDetailPage from "./pages/EventDetailPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import CityDetailPage from "./pages/CityDetailPage";
+// ── Settings ──────────────────────────────────────────────────────────────────
+import SettingsLayout      from "./components/settings/SettingsLayout";
+import AccountSecurity     from "./pages/settings/AccountSecurity";
+import NotificationsPanel  from "./pages/settings/NotificationsPanel";
+import GuideProfileSettings from "./pages/settings/GuideProfileSettings";
+import BusinessSettings    from "./pages/settings/BusinessSettings";
 // ── Global styles ─────────────────────────────────────────────────────────────
 import "./styles/global.css";
 function ProtectedRoute() {
@@ -76,7 +82,16 @@ function AppLayout() {
 
           {/* ── Account ── */}
           <Route path="/account" element={<AccountPage />} />
-          <Route path="/notifications" element={<NotificationsPage/> } />
+          <Route path="/notifications" element={<NotificationsPage/>} />
+
+          {/* ── Settings ── */}
+          <Route path="/settings" element={<SettingsLayout />}>
+            <Route path="account"          element={<AccountSecurity />} />
+            <Route path="personal"         element={<AccountSecurity />} />
+            <Route path="notifications"    element={<NotificationsPanel />} />
+            <Route path="profile/guide"    element={<GuideProfileSettings />} />
+            <Route path="profile/business" element={<BusinessSettings />} />
+          </Route>
 
           {/* ── 404 — redirect to home ── */}
           <Route path="*" element={<Navigate to="/" replace />} />

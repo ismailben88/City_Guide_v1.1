@@ -1,0 +1,109 @@
+/* Profile Settings — scoped design tokens */
+/* prefix --ps- avoids collisions with global token names */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --ps-bg:          #F7F2E9;
+  --ps-bg-2:        #FBF7EF;
+  --ps-ink:         #2A1F14;
+  --ps-ink-2:       #5A4A38;
+  --ps-ink-3:       #8A7B66;
+  --ps-line:        #E8DDC7;
+  --ps-line-2:      #D9CDB3;
+  --ps-card:        #FFFFFF;
+  --ps-dark:        #2B1F12;
+  --ps-dark-2:      #3A2A18;
+  --ps-green:       #7DA635;
+  --ps-green-2:     #6A8E2A;
+  --ps-green-soft:  #EEF4DC;
+  --ps-orange:      #E08A3C;
+  --ps-orange-soft: #FBEBD6;
+  --ps-danger:      #B85433;
+  --ps-gap:         20px;
+  --ps-pad:         24px;
+  --ps-radius:      14px;
+  --ps-radius-sm:   10px;
+  --ps-radius-lg:   18px;
+  --ps-shadow-sm:   0 1px 4px rgba(0,0,0,0.08);
+  --ps-shadow:      0 4px 20px rgba(0,0,0,0.10);
+  --ps-font-display:'Fraunces', 'Playfair Display', Georgia, serif;
+  --ps-font-ui:     'Inter', 'Nunito', 'Segoe UI', sans-serif;
+}
+
+@keyframes ps-pulse-anim {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(1.6); }
+}
+
+.ps-pulse {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--ps-green);
+  display: inline-block;
+  flex-shrink: 0;
+  animation: ps-pulse-anim 2s ease-in-out infinite;
+}
+
+.ps-progress {
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--ps-line);
+  overflow: hidden;
+}
+.ps-progress-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: var(--ps-green);
+  transition: width 0.4s ease;
+}
+
+.ps-action-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ps-card);
+  box-shadow: var(--ps-shadow);
+  border-radius: 9999px;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 640px;
+  width: calc(100% - 48px);
+  z-index: 100;
+  border: 1px solid var(--ps-line);
+}
+
+.ps-card {
+  background: var(--ps-card);
+  border-radius: var(--ps-radius);
+  border: 1px solid var(--ps-line);
+  box-shadow: var(--ps-shadow-sm);
+  overflow: hidden;
+}
+
+.ps-field-input,
+.ps-field-select,
+.ps-field-textarea {
+  background: #fff;
+  border: 1px solid var(--ps-line);
+  border-radius: var(--ps-radius-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ps-ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  width: 100%;
+  font-family: var(--ps-font-ui);
+}
+.ps-field-textarea { resize: vertical; min-height: 96px; }
+.ps-field-input:focus,
+.ps-field-select:focus,
+.ps-field-textarea:focus {
+  border-color: var(--ps-green);
+  box-shadow: 0 0 0 3px rgba(125,166,53,0.12);
+}
