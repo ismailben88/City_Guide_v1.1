@@ -5,7 +5,6 @@ import {
   RiUserLine,
   RiShieldLine,
   RiLinksLine,
-  RiMailLine,
   RiPencilLine,
   RiCheckLine,
   RiDeleteBinLine,
@@ -261,105 +260,367 @@ function SaveRow() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+//  Section header — eyebrow + serif title + description
+// ─────────────────────────────────────────────────────────────────────────────
+function SectionHeader({ eyebrow, icon, title, desc, danger = false }) {
+  return (
+    <div>
+      <div
+        className={`flex items-center gap-1.5 text-[10px] uppercase tracking-[0.08em] font-semibold mb-1.5 ${
+          danger ? "text-red-400" : "text-ink3"
+        }`}
+      >
+        {icon} {eyebrow}
+      </div>
+      <h3 className="font-display text-[18px] font-medium text-ink m-0 tracking-[-0.2px]">
+        {title}
+      </h3>
+      {desc && (
+        <p className="font-body text-[12px] text-ink3 m-0 mt-1 leading-relaxed">
+          {desc}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 //  Account Management tab
 // ─────────────────────────────────────────────────────────────────────────────
 function AccountManagement({ user }) {
-  const [linkedAccounts, setLinkedAccounts] = useState([
-    user?.email || "y****@hotmail.fr",
+  const [email, setEmail] = useState(user?.email || "");
+  const [editingEmail, setEditingEmail] = useState(false);
+
+  const [fullName, setFullName] = useState(user?.name || "");
+  const [editingName, setEditingName] = useState(false);
+  const [gender, setGender] = useState("female");
+  const [city, setCity] = useState(user?.city || "");
+  const [editingCity, setEditingCity] = useState(false);
+  const [nationality, setNationality] = useState("Moroccan");
+  const [editingNat, setEditingNat] = useState(false);
+  const [dob, setDob] = useState("1991-08-22");
+  const [editingDob, setEditingDob] = useState(false);
+
+  const [providers, setProviders] = useState([
+    {
+      name: "Google",
+      desc: user?.email || "",
+      connected: true,
+      color: "#EA4335",
+    },
+    { name: "Apple", desc: "Not connected", connected: false, color: "#1c1c1e" },
+    {
+      name: "Facebook",
+      desc: "Not connected",
+      connected: false,
+      color: "#1877F2",
+    },
   ]);
-  const removeLinked = (i) =>
-    setLinkedAccounts((l) => l.filter((_, idx) => idx !== i));
+
+  const toggleProvider = (name) =>
+    setProviders((p) =>
+      p.map((pr) =>
+        pr.name === name
+          ? {
+              ...pr,
+              connected: !pr.connected,
+              desc: !pr.connected ? user?.email || "" : "Not connected",
+            }
+          : pr
+      )
+    );
 
   return (
     <Content>
-      {/* Security */}
+      {/* ── Sign-in & security ── */}
       <Card delay="0ms">
         <CardHeader>
-          <CardTitle>
-            <RiShieldLine size={13} /> Accounts Security
-          </CardTitle>
+          <SectionHeader
+            eyebrow="Sign-in & security"
+            icon={<RiShieldLine size={12} />}
+            title="Keep your account safe"
+            desc="Update credentials and add extra protection."
+          />
         </CardHeader>
         <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
-          <EditableField
-            label="Linked email"
-            value={user?.email || "y****@hotmail.fr"}
-            type="email"
-          />
-          <EditableField
-            label="Linked phone number"
-            value="+212 *********"
-            type="tel"
-          />
-          <EditableField
-            label="Password"
-            value="••••••••••••"
-            type="password"
-          />
-          <div />
+          {/* Email */}
+          <FieldWrap>
+            <div className="flex items-center justify-between">
+              <FieldLabel>Email</FieldLabel>
+              <span className="text-[11px] font-medium text-primary">
+                Verified
+              </span>
+            </div>
+            <FieldRow>
+              <FieldInput
+                type="email"
+                value={email}
+                editing={editingEmail}
+                disabled={!editingEmail}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <EditBtn
+                active={editingEmail}
+                onClick={() => setEditingEmail((v) => !v)}
+                title={editingEmail ? "Save" : "Edit"}
+              >
+                {editingEmail ? (
+                  <RiCheckLine size={14} />
+                ) : (
+                  <RiPencilLine size={14} />
+                )}
+              </EditBtn>
+            </FieldRow>
+          </FieldWrap>
+
+          {/* Phone */}
+          <FieldWrap>
+            <div className="flex items-center justify-between">
+              <FieldLabel>Phone</FieldLabel>
+              <span className="text-[11px] text-ink3">+212 ····· 47</span>
+            </div>
+            <FieldRow>
+              <FieldInput
+                value="+212 6 ·· ·· ·· 47"
+                disabled
+                editing={false}
+              />
+              <EditBtn title="Edit" onClick={() => {}}>
+                <RiPencilLine size={14} />
+              </EditBtn>
+            </FieldRow>
+          </FieldWrap>
+
+          {/* Password */}
+          <FieldWrap>
+            <FieldLabel>Password</FieldLabel>
+            <FieldRow>
+              <FieldInput
+                type="password"
+                value="············"
+                disabled
+                editing={false}
+              />
+              <EditBtn title="Change password" onClick={() => {}}>
+                <RiPencilLine size={14} />
+              </EditBtn>
+            </FieldRow>
+            <span className="text-[11px] text-ink3">
+              Last changed 2 months ago
+            </span>
+          </FieldWrap>
+
+          {/* 2FA */}
+          <FieldWrap>
+            <div className="flex items-center justify-between">
+              <FieldLabel>Two-factor auth</FieldLabel>
+              <span className="text-[11px] font-medium text-primary">
+                Enabled
+              </span>
+            </div>
+            <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-sand3 bg-sand">
+              <span className="font-body text-[13px] font-semibold text-ink2">
+                Authenticator app
+              </span>
+              <button className="font-body text-[12px] font-semibold text-ink3 hover:text-primary transition-colors px-2 py-1 rounded-lg hover:bg-primary/8">
+                Manage
+              </button>
+            </div>
+          </FieldWrap>
         </div>
       </Card>
 
-      {/* Personal info */}
+      {/* ── Linked accounts / Sign-in providers ── */}
       <Card delay="60ms">
         <CardHeader>
-          <CardTitle>
-            <RiUserLine size={13} /> Personal Information
-          </CardTitle>
+          <SectionHeader
+            eyebrow="Linked accounts"
+            icon={<RiLinksLine size={12} />}
+            title="Sign-in providers"
+            desc="Connect alternative ways to sign in."
+          />
         </CardHeader>
-        <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
-          <EditableField
-            label="Full name"
-            value={user?.name || "Tarik Amrani"}
-          />
-          <EditableField label="Gender" value="Male" />
-          <EditableField
-            label="City of residence"
-            value={user?.city || "Marrakech"}
-          />
-          <EditableField label="Nationality" value="Moroccan" />
+        <div className="flex flex-col gap-2">
+          {providers.map((provider) => (
+            <div
+              key={provider.name}
+              className="flex items-center gap-3.5 px-3.5 py-3 border border-sand3 rounded-xl bg-sand transition-colors hover:border-ink3/20"
+            >
+              <div className="w-9 h-9 rounded-[9px] bg-white border border-sand3 flex items-center justify-center flex-shrink-0">
+                <span
+                  className="w-[14px] h-[14px] rounded-full inline-block"
+                  style={{ background: provider.color }}
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-body text-[13px] font-semibold text-ink2">
+                  {provider.name}
+                </div>
+                <div className="font-body text-[11px] text-ink3">
+                  {provider.desc}
+                </div>
+              </div>
+              {provider.connected ? (
+                <button
+                  onClick={() => toggleProvider(provider.name)}
+                  className="px-3 py-1.5 rounded-xl border border-sand3 bg-white font-body text-[12px] font-semibold text-ink3 cursor-pointer transition-all hover:border-red-200 hover:text-red-500 hover:bg-red-50"
+                >
+                  Disconnect
+                </button>
+              ) : (
+                <button
+                  onClick={() => toggleProvider(provider.name)}
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-xl border border-sand3 bg-white font-body text-[12px] font-semibold text-ink3 cursor-pointer transition-all hover:border-primary hover:text-primary hover:bg-primary/5"
+                >
+                  <RiAddLine size={12} /> Connect
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       </Card>
 
-      {/* Linked accounts */}
+      {/* ── Personal information ── */}
       <Card delay="120ms">
         <CardHeader>
-          <CardTitle>
-            <RiLinksLine size={13} /> Linked Accounts
-          </CardTitle>
+          <SectionHeader
+            eyebrow="Personal information"
+            icon={<RiUserLine size={12} />}
+            title="How you appear off-profile"
+            desc="Used for receipts, payouts and ID verification — never shown publicly."
+          />
         </CardHeader>
+        <div className="grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
+          <FieldWrap>
+            <FieldLabel>Full legal name</FieldLabel>
+            <FieldRow>
+              <FieldInput
+                value={fullName}
+                editing={editingName}
+                disabled={!editingName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+              <EditBtn
+                active={editingName}
+                onClick={() => setEditingName((v) => !v)}
+                title={editingName ? "Save" : "Edit"}
+              >
+                {editingName ? (
+                  <RiCheckLine size={14} />
+                ) : (
+                  <RiPencilLine size={14} />
+                )}
+              </EditBtn>
+            </FieldRow>
+          </FieldWrap>
 
-        {linkedAccounts.map((acc, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-2.5 px-3.5 py-2.5 bg-sand rounded-xl
-            border border-sand3 mb-2 transition-colors duration-150 hover:border-ink3/20"
-          >
-            <span className="w-8 h-8 rounded-[9px] bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-              <RiMailLine size={15} />
-            </span>
-            <input
-              defaultValue={acc}
-              className="flex-1 border-0 outline-none bg-transparent font-body text-[13px]
-                font-semibold text-ink2 min-w-0 placeholder:text-ink3/50"
-            />
-            <EditBtn onClick={() => {}} title="Edit">
-              <RiPencilLine size={13} />
-            </EditBtn>
-            <DeleteBtn onClick={() => removeLinked(i)} title="Remove">
-              <RiDeleteBinLine size={13} />
-            </DeleteBtn>
-          </div>
-        ))}
+          <FieldWrap>
+            <FieldLabel>Gender</FieldLabel>
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="px-3.5 py-2.5 rounded-xl border border-sand3 bg-sand font-body text-[13px] font-semibold text-ink2 outline-none cursor-pointer focus:border-primary transition-colors"
+            >
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="nb">Non-binary</option>
+              <option value="other">Prefer not to say</option>
+            </select>
+          </FieldWrap>
 
-        <button
-          onClick={() => setLinkedAccounts((l) => [...l, ""])}
-          className="flex items-center justify-center gap-1.5 w-full px-4 py-2 mt-1 rounded-[10px]
-            border border-dashed border-ink3/30 bg-transparent text-ink3
-            font-body text-[12px] font-bold cursor-pointer transition-all duration-150
-            hover:border-primary hover:text-primary hover:bg-primary/5"
-        >
-          <RiAddLine size={14} /> Add linked account
-        </button>
+          <FieldWrap>
+            <FieldLabel>City of residence</FieldLabel>
+            <FieldRow>
+              <FieldInput
+                value={city}
+                editing={editingCity}
+                disabled={!editingCity}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <EditBtn
+                active={editingCity}
+                onClick={() => setEditingCity((v) => !v)}
+                title={editingCity ? "Save" : "Edit"}
+              >
+                {editingCity ? (
+                  <RiCheckLine size={14} />
+                ) : (
+                  <RiPencilLine size={14} />
+                )}
+              </EditBtn>
+            </FieldRow>
+          </FieldWrap>
+
+          <FieldWrap>
+            <FieldLabel>Nationality</FieldLabel>
+            <FieldRow>
+              <FieldInput
+                value={nationality}
+                editing={editingNat}
+                disabled={!editingNat}
+                onChange={(e) => setNationality(e.target.value)}
+              />
+              <EditBtn
+                active={editingNat}
+                onClick={() => setEditingNat((v) => !v)}
+                title={editingNat ? "Save" : "Edit"}
+              >
+                {editingNat ? (
+                  <RiCheckLine size={14} />
+                ) : (
+                  <RiPencilLine size={14} />
+                )}
+              </EditBtn>
+            </FieldRow>
+          </FieldWrap>
+
+          <FieldWrap>
+            <FieldLabel>Date of birth</FieldLabel>
+            <FieldRow>
+              <input
+                type="date"
+                value={dob}
+                disabled={!editingDob}
+                onChange={(e) => setDob(e.target.value)}
+                className={`flex-1 px-3.5 py-2.5 rounded-xl border font-body text-[13px] font-semibold text-ink2 outline-none transition-all duration-200 focus:border-primary focus:ring-2 focus:ring-primary/10 disabled:bg-sand disabled:text-ink3 disabled:cursor-default ${
+                  editingDob ? "border-primary bg-white" : "border-sand3 bg-sand"
+                }`}
+              />
+              <EditBtn
+                active={editingDob}
+                onClick={() => setEditingDob((v) => !v)}
+                title={editingDob ? "Save" : "Edit"}
+              >
+                {editingDob ? (
+                  <RiCheckLine size={14} />
+                ) : (
+                  <RiPencilLine size={14} />
+                )}
+              </EditBtn>
+            </FieldRow>
+          </FieldWrap>
+        </div>
+      </Card>
+
+      {/* ── Danger zone ── */}
+      <Card delay="180ms">
+        <CardHeader>
+          <SectionHeader
+            eyebrow="Danger zone"
+            icon={<RiDeleteBinLine size={12} />}
+            title="Pause or delete your account"
+            desc="Pausing hides your profile but keeps your history. Deleting is permanent."
+            danger
+          />
+        </CardHeader>
+        <div className="flex gap-2.5 flex-wrap">
+          <button className="flex items-center gap-1.5 px-5 py-[11px] rounded-xl border border-sand3 bg-transparent text-ink3 font-body text-sm font-semibold cursor-pointer transition-all duration-150 hover:bg-sand2 hover:text-ink2">
+            Pause account
+          </button>
+          <button className="flex items-center gap-1.5 px-5 py-[11px] rounded-xl border border-red-200 bg-transparent text-red-500 font-body text-sm font-semibold cursor-pointer transition-all duration-150 hover:bg-red-50">
+            <RiDeleteBinLine size={14} /> Delete account
+          </button>
+        </div>
       </Card>
 
       <SaveRow />
