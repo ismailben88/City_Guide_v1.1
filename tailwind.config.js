@@ -7,8 +7,8 @@ export default {
     extend: {
       // ─── Design tokens ───────────────────────────────────────────────────
       colors: {
-        primary: "#5b8523", // green — buttons, accents
-        accent: "#d57a2a", // orange — CTAs, featured badges
+        primary: "#6b9c3e", // green — buttons, accents (matches --color-primary)
+        accent:  "#c8761a", // orange — CTAs, hover states (matches --color-accent)
         dark: "#1a1a1a", // dark background
         // ── Guide page neutrals (warm sand palette) ───────────────────────
         sand: "#faf7f2",
@@ -68,6 +68,10 @@ export default {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.6" },
         },
+        "pop-in": {
+          "0%":   { opacity: "0", transform: "scale(0.85)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
       },
       // ─── Hero animations ─────────────────────────────────────────────────
       animation: {
@@ -83,7 +87,9 @@ export default {
         "fade-in": "fade-in 0.4s ease both",
         "slide-right": "slide-right 0.45s ease both",
         "scale-in": "scale-in 0.35s ease both",
-        "pulse-soft": "pulse-soft 2.5s ease-in-out infinite",
+        "pulse-soft":  "pulse-soft 2.5s ease-in-out infinite",
+        "modal-in":    "slide-up 0.3s cubic-bezier(0.25,0.8,0.25,1) both",
+        "pop-in":      "pop-in 0.35s cubic-bezier(0.25,0.8,0.25,1) both",
       },
     },
   },

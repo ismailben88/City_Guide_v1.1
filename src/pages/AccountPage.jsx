@@ -24,7 +24,7 @@ import { TbLanguage, TbTargetArrow } from "react-icons/tb";
 import { selectUser } from "../store/slices/authSlice";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = import.meta.env.VITE_API_URL;
 const DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const GUIDE_TYPES = [
   "Cultural",

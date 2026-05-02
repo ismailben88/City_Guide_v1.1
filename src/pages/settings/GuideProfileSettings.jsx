@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import {
   RiImageAddLine, RiShieldCheckLine, RiUserLine, RiPencilLine,
   RiMapPinLine, RiTimeLine, RiAddLine, RiCloseLine, RiSparklingLine,
@@ -13,6 +14,8 @@ import {
   PsBtnPrimary, PsBtnOutline, PsBtnGhost,
 } from "../../components/settings/atoms";
 import { SPECIALTIES, CITIES, LANGUAGES, DAYS, PROFICIENCY_LEVELS, MOCK_GUIDE_PROFILE } from "../../constants/guide";
+import { selectUser } from "../../store/slices/authSlice";
+import BecomeGuide from "./BecomeGuide";
 
 // ── Completeness calculator ───────────────────────────────────────────────────
 function calcCompleteness(p) {
@@ -824,7 +827,7 @@ function ActionBar({ isDirty, onDiscard, onSave }) {
 }
 
 // ── Page root ─────────────────────────────────────────────────────────────────
-export default function GuideProfileSettings() {
+function GuideProfileEditor() {
   const [profile, setProfile] = useState({ ...MOCK_GUIDE_PROFILE });
   const [isDirty, setIsDirty] = useState(false);
 
@@ -867,4 +870,9 @@ export default function GuideProfileSettings() {
       <ActionBar isDirty={isDirty} onDiscard={handleDiscard} onSave={handleSave} />
     </>
   );
+}
+
+export default function GuideProfileSettings() {
+  const user = useSelector(selectUser);
+  return user?.isGuide ? <GuideProfileEditor /> : <BecomeGuide />;
 }

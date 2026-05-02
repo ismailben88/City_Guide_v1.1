@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "mock": "json-server --watch db.json --port 3001",
+    "dev:backend": "cp .env.backend .env && vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
