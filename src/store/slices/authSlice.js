@@ -101,6 +101,32 @@ export const updateUser = createAsyncThunk(
   }
 );
 
+/** UPLOAD AVATAR — POST /users/:id/avatar (multipart) */
+export const uploadAvatarThunk = createAsyncThunk(
+  "auth/uploadAvatar",
+  async (file, { getState, rejectWithValue }) => {
+    try {
+      const { user, token } = getState().auth;
+      const id = user?._id || user?.id;
+      if (!id) return rejectWithValue("Not authenticated.");
+
+      const form = new FormData();
+      form.append("avatar", file);
+
+      const res  = await fetch(`${BASE_URL}/users/${id}/avatar`, {
+        method:  "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body:    form,
+      });
+      const data = await res.json();
+      if (!res.ok) return rejectWithValue(data.message || "Upload failed.");
+      return data.avatarUrl;
+    } catch {
+      return rejectWithValue("Upload failed. Please try again.");
+    }
+  }
+);
+
 /** GOOGLE AUTH (demo) — tries POST /auth/register; if email taken, POST /auth/login
  *  Uses a deterministic derived password so the same Google account always works.
  *  Replace this with a real Google OAuth flow in production.
@@ -208,7 +234,19 @@ const authSlice = createSlice({
         state.user    = { ...state.user, ...payload };
         localStorage.setItem("cg_user", JSON.stringify(state.user));
       })
-      .addCase(updateUser.rejected,  onRejected);
+      .addCase(updateUser.rejected,  onRejected)
+
+      // ── upload avatar ─────────────────────────────────────────────────────
+      .addCase(uploadAvatarThunk.pending,   (state) => { state.loading = true;  state.error = null; })
+      .addCase(uploadAvatarThunk.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        if (state.user) {
+          state.user.avatarUrl = payload;
+          state.user.avatar    = payload;
+          localStorage.setItem("cg_user", JSON.stringify(state.user));
+        }
+      })
+      .addCase(uploadAvatarThunk.rejected,  onRejected);
   },
 });
 

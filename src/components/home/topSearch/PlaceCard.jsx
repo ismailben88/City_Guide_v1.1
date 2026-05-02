@@ -53,7 +53,7 @@ export default function PlaceCard({ place, index, isActive, onClick }) {
                          uppercase px-[10px] py-1 rounded-full border border-[rgba(255,255,255,0.22)]
                          flex items-center gap-1">
           <RiLeafLine size={10} />
-          {place.category.name || place.category}
+          {place.category?.name ?? place.categoryName ?? ""}
         </span>
       )}
 
@@ -76,7 +76,7 @@ export default function PlaceCard({ place, index, isActive, onClick }) {
         <p className="font-[Nunito,sans-serif] text-[11px] text-[#a09880] m-0
                       flex items-center gap-1 letter-spacing-[0.03em]">
           <RiMapPin2Line size={12} />
-          {place.cityName || place.subtitle || place.city}
+          {place.cityName || place.subtitle || place.city?.name || ""}
         </p>
 
         {/* Title */}

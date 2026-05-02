@@ -12,9 +12,8 @@ import {
   PSSelect, PsBtnPrimary, PsBtnGhost, PsBtnOutline, BadgeMini,
 } from "../../components/settings/atoms";
 import { BIZ_CATEGORIES } from "../../constants/guide";
-import { selectUser, selectToken } from "../../store/slices/authSlice";
-
-const BASE_URL = import.meta.env.VITE_API_URL;
+import { selectUser } from "../../store/slices/authSlice";
+import { api } from "../../services/api";
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
 function Toast({ msg, color, onDismiss }) {
@@ -185,8 +184,7 @@ function Spinner({ size = 5 }) {
 
 // ── Main component ────────────────────────────────────────────────────────────
 export default function BusinessSettings() {
-  const user  = useSelector(selectUser);
-  const token = useSelector(selectToken);
+  const user = useSelector(selectUser);
 
   const [businesses,   setBusinesses]   = useState([]);
   const [loading,      setLoading]      = useState(true);
@@ -194,6 +192,11 @@ export default function BusinessSettings() {
   const [submitting,   setSubmitting]   = useState(false);
   const [filterStatus, setFilterStatus] = useState("all");
   const [toast,        setToast]        = useState(null);
+
+  // Edit modal state
+  const [editingBiz,   setEditingBiz]   = useState(null);
+  const [editForm,     setEditForm]     = useState({ name: "", description: "", address: "" });
+  const [editSaving,   setEditSaving]   = useState(false);
 
   const [form, setForm] = useState({
     name: "", category: "", description: "", location: "", city: "", photos: [],
@@ -204,16 +207,11 @@ export default function BusinessSettings() {
     const id = user?.id || user?._id;
     if (!id) { setLoading(false); return; }
 
-    fetch(`${BASE_URL}/businesses?ownerId=${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        setBusinesses(Array.isArray(data) ? data : (data.businesses ?? []));
-      })
+    api.getBusinessesByUser(id)
+      .then((data) => setBusinesses(Array.isArray(data) ? data : []))
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [user?.id, user?._id, token]);
+  }, [user?.id, user?._id]);
 
   const setField = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -227,23 +225,14 @@ export default function BusinessSettings() {
     if (!form.name.trim() || !form.category) return;
     setSubmitting(true);
     try {
-      const res = await fetch(`${BASE_URL}/businesses`, {
-        method:  "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization:  `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name:        form.name.trim(),
-          category:    form.category,
-          description: form.description.trim(),
-          location:    form.location.trim(),
-          city:        form.city,
-          ownerId:     user?.id || user?._id,
-        }),
+      const data = await api.createBusiness({
+        name:        form.name.trim(),
+        category:    form.category,
+        description: form.description.trim(),
+        location:    form.location.trim(),
+        city:        form.city,
+        photos:      form.photos,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to publish listing.");
       setBusinesses((prev) => [data, ...prev]);
       setForm({ name: "", category: "", description: "", location: "", city: "", photos: [] });
       setShowForm(false);
@@ -258,13 +247,37 @@ export default function BusinessSettings() {
   // ── Delete ────────────────────────────────────────────────────────────────
   const handleDelete = async (idVal) => {
     try {
-      await fetch(`${BASE_URL}/businesses/${idVal}`, {
-        method:  "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await api.deleteBusiness(idVal);
       setBusinesses((prev) => prev.filter((b) => (b._id || b.id) !== idVal));
     } catch {
       showToastMsg("Failed to delete. Please try again.", "red");
+    }
+  };
+
+  // ── Edit ──────────────────────────────────────────────────────────────────
+  const handleEditOpen = (biz) => {
+    setEditingBiz(biz);
+    setEditForm({
+      name:        biz.name        ?? "",
+      description: biz.description ?? "",
+      address:     biz.address     ?? biz.location ?? "",
+    });
+  };
+
+  const handleEditSubmit = async () => {
+    if (!editingBiz) return;
+    setEditSaving(true);
+    try {
+      const updated = await api.updateBusiness(editingBiz._id || editingBiz.id, editForm);
+      setBusinesses((prev) =>
+        prev.map((b) => (b._id || b.id) === (editingBiz._id || editingBiz.id) ? { ...b, ...updated } : b)
+      );
+      setEditingBiz(null);
+      showToastMsg("Listing updated!", "green");
+    } catch (err) {
+      showToastMsg(err.message, "red");
+    } finally {
+      setEditSaving(false);
     }
   };
 
@@ -530,6 +543,7 @@ export default function BusinessSettings() {
                     className="w-8 h-8 rounded-[8px] border flex items-center justify-center transition-all hover:bg-sand hover:border-sand3"
                     style={{ borderColor: "var(--ps-line)", background: "transparent", color: "var(--ps-ink-3)", cursor: "pointer" }}
                     title="Edit"
+                    onClick={() => handleEditOpen(biz)}
                   >
                     <RiPencilLine size={14} />
                   </button>
@@ -548,6 +562,77 @@ export default function BusinessSettings() {
           })}
         </div>
       </PSCard>
+
+      {/* ── Edit modal ── */}
+      {editingBiz && (
+        <div
+          className="fixed inset-0 z-[9998] flex items-center justify-center p-4"
+          style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+          onClick={(e) => e.target === e.currentTarget && setEditingBiz(null)}
+        >
+          <div
+            className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4"
+            style={{ background: "var(--ps-card)", border: "1px solid var(--ps-line)", boxShadow: "var(--ps-shadow-lg)" }}
+          >
+            <div className="flex items-center justify-between">
+              <h3 className="text-[17px] font-semibold m-0" style={{ fontFamily: "var(--ps-font-display)", color: "var(--ps-ink)" }}>
+                Edit listing
+              </h3>
+              <button
+                onClick={() => setEditingBiz(null)}
+                className="w-8 h-8 rounded-full border flex items-center justify-center transition-all hover:bg-red-50 hover:text-red-500"
+                style={{ borderColor: "var(--ps-line)", color: "var(--ps-ink-3)", cursor: "pointer" }}
+              >
+                <RiCloseLine size={16} />
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-1.5">
+                <PSFieldLabel>Business name</PSFieldLabel>
+                <PSInput
+                  value={editForm.name}
+                  onChange={(e) => setEditForm((f) => ({ ...f, name: e.target.value }))}
+                  placeholder="Business name"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <PSFieldLabel>Description</PSFieldLabel>
+                <PSTextarea
+                  value={editForm.description}
+                  onChange={(e) => setEditForm((f) => ({ ...f, description: e.target.value }))}
+                  placeholder="Short description…"
+                  maxLength={400}
+                  rows={4}
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <PSFieldLabel>Address</PSFieldLabel>
+                <div className="relative">
+                  <RiMapPinLine size={15} className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" style={{ color: "var(--ps-ink-3)" }} />
+                  <PSInput
+                    value={editForm.address}
+                    onChange={(e) => setEditForm((f) => ({ ...f, address: e.target.value }))}
+                    placeholder="Address or neighbourhood"
+                    style={{ paddingLeft: 34 }}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-end gap-2.5 pt-2 border-t" style={{ borderColor: "var(--ps-line)" }}>
+              <PsBtnGhost onClick={() => setEditingBiz(null)} disabled={editSaving}>Cancel</PsBtnGhost>
+              <PsBtnPrimary
+                onClick={handleEditSubmit}
+                disabled={!editForm.name.trim() || editSaving}
+              >
+                {editSaving ? <Spinner size={4} /> : <RiCheckLine size={15} />}
+                {editSaving ? "Saving…" : "Save changes"}
+              </PsBtnPrimary>
+            </div>
+          </div>
+        </div>
+      )}
 
       {toast && <Toast msg={toast.msg} color={toast.color} />}
     </div>

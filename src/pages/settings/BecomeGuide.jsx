@@ -1,7 +1,6 @@
 // pages/settings/BecomeGuide.jsx
 // Shown at /settings/profile/guide when user.isGuide === false
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   RiCompassLine, RiArrowRightLine, RiArrowLeftLine,
   RiUserHeartLine, RiGlobalLine, RiMapPinLine,
@@ -10,21 +9,8 @@ import {
 } from "react-icons/ri";
 import { HiCheck, HiSparkles } from "react-icons/hi2";
 import { SPECIALTIES, CITIES, LANGUAGES } from "../../constants/guide";
-import { selectToken, updateUser } from "../../store/slices/authSlice";
 import { BadgeMini } from "../../components/settings/atoms";
-
-// ── API helper ────────────────────────────────────────────────────────────────
-const BASE_URL = import.meta.env.VITE_API_URL;
-async function apiPost(path, body, token) {
-  const res  = await fetch(`${BASE_URL}${path}`, {
-    method:  "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-    body:    JSON.stringify(body),
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.message || "Request failed");
-  return data;
-}
+import { api } from "../../services/api";
 
 // ── Wizard steps meta ─────────────────────────────────────────────────────────
 const STEPS = [
@@ -93,8 +79,6 @@ function StepBar({ step }) {
 
 // ─────────────────────────────────────────────────────────────────────────────
 export default function BecomeGuide() {
-  const dispatch = useDispatch();
-  const token    = useSelector(selectToken);
 
   const [phase,   setPhase]   = useState("landing"); // "landing" | "wizard" | "done"
   const [step,    setStep]    = useState(1);
@@ -123,15 +107,14 @@ export default function BecomeGuide() {
     setLoading(true);
     setError("");
     try {
-      await apiPost("/guides", {
+      await api.createGuideProfile({
         bio,
         tagline,
         specialties:     specs,
         spokenLanguages: langs,
         cityIds:         cities,
         pricePerHour:    price,
-      }, token);
-      await dispatch(updateUser({ isGuide: true }));
+      });
       setPhase("done");
     } catch (e) {
       setError(e.message || "Something went wrong. Please try again.");

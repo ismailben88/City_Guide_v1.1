@@ -58,7 +58,7 @@ export default function EventCard({ event, index, onClick }) {
       <div className="p-[14px_16px_18px] flex flex-col gap-2 flex-1 bg-[#1e1a14]">
         <p className="font-body text-[11px] text-[#a09880] m-0 flex items-center gap-1">
           <RiMapPin2Line size={12} />
-          {event.cityName || event.city}
+          {event.cityName || event.city?.name || ""}
         </p>
 
         <h3 className="font-display text-[15px] font-bold text-[#f5ede0] m-0 leading-[1.3] line-clamp-2">

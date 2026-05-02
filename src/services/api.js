@@ -84,11 +84,15 @@ function getCurrentSeason() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function normalizePlace(p) {
+  // Backend returns cityId/categoryId (populated); json-server returns city/category
+  const city     = p.cityId     ?? p.city;
+  const category = p.categoryId ?? p.category;
   return {
     ...p,
-    cityName:     p.city?.name     ?? "Inconnu",
-    categoryName: p.category?.name ?? "Général",
-    categoryIcon: p.category?.icon ?? "📍",
+    id:           p._id?.toString() ?? p.id,  // always a plain string
+    cityName:     city?.name     ?? "Inconnu",
+    categoryName: category?.name ?? "Général",
+    categoryIcon: category?.icon ?? "📍",
   };
 }
 
@@ -97,11 +101,15 @@ function normalizePlace(p) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function normalizeGuide(g) {
+  // Backend returns userId/cityIds (populated); json-server returns user/cities
+  const user   = g.userId  ?? g.user;
+  const cities = g.cityIds ?? g.cities ?? [];
   return {
     ...g,
-    name:      g.user ? `${g.user.firstName} ${g.user.lastName}` : "Inconnu",
-    avatar:    g.user?.avatarUrl ?? "",
-    cityNames: g.cities?.map((c) => c.name) ?? [],
+    id:        g._id?.toString() ?? g.id,
+    name:      user ? `${user.firstName} ${user.lastName}` : "Inconnu",
+    avatar:    user?.avatarUrl ?? "",
+    cityNames: cities.map((c) => c.name),
   };
 }
 
@@ -569,8 +577,8 @@ export const api = {
   // 15. BUSINESSES  (5 endpoints)
   // ═══════════════════════════════════════════════════════════════════════════
 
-  /** GET  /businesses?userId= */
-  getBusinessesByUser: (userId) => get("/businesses", { userId }),
+  /** GET  /businesses?ownerId= */
+  getBusinessesByUser: (userId) => get("/businesses", { ownerId: userId }),
 
   /** GET  /businesses/:id */
   getBusinessById: (id) => get(`/businesses/${id}`),
