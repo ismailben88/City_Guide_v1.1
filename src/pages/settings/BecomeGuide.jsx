@@ -111,7 +111,7 @@ export default function BecomeGuide() {
         bio,
         tagline,
         specialties:     specs,
-        spokenLanguages: langs,
+        spokenLanguages: langs.map((code) => ({ code, level: "fluent" })),
         cityIds:         cities,
         pricePerHour:    price,
       });

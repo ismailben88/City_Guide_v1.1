@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import {
   RiImageAddLine, RiShieldCheckLine, RiUserLine, RiPencilLine,
   RiMapPinLine, RiTimeLine, RiAddLine, RiCloseLine, RiSparklingLine,
   RiEyeLine, RiDeleteBinLine, RiUploadLine, RiFileShieldLine,
   RiCameraLine, RiIdCardLine, RiHome3Line, RiStarLine,
+  RiPhoneLine, RiWhatsappLine, RiInstagramLine, RiGlobalLine,
 } from "react-icons/ri";
 import { IoStarSharp } from "react-icons/io5";
 import { HiCheckBadge } from "react-icons/hi2";
@@ -15,6 +16,7 @@ import {
 } from "../../components/settings/atoms";
 import { SPECIALTIES, CITIES, LANGUAGES, DAYS, PROFICIENCY_LEVELS, MOCK_GUIDE_PROFILE } from "../../constants/guide";
 import { selectUser } from "../../store/slices/authSlice";
+import { api } from "../../services/api";
 import BecomeGuide from "./BecomeGuide";
 
 // ── Completeness calculator ───────────────────────────────────────────────────
@@ -716,6 +718,82 @@ function PricingCard({ profile, update }) {
   );
 }
 
+// ── Contact card ─────────────────────────────────────────────────────────────
+const CONTACT_FIELDS = [
+  {
+    key:         "phone",
+    icon:        <RiPhoneLine size={15} />,
+    label:       "Phone",
+    placeholder: "+212 6XX XXX XXX",
+    type:        "tel",
+    hint:        "Used for direct calls from travellers",
+  },
+  {
+    key:         "whatsapp",
+    icon:        <RiWhatsappLine size={15} />,
+    label:       "WhatsApp",
+    placeholder: "+212 6XX XXX XXX",
+    type:        "tel",
+    hint:        "Leave blank to use the same number as Phone",
+  },
+  {
+    key:         "instagram",
+    icon:        <RiInstagramLine size={15} />,
+    label:       "Instagram",
+    placeholder: "@your.handle",
+    type:        "text",
+    hint:        "Handle only, without the full URL",
+  },
+  {
+    key:         "website",
+    icon:        <RiGlobalLine size={15} />,
+    label:       "Website",
+    placeholder: "https://your-tours.com",
+    type:        "url",
+    hint:        "Your personal site or booking page",
+  },
+];
+
+function ContactCard({ profile, update }) {
+  const contact = profile.contact || {};
+
+  const set = (key, value) =>
+    update({ contact: { ...contact, [key]: value } });
+
+  return (
+    <PSCard>
+      <PSCardHead
+        eyebrow="Contact"
+        eyebrowIcon={<RiPhoneLine size={12} />}
+        title="How travellers reach you"
+        subtitle="Displayed on your public profile. Only add channels you actively monitor."
+      />
+
+      <div className="flex flex-col gap-4">
+        {CONTACT_FIELDS.map(({ key, icon, label, placeholder, type, hint }) => (
+          <div key={key}>
+            <PSFieldLabel>
+              <span className="flex items-center gap-1.5">
+                <span style={{ color: "var(--ps-green-2)" }}>{icon}</span>
+                {label}
+              </span>
+            </PSFieldLabel>
+            <PSInput
+              type={type}
+              value={contact[key] || ""}
+              onChange={(e) => set(key, e.target.value)}
+              placeholder={placeholder}
+            />
+            <p className="mt-1 text-[11px]" style={{ color: "var(--ps-ink-3)" }}>
+              {hint}
+            </p>
+          </div>
+        ))}
+      </div>
+    </PSCard>
+  );
+}
+
 // ── Public preview rail ───────────────────────────────────────────────────────
 function PublicPreview({ profile }) {
   const topSpecialties = SPECIALTIES.filter((s) => profile.specialties.includes(s.id)).slice(0, 3);
@@ -809,7 +887,7 @@ function PublicPreview({ profile }) {
 }
 
 // ── Action bar ────────────────────────────────────────────────────────────────
-function ActionBar({ isDirty, onDiscard, onSave }) {
+function ActionBar({ isDirty, onDiscard, onSave, saving }) {
   if (!isDirty) return null;
   return (
     <div className="ps-action-bar" role="region" aria-label="Save changes">
@@ -817,37 +895,114 @@ function ActionBar({ isDirty, onDiscard, onSave }) {
       <span className="text-[12px] font-medium flex-1 min-w-0 truncate" style={{ color: "var(--ps-ink-3)" }}>
         Unsaved changes
       </span>
-      <PsBtnGhost onClick={onDiscard}>Discard</PsBtnGhost>
-      <PsBtnOutline>
-        <RiEyeLine size={13} /> Preview public
-      </PsBtnOutline>
-      <PsBtnPrimary onClick={onSave}>Save changes</PsBtnPrimary>
+      <PsBtnGhost onClick={onDiscard} disabled={saving}>Discard</PsBtnGhost>
+      <PsBtnPrimary onClick={onSave} disabled={saving}>
+        {saving ? "Saving…" : "Save changes"}
+      </PsBtnPrimary>
     </div>
   );
 }
 
+// ── Normalize backend → local profile shape ───────────────────────────────────
+function normalizeBackend(doc, fallbackUser) {
+  const user   = doc.user || doc.userId || {};
+  const cities = (doc.cities || doc.cityIds || []).map((c) => c.slug ?? c.id ?? c);
+  // Real API: contact fields live on User model (populated into user object)
+  // json-server: contact object is on the guide profile directly
+  const src = doc.contact ?? {};
+  return {
+    _id:                  doc._id,
+    userId:               user._id || user.id || fallbackUser?._id || fallbackUser?.id || "",
+    firstName:            user.firstName            || fallbackUser?.firstName  || "",
+    email:                user.email                || fallbackUser?.email      || "",
+    username:             doc.username              || "",
+    tagline:              doc.tagline               || "",
+    bio:                  doc.bio                   || "",
+    avatarUrl:            user.avatarUrl            || fallbackUser?.avatarUrl  || "",
+    bannerUrl:            doc.bannerUrl             || "",
+    specialties:          doc.specialties           || [],
+    spokenLanguages: (doc.spokenLanguages || []).map((l) =>
+      typeof l === "string" ? { code: l, level: "fluent" } : l
+    ),
+    cities,
+    pricePerHour:         doc.pricePerHour          ?? 350,
+    averageRating:        doc.averageRating         ?? 0,
+    isCurrentlyAvailable: doc.isCurrentlyAvailable  ?? true,
+    verificationStatus:   doc.verificationStatus    || "unverified",
+    schedule:             doc.schedule?.length ? doc.schedule : MOCK_GUIDE_PROFILE.schedule,
+    unavailableDates:     doc.unavailableDates      || [],
+    contact: {
+      phone:     user.phone     || src.phone     || "",
+      whatsapp:  user.whatsapp  || src.whatsapp  || "",
+      instagram: user.instagram || src.instagram || "",
+      website:   user.website   || src.website   || "",
+    },
+  };
+}
+
 // ── Page root ─────────────────────────────────────────────────────────────────
-function GuideProfileEditor() {
-  const [profile, setProfile] = useState({ ...MOCK_GUIDE_PROFILE });
+function GuideProfileEditor({ initialProfile }) {
+  const [profile, setProfile] = useState(initialProfile);
+  const [saved,   setSaved]   = useState(initialProfile);
   const [isDirty, setIsDirty] = useState(false);
+  const [saving,  setSaving]  = useState(false);
+  const [saveErr, setSaveErr] = useState("");
 
   const update = (patch) => {
     setProfile((p) => ({ ...p, ...patch }));
     setIsDirty(true);
   };
 
-  const handleSave = () => {
-    console.log("[GuideProfileSettings] saved", profile);
-    setIsDirty(false);
+  const handleSave = async () => {
+    setSaving(true);
+    setSaveErr("");
+    try {
+      await Promise.all([
+        api.updateGuideProfile(profile._id, {
+          tagline:              profile.tagline,
+          bio:                  profile.bio,
+          specialties:          profile.specialties,
+          spokenLanguages:      profile.spokenLanguages,
+          cityIds:              profile.cities,
+          pricePerHour:         profile.pricePerHour,
+          isCurrentlyAvailable: profile.isCurrentlyAvailable,
+          schedule:             profile.schedule,
+          unavailableDates:     profile.unavailableDates,
+          bannerUrl:            profile.bannerUrl,
+        }),
+        profile.userId && api.updateUser(profile.userId, {
+          phone:     profile.contact.phone,
+          whatsapp:  profile.contact.whatsapp,
+          instagram: profile.contact.instagram,
+          website:   profile.contact.website,
+        }),
+      ]);
+      setSaved(profile);
+      setIsDirty(false);
+    } catch (e) {
+      setSaveErr(e.message || "Save failed. Please try again.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDiscard = () => {
-    setProfile({ ...MOCK_GUIDE_PROFILE });
+    setProfile(saved);
     setIsDirty(false);
+    setSaveErr("");
   };
 
   return (
     <>
+      {saveErr && (
+        <div
+          className="px-4 py-3 rounded-[10px] border text-[12px] font-semibold mb-2"
+          style={{ background: "#fde8e0", borderColor: "rgba(184,84,51,0.3)", color: "var(--ps-danger)", fontFamily: "var(--ps-font-ui)" }}
+        >
+          {saveErr}
+        </div>
+      )}
+
       {/* Two-column: cards + preview */}
       <div className="flex gap-6 items-start max-[1180px]:flex-col">
         {/* Card stack */}
@@ -859,6 +1014,7 @@ function GuideProfileEditor() {
           <CitiesCard          profile={profile} update={update} />
           <AvailabilityCard    profile={profile} update={update} />
           <PricingCard         profile={profile} update={update} />
+          <ContactCard         profile={profile} update={update} />
         </div>
 
         {/* Public preview rail — hidden below 1180px */}
@@ -867,12 +1023,39 @@ function GuideProfileEditor() {
         </div>
       </div>
 
-      <ActionBar isDirty={isDirty} onDiscard={handleDiscard} onSave={handleSave} />
+      <ActionBar isDirty={isDirty} onDiscard={handleDiscard} onSave={saving ? undefined : handleSave} saving={saving} />
     </>
   );
 }
 
 export default function GuideProfileSettings() {
-  const user = useSelector(selectUser);
-  return user?.isGuide ? <GuideProfileEditor /> : <BecomeGuide />;
+  const user    = useSelector(selectUser);
+  const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const id = user?._id || user?.id;
+    if (!id) { setLoading(false); return; }
+    api.getMyGuideProfile(id)
+      .then((list) => {
+        const doc = Array.isArray(list) ? list[0] : list;
+        if (doc) setProfile(normalizeBackend(doc, user));
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [user?._id, user?.id]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-24">
+        <svg className="animate-spin h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" style={{ color: "var(--ps-green)" }}>
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+        </svg>
+      </div>
+    );
+  }
+
+  if (!profile) return <BecomeGuide />;
+  return <GuideProfileEditor initialProfile={profile} />;
 }

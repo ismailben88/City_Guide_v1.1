@@ -377,6 +377,9 @@ export const api = {
     return profile ? normalizeGuide(profile) : null;
   },
 
+  /** GET  /guideProfiles?userId=:id — fetch the current user's own guide profile */
+  getMyGuideProfile: (userId) => get("/guideProfiles", { userId }),
+
   /** POST /guideProfiles */
   createGuideProfile: (data) => post("/guideProfiles", data),
 

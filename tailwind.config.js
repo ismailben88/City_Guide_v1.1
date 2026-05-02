@@ -88,6 +88,7 @@ export default {
         "slide-right": "slide-right 0.45s ease both",
         "scale-in": "scale-in 0.35s ease both",
         "pulse-soft":  "pulse-soft 2.5s ease-in-out infinite",
+        "slide-up":    "slide-up 0.35s ease both",
         "modal-in":    "slide-up 0.3s cubic-bezier(0.25,0.8,0.25,1) both",
         "pop-in":      "pop-in 0.35s cubic-bezier(0.25,0.8,0.25,1) both",
       },

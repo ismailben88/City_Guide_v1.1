@@ -572,7 +572,7 @@ export default function BusinessSettings() {
         >
           <div
             className="w-full max-w-md rounded-2xl p-6 flex flex-col gap-4"
-            style={{ background: "var(--ps-card)", border: "1px solid var(--ps-line)", boxShadow: "var(--ps-shadow-lg)" }}
+            style={{ background: "var(--ps-card)", border: "1px solid var(--ps-line)", boxShadow: "var(--ps-shadow)" }}
           >
             <div className="flex items-center justify-between">
               <h3 className="text-[17px] font-semibold m-0" style={{ fontFamily: "var(--ps-font-display)", color: "var(--ps-ink)" }}>

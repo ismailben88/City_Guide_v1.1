@@ -41,6 +41,9 @@
       "city": "El Jadida",
       "createdAt": "2026-01-11T00:56:00.647Z",
       "phone": "+212 846591868",
+      "whatsapp": "+212 846591868",
+      "instagram": "@kasandra.guide.ma",
+      "website": "https://kasandra-tours.ma",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -68,6 +71,9 @@
       "city": "Beni Mellal",
       "createdAt": "2025-10-26T22:31:43.345Z",
       "phone": "+212 003309747",
+      "whatsapp": "+212 003309747",
+      "instagram": "@amya.tours.ma",
+      "website": "",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -96,6 +102,9 @@
       "city": "Marrakech",
       "createdAt": "2025-12-28T15:44:56.925Z",
       "phone": "+212 700896055",
+      "whatsapp": "+212 700896055",
+      "instagram": "@dominic.marrakech",
+      "website": "https://marrakech-history.com",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -126,6 +135,9 @@
       "city": "Rabat",
       "createdAt": "2025-07-12T17:37:45.419Z",
       "phone": "+212 716462681",
+      "whatsapp": "+212 716462681",
+      "instagram": "@eusebio.guide.ma",
+      "website": "",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -153,6 +165,9 @@
       "city": "Safi",
       "createdAt": "2025-09-08T13:48:38.062Z",
       "phone": "+212 963116423",
+      "whatsapp": "+212 963116423",
+      "instagram": "@annie.tours.ma",
+      "website": "https://fes-heritage-tours.com",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -178,6 +193,9 @@
       "city": "Khouribga",
       "createdAt": "2025-11-10T16:20:33.882Z",
       "phone": "+212 647837592",
+      "whatsapp": "+212 647837592",
+      "instagram": "@joanna.guide.ma",
+      "website": "",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -205,6 +223,9 @@
       "city": "Mohammedia",
       "createdAt": "2025-05-12T19:07:21.079Z",
       "phone": "+212 734043826",
+      "whatsapp": "+212 734043826",
+      "instagram": "@destin.sahara",
+      "website": "https://sahara-guide.com",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -232,6 +253,9 @@
       "city": "Oujda",
       "createdAt": "2026-02-08T14:15:50.516Z",
       "phone": "+212 663053823",
+      "whatsapp": "+212 663053823",
+      "instagram": "@tammy.tours.ma",
+      "website": "",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -259,6 +283,9 @@
       "city": "Beni Mellal",
       "createdAt": "2025-10-26T17:13:30.076Z",
       "phone": "+212 571728065",
+      "whatsapp": "+212 571728065",
+      "instagram": "@leroy.rabat.guide",
+      "website": "https://rabat-tours.ma",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -284,6 +311,9 @@
       "city": "Taza",
       "createdAt": "2025-08-09T20:09:30.961Z",
       "phone": "+212 248842318",
+      "whatsapp": "+212 248842318",
+      "instagram": "@lela.guide.ma",
+      "website": "",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -311,6 +341,9 @@
       "city": "Kenitra",
       "createdAt": "2025-08-09T06:36:23.538Z",
       "phone": "+212 389633060",
+      "whatsapp": "+212 389633060",
+      "instagram": "@lora.chefchaouen",
+      "website": "https://chefchaouen-blue.com",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -338,6 +371,9 @@
       "city": "Mohammedia",
       "createdAt": "2025-09-26T02:54:17.855Z",
       "phone": "+212 838065831",
+      "whatsapp": "+212 838065831",
+      "instagram": "@maximillia.tours",
+      "website": "",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -366,6 +402,9 @@
       "city": "Marrakech",
       "createdAt": "2026-02-15T23:43:54.416Z",
       "phone": "+212 436409044",
+      "whatsapp": "+212 436409044",
+      "instagram": "@orval.essaouira",
+      "website": "https://essaouira-ocean.ma",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -391,6 +430,9 @@
       "city": "El Jadida",
       "createdAt": "2026-02-26T23:14:19.379Z",
       "phone": "+212 108027559",
+      "whatsapp": "+212 108027559",
+      "instagram": "@lulu.guide.ma",
+      "website": "",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -418,6 +460,9 @@
       "city": "Mohammedia",
       "createdAt": "2025-12-13T19:40:13.888Z",
       "phone": "+212 801306304",
+      "whatsapp": "+212 801306304",
+      "instagram": "@carissa.tangier",
+      "website": "https://tangier-xplore.com",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -443,6 +488,9 @@
       "city": "Beni Mellal",
       "createdAt": "2025-07-13T01:30:57.065Z",
       "phone": "+212 741203833",
+      "whatsapp": "+212 741203833",
+      "instagram": "@hattie.guide.ma",
+      "website": "",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -470,6 +518,9 @@
       "city": "Fes",
       "createdAt": "2025-08-07T00:05:41.315Z",
       "phone": "+212 270036380",
+      "whatsapp": "+212 270036380",
+      "instagram": "@lucie.meknes.tours",
+      "website": "https://meknestours.ma",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -497,6 +548,9 @@
       "city": "Meknes",
       "createdAt": "2025-11-14T03:57:46.469Z",
       "phone": "+212 002268431",
+      "whatsapp": "+212 002268431",
+      "instagram": "@regan.guide.ma",
+      "website": "",
       "gender": "Female",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -526,6 +580,9 @@
       "city": "El Jadida",
       "createdAt": "2025-05-14T00:35:37.073Z",
       "phone": "+212 650916872",
+      "whatsapp": "+212 650916872",
+      "instagram": "@lorenzo.desert.tours",
+      "website": "https://ouarzazate-desert.com",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -553,6 +610,9 @@
       "city": "Nador",
       "createdAt": "2026-01-15T08:59:08.276Z",
       "phone": "+212 445897142",
+      "whatsapp": "+212 445897142",
+      "instagram": "@julio.nador.guide",
+      "website": "",
       "gender": "Male",
       "nationality": "Moroccan",
       "linkedAccounts": [
@@ -1983,6 +2043,12 @@
       "totalTours": 353,
       "averageRating": 4.6,
       "reviewCount": 187,
+      "contact": {
+        "phone":     "+212 661 234 567",
+        "whatsapp":  "+212 661 234 567",
+        "instagram": "@kasandra.guide.ma",
+        "website":   "https://kasandra-tours.ma"
+      },
       "verificationStatus": "verified",
       "createdAt": "2026-01-11T00:56:00.647Z"
     },
@@ -2100,6 +2166,12 @@
       "totalTours": 51,
       "averageRating": 4.6,
       "reviewCount": 148,
+      "contact": {
+        "phone":     "+212 662 345 678",
+        "whatsapp":  "+212 662 345 678",
+        "instagram": "@amya.tours.ma",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-10-26T22:31:43.345Z"
     },
@@ -2223,6 +2295,12 @@
       "totalTours": 49,
       "averageRating": 4.7,
       "reviewCount": 85,
+      "contact": {
+        "phone":     "+212 663 456 789",
+        "whatsapp":  "+212 663 456 789",
+        "instagram": "@dominic.marrakech",
+        "website":   "https://marrakech-history.com"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-12-28T15:44:56.925Z"
     },
@@ -2352,6 +2430,12 @@
       "totalTours": 325,
       "averageRating": 4.2,
       "reviewCount": 179,
+      "contact": {
+        "phone":     "+212 664 567 890",
+        "whatsapp":  "+212 664 567 890",
+        "instagram": "@guide.ma.4",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-07-12T17:37:45.419Z"
     },
@@ -2469,6 +2553,12 @@
       "totalTours": 484,
       "averageRating": 5,
       "reviewCount": 24,
+      "contact": {
+        "phone":     "+212 665 678 901",
+        "whatsapp":  "+212 665 678 901",
+        "instagram": "@guide.ma.5",
+        "website":   "https://fes-heritage-tours.com"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-09-08T13:48:38.062Z"
     },
@@ -2586,6 +2676,12 @@
       "totalTours": 429,
       "averageRating": 4.7,
       "reviewCount": 6,
+      "contact": {
+        "phone":     "+212 666 789 012",
+        "whatsapp":  "+212 666 789 012",
+        "instagram": "@guide.ma.6",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-11-10T16:20:33.882Z"
     },
@@ -2709,6 +2805,12 @@
       "totalTours": 62,
       "averageRating": 4.3,
       "reviewCount": 98,
+      "contact": {
+        "phone":     "+212 667 890 123",
+        "whatsapp":  "+212 667 890 123",
+        "instagram": "@guide.ma.7",
+        "website":   "https://sahara-guide.com"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-05-12T19:07:21.079Z"
     },
@@ -2832,6 +2934,12 @@
       "totalTours": 174,
       "averageRating": 3.9,
       "reviewCount": 136,
+      "contact": {
+        "phone":     "+212 668 901 234",
+        "whatsapp":  "+212 668 901 234",
+        "instagram": "@guide.ma.8",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2026-02-08T14:15:50.516Z"
     },
@@ -2961,6 +3069,12 @@
       "totalTours": 451,
       "averageRating": 4.6,
       "reviewCount": 196,
+      "contact": {
+        "phone":     "+212 669 012 345",
+        "whatsapp":  "+212 669 012 345",
+        "instagram": "@guide.ma.9",
+        "website":   "https://rabat-tours.ma"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-10-26T17:13:30.076Z"
     },
@@ -3078,6 +3192,12 @@
       "totalTours": 77,
       "averageRating": 4.5,
       "reviewCount": 118,
+      "contact": {
+        "phone":     "+212 670 123 456",
+        "whatsapp":  "+212 670 123 456",
+        "instagram": "@guide.ma.10",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-08-09T20:09:30.961Z"
     },
@@ -3207,6 +3327,12 @@
       "totalTours": 82,
       "averageRating": 4.3,
       "reviewCount": 77,
+      "contact": {
+        "phone":     "+212 671 234 567",
+        "whatsapp":  "+212 671 234 567",
+        "instagram": "@guide.ma.11",
+        "website":   "https://chefchaouen-blue.com"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-08-09T06:36:23.538Z"
     },
@@ -3324,6 +3450,12 @@
       "totalTours": 27,
       "averageRating": 4.7,
       "reviewCount": 154,
+      "contact": {
+        "phone":     "+212 672 345 678",
+        "whatsapp":  "+212 672 345 678",
+        "instagram": "@guide.ma.12",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-09-26T02:54:17.855Z"
     },
@@ -3453,6 +3585,12 @@
       "totalTours": 368,
       "averageRating": 3.7,
       "reviewCount": 83,
+      "contact": {
+        "phone":     "+212 673 456 789",
+        "whatsapp":  "+212 673 456 789",
+        "instagram": "@guide.ma.13",
+        "website":   "https://essaouira-ocean.ma"
+      },
       "verificationStatus": "verified",
       "createdAt": "2026-02-15T23:43:54.416Z"
     },
@@ -3570,6 +3708,12 @@
       "totalTours": 280,
       "averageRating": 4.2,
       "reviewCount": 1,
+      "contact": {
+        "phone":     "+212 674 567 890",
+        "whatsapp":  "+212 674 567 890",
+        "instagram": "@guide.ma.14",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2026-02-26T23:14:19.379Z"
     },
@@ -3699,6 +3843,12 @@
       "totalTours": 424,
       "averageRating": 3.7,
       "reviewCount": 39,
+      "contact": {
+        "phone":     "+212 675 678 901",
+        "whatsapp":  "+212 675 678 901",
+        "instagram": "@guide.ma.15",
+        "website":   "https://tangier-xplore.com"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-12-13T19:40:13.888Z"
     },
@@ -3828,6 +3978,12 @@
       "totalTours": 496,
       "averageRating": 4.8,
       "reviewCount": 29,
+      "contact": {
+        "phone":     "+212 676 789 012",
+        "whatsapp":  "+212 676 789 012",
+        "instagram": "@guide.ma.16",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-07-13T01:30:57.065Z"
     },
@@ -3951,6 +4107,12 @@
       "totalTours": 256,
       "averageRating": 3.7,
       "reviewCount": 90,
+      "contact": {
+        "phone":     "+212 677 890 123",
+        "whatsapp":  "+212 677 890 123",
+        "instagram": "@guide.ma.17",
+        "website":   "https://meknestours.ma"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-08-07T00:05:41.315Z"
     },
@@ -4068,6 +4230,12 @@
       "totalTours": 303,
       "averageRating": 4.5,
       "reviewCount": 160,
+      "contact": {
+        "phone":     "+212 678 901 234",
+        "whatsapp":  "+212 678 901 234",
+        "instagram": "@guide.ma.18",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-11-14T03:57:46.469Z"
     },
@@ -4197,6 +4365,12 @@
       "totalTours": 489,
       "averageRating": 4.9,
       "reviewCount": 14,
+      "contact": {
+        "phone":     "+212 679 012 345",
+        "whatsapp":  "+212 679 012 345",
+        "instagram": "@guide.ma.19",
+        "website":   "https://ouarzazate-desert.com"
+      },
       "verificationStatus": "verified",
       "createdAt": "2025-05-14T00:35:37.073Z"
     },
@@ -4326,6 +4500,12 @@
       "totalTours": 73,
       "averageRating": 3.7,
       "reviewCount": 198,
+      "contact": {
+        "phone":     "+212 680 123 456",
+        "whatsapp":  "+212 680 123 456",
+        "instagram": "@guide.ma.20",
+        "website":   ""
+      },
       "verificationStatus": "verified",
       "createdAt": "2026-01-15T08:59:08.276Z"
     }

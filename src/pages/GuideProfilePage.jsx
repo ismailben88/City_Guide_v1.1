@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { IoStarSharp, IoStarOutline } from "react-icons/io5";
 import {
@@ -20,6 +20,8 @@ import {
   TbCheck,
   TbX,
   TbMoodSmile,
+  TbCopy,
+  TbCopyCheck,
 } from "react-icons/tb";
 import { HiArrowRight } from "react-icons/hi2";
 
@@ -128,80 +130,100 @@ const CONTACT_ITEMS = [
   },
 ];
 
-function ContactCard({ contact }) {
-  const items = CONTACT_ITEMS.filter(({ key }) => contact[key]);
+const COPYABLE = new Set(["email", "phone", "whatsapp"]);
 
+function ContactCard({ contact }) {
+  const [copied, setCopied] = useState(null);
+
+  const copy = useCallback((text, key) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(key);
+      setTimeout(() => setCopied(null), 2000);
+    });
+  }, []);
+
+  const items = CONTACT_ITEMS.filter(({ key }) => contact[key]);
   if (!items.length) return null;
 
   return (
-    <div
-      className="bg-white rounded-[20px] border border-[#ede8e0]
-                    shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5"
-    >
-      <h3
-        className="flex items-center gap-1.5 text-[11px] font-black uppercase
-                     tracking-widest text-[#9e8e80] font-[Nunito,sans-serif] mb-4"
-      >
-        <span className="text-[#6b9c3e]">
-          <RiPhoneLine size={13} />
-        </span>
+    <div className="bg-white rounded-[20px] border border-[#ede8e0]
+                    shadow-[0_2px_12px_rgba(0,0,0,0.06)] p-5">
+      <h3 className="flex items-center gap-1.5 text-[11px] font-black uppercase
+                     tracking-widest text-[#9e8e80] font-[Nunito,sans-serif] mb-4">
+        <span className="text-[#6b9c3e]"><RiPhoneLine size={13} /></span>
         Contact
       </h3>
 
-      <div className="flex flex-col gap-2.5">
+      <div className="flex flex-col gap-2">
         {items.map(({ key, icon, label, href, color, bg }) => {
           const value = contact[key];
+          const isCopyable = COPYABLE.has(key);
+          const wasCopied = copied === key;
           return (
-            <a
+            <div
               key={key}
-              href={href(value)}
-              target={key === "email" || key === "phone" ? "_self" : "_blank"}
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 p-3 rounded-[12px]
-                         border border-[#ede8e0] hover:border-transparent
-                         transition-all duration-200 hover:-translate-y-px
-                         hover:shadow-[0_4px_14px_rgba(0,0,0,0.08)]"
-              style={{ "--hover-bg": bg }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = bg;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "";
-              }}
+              className="flex items-center gap-3 p-3 rounded-[14px] border border-[#ede8e0]"
             >
-              {/* Icon bubble */}
               <span
-                className="w-8 h-8 rounded-full flex items-center justify-center
-                           shrink-0 transition-transform duration-200
-                           group-hover:scale-110"
+                className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
                 style={{ background: bg, color }}
               >
                 {icon}
               </span>
 
-              {/* Text */}
               <div className="flex flex-col min-w-0 flex-1">
-                <span
-                  className="text-[10px] font-black uppercase tracking-wider
-                                 text-[#c4b8a8] font-[Nunito,sans-serif] leading-none mb-0.5"
-                >
+                <span className="text-[10px] font-black uppercase tracking-wider
+                                 text-[#c4b8a8] font-[Nunito,sans-serif] leading-none mb-0.5">
                   {label}
                 </span>
-                <span
-                  className="text-[12px] font-semibold text-[#3d2b1a]
-                                 font-[Nunito,sans-serif] truncate"
-                >
+                <span className="text-[12px] font-semibold text-[#3d2b1a]
+                                 font-[Nunito,sans-serif] truncate">
                   {value}
                 </span>
               </div>
 
-              {/* Arrow */}
-              <HiArrowRight
-                size={13}
-                className="shrink-0 text-[#c4b8a8] group-hover:text-[#3d2b1a]
-                           transition-colors duration-200"
-              />
-            </a>
+              <div className="flex items-center gap-1 shrink-0">
+                {isCopyable && (
+                  <button
+                    onClick={() => copy(value, key)}
+                    title={wasCopied ? "Copied!" : `Copy ${label}`}
+                    className="w-7 h-7 rounded-[8px] flex items-center justify-center
+                               border border-[#ede8e0] transition-all duration-150"
+                    style={{
+                      background: wasCopied ? bg : "transparent",
+                      color:      wasCopied ? color : "#c4b8a8",
+                      borderColor: wasCopied ? color + "44" : undefined,
+                    }}
+                  >
+                    {wasCopied
+                      ? <TbCopyCheck size={13} />
+                      : <TbCopy     size={13} />
+                    }
+                  </button>
+                )}
+                <a
+                  href={href(value)}
+                  target={key === "email" || key === "phone" ? "_self" : "_blank"}
+                  rel="noopener noreferrer"
+                  title={`Open ${label}`}
+                  className="w-7 h-7 rounded-[8px] flex items-center justify-center
+                             border border-[#ede8e0] text-[#9e8e80]
+                             transition-all duration-150"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = bg;
+                    e.currentTarget.style.color = color;
+                    e.currentTarget.style.borderColor = color + "44";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "";
+                    e.currentTarget.style.color = "";
+                    e.currentTarget.style.borderColor = "";
+                  }}
+                >
+                  <HiArrowRight size={12} />
+                </a>
+              </div>
+            </div>
           );
         })}
       </div>
@@ -211,56 +233,73 @@ function ContactCard({ contact }) {
 
 // ─── Booking modal ────────────────────────────────────────────────────────────
 function BookingModal({ guide, onClose }) {
-  const name = guide.name || "the guide";
+  const name    = guide.name || "the guide";
   const contact = guide.contact || {};
+  const [copied, setCopied] = useState(null);
 
-  const waNumber = (contact.whatsapp || contact.phone || "").replace(
-    /[^0-9]/g,
-    "",
-  );
+  const copy = useCallback((text, key) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(key);
+      setTimeout(() => setCopied(null), 2000);
+    });
+  }, []);
 
-  const waMsg = encodeURIComponent(
-    `Hello ${name.split(" ")[0]}, I found your profile on City Guide and I'd like to book a guided tour with you. Could you share your availability?`,
-  );
+  const waNumber = (contact.whatsapp || contact.phone || "").replace(/[^0-9]/g, "");
+  const waMsg        = encodeURIComponent(`Hello ${name.split(" ")[0]}, I found your profile on City Guide and I'd like to book a guided tour with you. Could you share your availability?`);
   const emailSubject = encodeURIComponent("Booking Request — City Guide");
-  const emailBody = encodeURIComponent(
-    `Hello ${name.split(" ")[0]},\n\nI found your profile on City Guide and I'd like to book a guided tour with you.\n\nCould you please share your availability and rates?\n\nThank you!`,
-  );
+  const emailBody    = encodeURIComponent(`Hello ${name.split(" ")[0]},\n\nI found your profile on City Guide and I'd like to book a guided tour with you.\n\nCould you please share your availability and rates?\n\nThank you!`);
 
   const options = [
     waNumber && {
-      key: "whatsapp",
-      icon: <RiWhatsappLine size={20} />,
-      label: "Chat on WhatsApp",
-      sub: "Fastest response",
-      href: `https://wa.me/${waNumber}?text=${waMsg}`,
-      color: "#25d366",
-      bg: "#f0fdf4",
-      border: "#bbf7d0",
+      key:       "whatsapp",
+      icon:      <RiWhatsappLine size={20} />,
+      label:     "WhatsApp",
+      sub:       contact.whatsapp || contact.phone,
+      href:      `https://wa.me/${waNumber}?text=${waMsg}`,
+      copyValue: contact.whatsapp || contact.phone,
+      color:     "#25d366",
+      bg:        "#f0fdf4",
+      border:    "#bbf7d0",
+      action:    "Chat now",
     },
     contact.email && {
-      key: "email",
-      icon: <RiMailLine size={20} />,
-      label: "Send an Email",
-      sub: "Reply within 24h",
-      href: `mailto:${contact.email}?subject=${emailSubject}&body=${emailBody}`,
-      color: "#3b82f6",
-      bg: "#eff6ff",
-      border: "#bfdbfe",
+      key:       "email",
+      icon:      <RiMailLine size={20} />,
+      label:     "Email",
+      sub:       contact.email,
+      href:      `mailto:${contact.email}?subject=${emailSubject}&body=${emailBody}`,
+      copyValue: contact.email,
+      color:     "#3b82f6",
+      bg:        "#eff6ff",
+      border:    "#bfdbfe",
+      action:    "Send email",
     },
-    contact.phone && {
-      key: "phone",
-      icon: <RiPhoneLine size={20} />,
-      label: "Call Directly",
-      sub: contact.phone,
-      href: `tel:${contact.phone.replace(/\s/g, "")}`,
-      color: "#c8761a",
-      bg: "#fdf6ec",
-      border: "#fde68a",
+    contact.phone && !waNumber && {
+      key:       "phone",
+      icon:      <RiPhoneLine size={20} />,
+      label:     "Phone",
+      sub:       contact.phone,
+      href:      `tel:${contact.phone.replace(/\s/g, "")}`,
+      copyValue: contact.phone,
+      color:     "#c8761a",
+      bg:        "#fdf6ec",
+      border:    "#fde68a",
+      action:    "Call now",
+    },
+    contact.instagram && {
+      key:       "instagram",
+      icon:      <RiInstagramLine size={20} />,
+      label:     "Instagram",
+      sub:       contact.instagram,
+      href:      `https://instagram.com/${contact.instagram.replace("@", "")}`,
+      copyValue: null,
+      color:     "#e1306c",
+      bg:        "#fff0f5",
+      border:    "#fbcfe8",
+      action:    "Follow",
     },
   ].filter(Boolean);
 
-  // Close on Escape
   useEffect(() => {
     const handler = (e) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", handler);
@@ -276,138 +315,169 @@ function BookingModal({ guide, onClose }) {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-[2px]
+        className="absolute inset-0 bg-black/60 backdrop-blur-[3px]
                    animate-[fadeIn_0.2s_ease]"
         onClick={onClose}
       />
 
       {/* Modal card */}
       <div
-        className="relative w-full sm:max-w-[420px] bg-white
-                   rounded-t-[28px] sm:rounded-[28px]
-                   shadow-[0_24px_80px_rgba(0,0,0,0.22)]
-                   animate-[slideUp_0.3s_cubic-bezier(.25,.8,.25,1)]
+        className="relative w-full sm:max-w-[440px] bg-white
+                   rounded-t-[32px] sm:rounded-[28px]
+                   shadow-[0_32px_100px_rgba(0,0,0,0.28)]
+                   animate-[slideUp_0.35s_cubic-bezier(.25,.8,.25,1)]
                    overflow-hidden"
       >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full
-                     bg-[#f5f0ea] flex items-center justify-center
-                     text-[#9e8e80] hover:bg-[#ede8e0] hover:text-[#3d2b1a]
-                     transition-colors"
-        >
-          <TbX size={15} />
-        </button>
-
-        {/* Guide header */}
-        <div
-          className="flex items-center gap-4 p-6 pb-5
-                        border-b border-[#f0ebe4]"
-        >
-          <div
-            className="w-14 h-14 rounded-[14px] overflow-hidden
-                          border-2 border-[#ede8e0] shrink-0"
+        {/* ── Gradient header ── */}
+        <div className="relative bg-gradient-to-br from-[#2d4a1e] via-[#3d6128] to-[#558a36] px-6 pt-6 pb-10">
+          {/* Close */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 w-8 h-8 rounded-full
+                       bg-white/15 flex items-center justify-center
+                       text-white/70 hover:bg-white/25 hover:text-white
+                       transition-all"
           >
-            <img
-              src={guide.avatar}
-              alt={name}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = `https://i.pravatar.cc/150?u=${guide.id}`;
-              }}
-            />
+            <TbX size={15} />
+          </button>
+
+          {/* Guide info */}
+          <div className="flex items-center gap-4">
+            <div className="relative shrink-0">
+              <div className="w-[60px] h-[60px] rounded-[16px] overflow-hidden
+                              border-2 border-white/30 shadow-lg">
+                <img
+                  src={guide.avatar}
+                  alt={name}
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = `https://i.pravatar.cc/150?u=${guide.id}`;
+                  }}
+                />
+              </div>
+              {guide.availability?.isCurrentlyAvailable && (
+                <span className="absolute -bottom-1 -right-1 w-[14px] h-[14px]
+                                 rounded-full bg-[#6b9c3e] border-2 border-white" />
+              )}
+            </div>
+
+            <div className="min-w-0">
+              <h2 className="font-[Playfair_Display,Georgia,serif] text-[20px]
+                             font-bold text-white leading-tight mb-0.5 truncate">
+                {name}
+              </h2>
+              {guide.cityNames?.length > 0 && (
+                <p className="flex items-center gap-1 text-white/60 text-[12px]
+                              font-[Nunito,sans-serif]">
+                  <RiMapPin2Line size={11} className="shrink-0" />
+                  {guide.cityNames.slice(0, 2).join(" · ")}
+                </p>
+              )}
+              <div className="flex items-center gap-2 mt-1 flex-wrap">
+                <span className="flex items-center gap-1 text-white/80 text-[12px]
+                                 font-bold font-[Nunito,sans-serif]">
+                  <IoStarSharp size={11} className="text-[#f4b942]" />
+                  {guide.averageRating?.toFixed(1)}
+                </span>
+                <span className="text-white/35 text-[11px] font-[Nunito,sans-serif]">·</span>
+                <span className="text-white/70 text-[12px] font-bold
+                                 font-[Nunito,sans-serif]">
+                  {guide.pricePerHour} MAD/hr
+                </span>
+              </div>
+            </div>
           </div>
-          <div className="min-w-0">
-            <h2
-              className="font-[Playfair_Display,Georgia,serif] text-[18px]
-                           font-bold text-[#3d2b1a] leading-tight mb-0.5 truncate"
-            >
-              {name}
-            </h2>
-            {guide.cityNames?.length > 0 && (
-              <p
-                className="flex items-center gap-1 text-[12px] text-[#9e8e80]
-                            font-[Nunito,sans-serif]"
-              >
-                <RiMapPin2Line size={11} className="text-[#6b9c3e] shrink-0" />
-                {guide.cityNames.slice(0, 2).join(" · ")}
-              </p>
-            )}
-            <p
-              className="text-[11px] font-bold text-[#6b9c3e]
-                          font-[Nunito,sans-serif] mt-0.5"
-            >
-              {guide.pricePerHour} MAD / hour
-            </p>
-          </div>
+
+          {/* White curve */}
+          <div className="absolute -bottom-[1px] left-0 right-0 h-6 bg-white rounded-t-[22px]" />
         </div>
 
-        {/* Options */}
-        <div className="p-5">
-          <p
-            className="text-[12px] font-black uppercase tracking-widest
-                        text-[#9e8e80] font-[Nunito,sans-serif] mb-3"
-          >
-            How would you like to reach out?
+        {/* ── Contact options ── */}
+        <div className="px-5 pt-3 pb-6">
+          <p className="text-[11px] font-black uppercase tracking-widest
+                        text-[#9e8e80] font-[Nunito,sans-serif] mb-3.5">
+            Choose how to connect
           </p>
 
           <div className="flex flex-col gap-2.5">
-            {options.map(
-              ({ key, icon, label, sub, href, color, bg, border }) => (
-                <a
+            {options.map(({ key, icon, label, sub, href, copyValue, color, bg, border, action }) => {
+              const wasCopied = copied === key;
+              return (
+                <div
                   key={key}
-                  href={href}
-                  target={key === "phone" ? "_self" : "_blank"}
-                  rel="noopener noreferrer"
-                  onClick={onClose}
-                  className="group flex items-center gap-4 p-4 rounded-[16px]
-                           border-[1.5px] transition-all duration-200
-                           hover:-translate-y-px
-                           hover:shadow-[0_6px_20px_rgba(0,0,0,0.08)]"
-                  style={{ borderColor: border, backgroundColor: bg }}
+                  className="flex items-center gap-3 p-3.5 rounded-[16px] border-[1.5px]"
+                  style={{ background: bg, borderColor: border }}
                 >
                   {/* Icon */}
                   <span
                     className="w-10 h-10 rounded-[12px] flex items-center
-                             justify-center shrink-0 transition-transform
-                             duration-200 group-hover:scale-110"
-                    style={{ background: color + "1a", color }}
+                               justify-center shrink-0"
+                    style={{ background: color + "22", color }}
                   >
                     {icon}
                   </span>
 
                   {/* Text */}
                   <div className="flex-1 min-w-0">
-                    <p
-                      className="font-[Nunito,sans-serif] text-[14px] font-bold
-                                text-[#3d2b1a] leading-none mb-0.5"
-                    >
+                    <p className="font-[Nunito,sans-serif] text-[13px] font-bold
+                                  text-[#3d2b1a] leading-none mb-0.5">
                       {label}
                     </p>
-                    <p
-                      className="font-[Nunito,sans-serif] text-[11px]
-                                text-[#9e8e80]"
-                    >
+                    <p className="font-[Nunito,sans-serif] text-[11px]
+                                  text-[#9e8e80] truncate">
                       {sub}
                     </p>
                   </div>
 
-                  <HiArrowRight
-                    size={15}
-                    className="shrink-0 transition-all duration-200
-                             group-hover:translate-x-1"
-                    style={{ color }}
-                  />
-                </a>
-              ),
-            )}
+                  {/* Actions */}
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    {copyValue && (
+                      <button
+                        onClick={() => copy(copyValue, key)}
+                        title={wasCopied ? "Copied!" : "Copy"}
+                        className="w-7 h-7 rounded-[8px] flex items-center
+                                   justify-center border transition-all duration-150"
+                        style={{
+                          background:  wasCopied ? color + "22" : "white",
+                          color:       wasCopied ? color : "#b0a090",
+                          borderColor: wasCopied ? color + "44" : "#e8e0d4",
+                        }}
+                      >
+                        {wasCopied
+                          ? <TbCopyCheck size={13} />
+                          : <TbCopy     size={13} />}
+                      </button>
+                    )}
+                    <a
+                      href={href}
+                      target={key === "phone" ? "_self" : "_blank"}
+                      rel="noopener noreferrer"
+                      onClick={onClose}
+                      className="flex items-center gap-1.5 px-3 py-[7px]
+                                 rounded-[10px] text-[11px] font-bold
+                                 font-[Nunito,sans-serif] text-white
+                                 transition-all duration-150
+                                 hover:opacity-90 active:scale-95"
+                      style={{ background: color }}
+                    >
+                      {action}
+                      <HiArrowRight size={11} />
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          <p
-            className="text-center text-[11px] text-[#c4b8a8]
-                        font-[Nunito,sans-serif] mt-4"
-          >
+          {options.length === 0 && (
+            <p className="text-center text-[13px] text-[#9e8e80]
+                          font-[Nunito,sans-serif] py-6">
+              No contact information available yet.
+            </p>
+          )}
+
+          <p className="text-center text-[11px] text-[#c4b8a8]
+                        font-[Nunito,sans-serif] mt-4 leading-relaxed">
             Your request goes directly to the guide — no middleman.
           </p>
         </div>
@@ -455,27 +525,23 @@ function LoadingSkeleton() {
 export default function GuideProfilePage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [guide, setGuide] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [guide,       setGuide]       = useState(null);
+  const [fetchedId,   setFetchedId]   = useState(null);
   const [showBooking, setShowBooking] = useState(false);
+
+  const loading = fetchedId !== id;
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
     api
       .getGuideById(id)
       .then((data) => {
-        if (!cancelled) {
-          setGuide(data);
-          setLoading(false);
-        }
+        if (!cancelled) { setGuide(data); setFetchedId(id); }
       })
       .catch(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) { setGuide(null); setFetchedId(id); }
       });
-    return () => {
-      cancelled = true;
-    };
+    return () => { cancelled = true; };
   }, [id]);
 
   if (loading) return <LoadingSkeleton />;
@@ -821,7 +887,7 @@ export default function GuideProfilePage() {
               title="Reviews & Community"
               icon={<IoStarSharp size={13} />}
             >
-              <CommentSection targetId={id} targetType="Guide" />
+              <CommentSection targetId={id} targetType="GuideProfile" />
             </Section>
           </div>
 
