@@ -568,12 +568,18 @@ export const api = {
   submitPendingRequest: (data) => post("/pendingRequests", data),
 
   /** PATCH /pendingRequests/:id/approve  (admin) */
-  approvePendingRequest: (id, note = "") =>
-    patch(`/pendingRequests/${id}`, { status: "approved", note }),
+  approvePendingRequest: (id) =>
+    patch(`/pendingRequests/${id}/approve`, {}),
 
   /** PATCH /pendingRequests/:id/reject  (admin) */
   rejectPendingRequest: (id, reason = "") =>
-    patch(`/pendingRequests/${id}`, { status: "rejected", reason }),
+    patch(`/pendingRequests/${id}/reject`, { reason }),
+
+  /** PATCH /media/:id/reject  (admin) */
+  rejectMedia: (id) => patch(`/media/${id}/reject`, { status: "rejected" }),
+
+  /** PUT /users/:id/role  (admin) — change user role */
+  updateUserRole: (id, role) => put(`/users/${id}`, { role }),
 
 
   // ═══════════════════════════════════════════════════════════════════════════

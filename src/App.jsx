@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate,Outlet } from "react-router-dom"
 import store from "./store/index";
 
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "./store/slices/authSlice";
+import { selectIsLoggedIn, selectUser } from "./store/slices/authSlice";
 // ── Layout ────────────────────────────────────────────────────────────────────
 import Navbar  from "./components/layout/navBar/Navbar";
 import Footer  from "./components/layout/footer/Footer";
@@ -33,13 +33,31 @@ import AccountSecurity     from "./pages/settings/AccountSecurity";
 import NotificationsPanel  from "./pages/settings/NotificationsPanel";
 import GuideProfileSettings from "./pages/settings/GuideProfileSettings";
 import BusinessSettings    from "./pages/settings/BusinessSettings";
+// ── Admin ─────────────────────────────────────────────────────────────────────
+import AdminLayout          from "./pages/admin/AdminLayout";
+import DashboardPage        from "./pages/admin/DashboardPage";
+import UsersPage            from "./pages/admin/UsersPage";
+import PendingRequestsPage  from "./pages/admin/PendingRequestsPage";
+import AdminPlacesPage      from "./pages/admin/PlacesPage";
+import AdminEventsPage      from "./pages/admin/EventsPage";
+import ReportsPage          from "./pages/admin/ReportsPage";
+import MediaPage            from "./pages/admin/MediaPage";
+import AdminLogsPage        from "./pages/admin/AdminLogsPage";
 // ── Global styles ─────────────────────────────────────────────────────────────
 import "./styles/global.css";
+
 function ProtectedRoute() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   return isLoggedIn
     ? <Outlet />
     : <Navigate to="/login" replace state={{ from: "/favorites" }} />;
+}
+
+function AdminRoute() {
+  const user = useSelector(selectUser);
+  if (!user) return <Navigate to="/" replace />;
+  if (user.role !== "admin") return <Navigate to="/" replace />;
+  return <Outlet />;
 }
 // ─────────────────────────────────────────────────────────────────────────────
 //  Layout wrapper — renders on every route
@@ -107,16 +125,41 @@ function AppLayout() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+//  Admin shell — full-screen, no Navbar/Footer
+// ─────────────────────────────────────────────────────────────────────────────
+function AdminShell() {
+  return (
+    <Routes>
+      <Route element={<AdminRoute />}>
+        <Route path="/" element={<AdminLayout />}>
+          <Route index            element={<DashboardPage />} />
+          <Route path="users"     element={<UsersPage />} />
+          <Route path="requests"  element={<PendingRequestsPage />} />
+          <Route path="places"    element={<AdminPlacesPage />} />
+          <Route path="events"    element={<AdminEventsPage />} />
+          <Route path="reports"   element={<ReportsPage />} />
+          <Route path="media"     element={<MediaPage />} />
+          <Route path="logs"      element={<AdminLogsPage />} />
+        </Route>
+      </Route>
+    </Routes>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 //  Root — Redux Provider + Router
+//  /admin/* → AdminShell (full-screen, no public navbar/footer)
+//  everything else → AppLayout (public site)
 // ─────────────────────────────────────────────────────────────────────────────
 export default function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <AppLayout />
+        <Routes>
+          <Route path="/admin/*" element={<AdminShell />} />
+          <Route path="/*"       element={<AppLayout />} />
+        </Routes>
       </BrowserRouter>
     </Provider>
-  ); 
- 
-
+  );
 }
